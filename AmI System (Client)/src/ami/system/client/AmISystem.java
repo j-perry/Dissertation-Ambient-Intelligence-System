@@ -11,11 +11,10 @@ package ami.system.client;
 public class AmISystem {
     
     public AmISystem() {
-        
+        System.out.println("AmI System");
     }
     
     public void init() {
-        System.out.println("AmISystem\n");
         menu();
     }
     
@@ -23,6 +22,8 @@ public class AmISystem {
         AmISystemMenu menu = new AmISystemMenu();
         menu.display();
         menu.input();
+        
+        menu = null; // garbage collection...
     }
     
 }
