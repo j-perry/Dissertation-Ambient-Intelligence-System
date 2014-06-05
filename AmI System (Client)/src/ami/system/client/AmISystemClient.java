@@ -9,11 +9,11 @@ package ami.system.client;
  * @author Jonathan Perry
  */
 public class AmISystemClient {
-
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println("Hello");
+        new AmISystem().init();
     }
 }
