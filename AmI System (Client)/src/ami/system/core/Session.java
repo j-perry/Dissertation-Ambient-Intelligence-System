@@ -57,24 +57,40 @@ public class Session {
     }
     
     private void parseOption(int choice) {
+        VolumeSession volSession = null;
+        
         switch(choice) {
             case 1:
+                TemperatureSession tempSession = new TemperatureSession();
+                tempSession.run();
+                tempSession.analyse();
                 break;
             case 2:
+                WirelessSession wireSession = new WirelessSession();
+                wireSession.run();
                 break;
             case 3:
+                MovementSession moveSession = new MovementSession();
+                moveSession.run();
+                moveSession.analyse();
                 break;
             case 4:
+                volSession = new VolumeSession();
+                volSession.run();
+                volSession.analyse();
                 break;
             case 5:
+                // We're capturing lo-frequency data? Do we need a different class?
+                volSession = new VolumeSession();
+                volSession.run();
+                volSession.analyse();
                 break;
             default:
                 System.out.println("Invalid option. Try again.");
                 System.out.println();
                 displayOptions();
                 getOptionInput();
-                break;
-                
+                break;                
         }
     }
     
