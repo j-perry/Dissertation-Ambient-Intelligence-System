@@ -6,9 +6,7 @@ package ami.system.client;
 
 import ami.system.core.*;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 
 /**
  *
@@ -25,9 +23,9 @@ public class AmISystemMenu {
         System.out.println("Menu");
         System.out.println("--------------\n");
         
-        final String option_one = "1. New Session";
-        final String option_two = "2. Settings";
-        final String option_three = "3. Exit";
+        final String option_one   = "> 1. New Session";
+        final String option_two   = "> 2. Settings";
+        final String option_three = "> 3. Exit";
         
         System.out.println(option_one);
         System.out.println(option_two);
@@ -54,6 +52,8 @@ public class AmISystemMenu {
         switch(choice) {
             case 1:
                 Session session = new Session();
+                session.displayOptions();
+                session.getOptionInput();
             case 2:
                 Settings settings = new Settings();
                 break;
