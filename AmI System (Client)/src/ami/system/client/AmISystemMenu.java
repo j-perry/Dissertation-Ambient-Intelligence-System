@@ -5,8 +5,10 @@
 package ami.system.client;
 
 import ami.system.core.*;
+import ami.system.database.Temperature;
 
 import java.io.*;
+import java.sql.SQLException;
 
 /**
  *
@@ -58,6 +60,19 @@ public class AmISystemMenu {
                 Settings settings = new Settings();
                 break;
             case 3:
+                Temperature temp = new Temperature();
+                temp.open();
+                
+                try {
+                    temp.insert(56);
+                }
+                catch(SQLException ex) {
+                    ex.printStackTrace();
+                }
+                finally {
+                    temp.close();
+                }
+                
                 System.exit(0);
                 break;
             default:
