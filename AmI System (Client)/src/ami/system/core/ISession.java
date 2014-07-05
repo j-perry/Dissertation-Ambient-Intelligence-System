@@ -10,7 +10,7 @@ package ami.system.core;
  */
 public interface ISession {
     
-    public void run();
+    public void run() throws Exception;
     
     public void analyse();
     

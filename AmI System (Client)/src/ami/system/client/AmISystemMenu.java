@@ -40,7 +40,7 @@ public class AmISystemMenu {
         BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
         
         try {
-            System.out.print("Input choice: ");
+            System.out.print("> Input choice: ");
             
             int choice = Integer.valueOf(bf.readLine() );
             parseChoice(choice);
@@ -60,19 +60,6 @@ public class AmISystemMenu {
                 Settings settings = new Settings();
                 break;
             case 3:
-                Temperature temp = new Temperature();
-                temp.open();
-                
-                try {
-                    temp.insert(56);
-                }
-                catch(SQLException ex) {
-                    ex.printStackTrace();
-                }
-                finally {
-                    temp.close();
-                }
-                
                 System.exit(0);
                 break;
             default:

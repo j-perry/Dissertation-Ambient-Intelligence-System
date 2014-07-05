@@ -63,9 +63,11 @@ public class Temperature implements IDatabase {
      * @param value
      * @throws SQLException 
      */
-    public void insert(int value) throws SQLException {
-        query = "INSERT INTO temperature (Value)" +
-                "VALUES ('" + value + "')";
+    public void insert(int value, String date, String time) throws SQLException {
+        query = "INSERT INTO temperature (Value, Date, Time)" +
+                "VALUES ('" + value + "' ," +
+                         "'" + date + "' , " +
+                         "'" + time + "')";
         
         int status = 0;
         

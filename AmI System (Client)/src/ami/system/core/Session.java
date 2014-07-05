@@ -23,7 +23,7 @@ public class Session {
         System.out.println();
         System.out.println("-----------------------------------");
         System.out.println();
-        System.out.println("What data would you like to gather?");
+        System.out.println("> What data would you like to gather?");
         
         final String option_one    = "> 1. Room temperature";
         final String option_two    = "> 2. Wireless device activity"; // TODO privacy?
@@ -47,7 +47,7 @@ public class Session {
        
        try {
            System.out.println();
-           System.out.print("Choice: ");
+           System.out.print("> Choice: ");
            choice = Integer.valueOf(br.readLine());
            parseOption(choice);
        }
@@ -62,9 +62,19 @@ public class Session {
         switch(choice) {
             case 1:
                 TemperatureSession tempSession = new TemperatureSession();
-                tempSession.run();
-                tempSession.analyse();
+                
+                try {
+                    tempSession.run();
+                }
+                catch(Exception ex) {
+                    ex.printStackTrace();
+                }
+                
+                //tempSession.analyse();
+                
                 break;
+                
+                /*
             case 2:
                 WirelessSession wireSession = new WirelessSession();
                 wireSession.run();
@@ -85,8 +95,9 @@ public class Session {
                 volSession.run();
                 volSession.analyse();
                 break;
+                */
             default:
-                System.out.println("Invalid option. Try again.");
+                System.out.println("> Invalid option. Try again.");
                 System.out.println();
                 displayOptions();
                 getOptionInput();
