@@ -6,6 +6,7 @@ package ami.system.core;
 
 import ami.system.database.Temperature;
 import com.pi4j.io.i2c.*;
+import java.sql.SQLException;
 import java.text.*;
 import java.util.*;
 
@@ -34,24 +35,21 @@ class TemperatureSession implements ISession {
         try {
             bus = I2CFactory.getInstance(I2CBus.BUS_1);
             tempSensor = bus.getDevice(tempAddr);
-            System.out.println("Connected ok");
+            System.out.println("> Connected ok");
         }
         catch(Exception ex) {
             ex.printStackTrace();
         }
         
+        System.out.println();
+        
         temperature.open();
         
-        for(;;) {
-            if(i == count) {
-                break;
-            }
-            else {
-                int noBytes = tempSensor.read(tempAddr, buffer, 0, 1); // TODO
-                System.out.println("Temperature: " + buffer[0]);
+        // capture the temperature every 10 minutes
+        try {
+            while(true) {
+                int noBytes = tempSensor.read(tempAddr, buffer, 0, 1);
                 temp = buffer[0];
-                
-                System.out.println("Count: " + i);
                 
                 // date
                 DateFormat df = new SimpleDateFormat("dd/MM/YYYY");
@@ -62,16 +60,49 @@ class TemperatureSession implements ISession {
                 df = new SimpleDateFormat("HH:mm");
                 String time = df.format(d).toString();
                 
-                try {                    
+                try {
                     temperature.insert(temp, date, time);
-                }
-                catch(Exception ex) {
+                } catch(Exception ex) {
                     ex.printStackTrace();
                 }
                 
-                i++;
+                int duration = 600 * 1000; // 10 minutes
+                Thread.sleep(duration);
             }
+        } catch(InterruptedException ex) {
+            ex.printStackTrace();
         }
+        
+//        for(;;) {
+//            if(i == count) {
+//                break;
+//            }
+//            else {
+//                int noBytes = tempSensor.read(tempAddr, buffer, 0, 1); // TODO
+//                System.out.println("Temperature: " + buffer[0]);
+//                temp = buffer[0];
+//                
+//                System.out.println("Count: " + i);
+//                
+//                // date
+//                DateFormat df = new SimpleDateFormat("dd/MM/YYYY");
+//                Date d = new Date();
+//                String date = df.format(d).toString();
+//                
+//                // time
+//                df = new SimpleDateFormat("HH:mm");
+//                String time = df.format(d).toString();
+//                
+//                try {                    
+//                    temperature.insert(temp, date, time);
+//                }
+//                catch(Exception ex) {
+//                    ex.printStackTrace();
+//                }
+//                
+//                i++;
+//            }
+//        }
         
         temperature.close();        
     }
