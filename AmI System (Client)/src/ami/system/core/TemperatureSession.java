@@ -72,39 +72,8 @@ class TemperatureSession implements ISession {
         } catch(InterruptedException ex) {
             ex.printStackTrace();
         }
-        
-//        for(;;) {
-//            if(i == count) {
-//                break;
-//            }
-//            else {
-//                int noBytes = tempSensor.read(tempAddr, buffer, 0, 1); // TODO
-//                System.out.println("Temperature: " + buffer[0]);
-//                temp = buffer[0];
-//                
-//                System.out.println("Count: " + i);
-//                
-//                // date
-//                DateFormat df = new SimpleDateFormat("dd/MM/YYYY");
-//                Date d = new Date();
-//                String date = df.format(d).toString();
-//                
-//                // time
-//                df = new SimpleDateFormat("HH:mm");
-//                String time = df.format(d).toString();
-//                
-//                try {                    
-//                    temperature.insert(temp, date, time);
-//                }
-//                catch(Exception ex) {
-//                    ex.printStackTrace();
-//                }
-//                
-//                i++;
-//            }
-//        }
-        
-        temperature.close();        
+                
+        temperature.close();
     }
 
     @Override
