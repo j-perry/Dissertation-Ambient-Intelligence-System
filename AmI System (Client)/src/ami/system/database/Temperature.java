@@ -81,7 +81,8 @@ public class Temperature implements IDatabase {
             ex.printStackTrace();
         }
         
-        System.out.println("Status: " + String.valueOf(value));
+        System.out.println("Time: " + time);
+        System.out.println("Temperature: " + String.valueOf(value));
     }
     
 }

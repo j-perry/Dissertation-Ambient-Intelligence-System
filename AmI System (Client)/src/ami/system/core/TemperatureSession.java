@@ -48,9 +48,6 @@ class TemperatureSession implements ISession {
         // capture the temperature every 10 minutes
         try {
             while(true) {
-                int noBytes = tempSensor.read(tempAddr, buffer, 0, 1);
-                temp = buffer[0];
-                
                 // date
                 DateFormat df = new SimpleDateFormat("dd/MM/YYYY");
                 Date d = new Date();
@@ -60,14 +57,23 @@ class TemperatureSession implements ISession {
                 df = new SimpleDateFormat("HH:mm");
                 String time = df.format(d).toString();
                 
-                try {
-                    temperature.insert(temp, date, time);
-                } catch(Exception ex) {
-                    ex.printStackTrace();
+                // if the time is 10pm, terminate
+                if(time.equals("22:00")) {
+                    break;
                 }
-                
-                int duration = 600 * 1000; // 10 minutes
-                Thread.sleep(duration);
+                else {
+                    int noBytes = tempSensor.read(tempAddr, buffer, 0, 1);
+                    temp = buffer[0];
+                    
+                    try {
+                        temperature.insert(temp, date, time);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    
+                    int duration = 600 * 1000; // 10 minutes
+                    Thread.sleep(duration);
+                }              
             }
         } catch(InterruptedException ex) {
             ex.printStackTrace();
