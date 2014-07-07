@@ -6,7 +6,6 @@ package ami.system.core;
 
 import ami.system.database.Temperature;
 import com.pi4j.io.i2c.*;
-import java.sql.SQLException;
 import java.text.*;
 import java.util.*;
 
@@ -66,6 +65,7 @@ class TemperatureSession implements ISession {
                     temp = buffer[0];
                     
                     try {
+                        // this will probably need to change
                         temperature.insert(temp, date, time);
                     } catch (Exception ex) {
                         ex.printStackTrace();
