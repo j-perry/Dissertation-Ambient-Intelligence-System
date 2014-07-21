@@ -99,7 +99,7 @@ public class Session {
         
         // enable the temperature sensor
         if(capture_temperature == true) {
-            System.exit(0);
+            
         }
         // enable the microphone sensor
         // TODO
