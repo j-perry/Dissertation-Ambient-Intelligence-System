@@ -1,13 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
+
+
 package ami.system.operations.menu;
 
 import java.io.*;
 
 /**
- *
+ * Displays the system menu
  * @author Jonathan Perry
  */
 public class AmISystemMenu {
