@@ -3,7 +3,9 @@
  * Jonathan Perry
  * Candidate No. 102235
  */
-package ami.system.main;
+package ami.system;
+
+import ami.system.AmISystem;
 
 /**
  *

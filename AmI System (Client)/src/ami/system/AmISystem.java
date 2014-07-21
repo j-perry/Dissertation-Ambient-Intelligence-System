@@ -1,7 +1,7 @@
 
 
 
-package ami.system.main;
+package ami.system;
 
 import ami.system.operations.menu.AmISystemMenu;
 
