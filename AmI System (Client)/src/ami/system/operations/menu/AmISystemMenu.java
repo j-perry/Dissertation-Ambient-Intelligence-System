@@ -37,6 +37,9 @@ public class AmISystemMenu {
         System.out.println();
     }
     
+    /**
+     * Receives user input
+     */
     public void input() {
         BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
         
@@ -68,7 +71,7 @@ public class AmISystemMenu {
                 new About().info();
                 break;
             case 4:
-                System.exit(0);
+                new Terminate();
                 break;
             default:
                 System.out.println("Invalid choice. Try again.");
@@ -78,5 +81,4 @@ public class AmISystemMenu {
                 break;
         }
     }
-    
 }
