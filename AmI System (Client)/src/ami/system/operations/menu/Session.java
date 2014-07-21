@@ -103,16 +103,17 @@ public class Session {
         }
         // enable the microphone sensor
         else if(capture_atmosphere = true) {
-            System.exit(0);            
+            System.exit(0);
         }
         // enable the accelerometer
         else if(capture_motion) {
-            System.exit(0);            
+            System.exit(0);
         }
         // enable the RGB light sensor
-        else if(capture_light) {
-            System.exit(0);            
-        }
+        // TODO
+//        else if(capture_light) {
+//            System.exit(0);            
+//        }
         
         // return a new instanceof
     }
