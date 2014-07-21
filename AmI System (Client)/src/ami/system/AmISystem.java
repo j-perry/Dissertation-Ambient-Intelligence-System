@@ -22,8 +22,10 @@ public class AmISystem {
     public void menu() {
         AmISystemMenu menu = new AmISystemMenu();
         menu.display();
-        menu.input();        
-        menu = null; // garbage collection...
+        menu.input();
+        
+        // garbage collection...
+        menu = null;
     }
     
 }
