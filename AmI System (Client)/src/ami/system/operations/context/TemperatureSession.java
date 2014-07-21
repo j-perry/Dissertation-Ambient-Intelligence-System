@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ami.system.core;
+package ami.system.operations.context;
 
-import ami.system.database.Temperature;
+import ami.system.resources.database.Temperature;
 import com.pi4j.io.i2c.*;
 import java.text.*;
 import java.util.*;

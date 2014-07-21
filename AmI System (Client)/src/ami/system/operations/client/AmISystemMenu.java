@@ -2,10 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ami.system.client;
+package ami.system.operations.client;
 
-import ami.system.core.*;
-import ami.system.database.Temperature;
+import ami.system.operations.context.Session;
+import ami.system.operations.context.Settings;
+import ami.system.resources.database.Temperature;
 
 import java.io.*;
 import java.sql.SQLException;

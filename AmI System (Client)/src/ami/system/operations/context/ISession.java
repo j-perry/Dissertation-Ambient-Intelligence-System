@@ -2,16 +2,16 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ami.system.core;
+package ami.system.operations.context;
 
 /**
  *
  * @author Jonathan Perry
  */
-public class Settings {
+public interface ISession {
     
-    public Settings() {
-        
-    }
+    public void run() throws Exception;
+    
+    public void analyse();
     
 }
