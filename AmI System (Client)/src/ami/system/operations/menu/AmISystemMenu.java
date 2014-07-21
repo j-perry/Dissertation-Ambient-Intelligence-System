@@ -61,8 +61,7 @@ public class AmISystemMenu {
         switch(choice) {
             case 1:
                 Session session = new Session();
-                session.displayOptions();
-                session.getOptionInput();
+                session.setup();
             case 2:
                 new Settings();
                 break;

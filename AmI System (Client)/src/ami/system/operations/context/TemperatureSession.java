@@ -14,7 +14,7 @@ import java.util.*;
  * @author Jonathan Perry
  */
 public class TemperatureSession implements ISession {
-
+    
     private I2CBus bus;
     private I2CDevice tempSensor;
     
@@ -22,6 +22,10 @@ public class TemperatureSession implements ISession {
         
     }
 
+    /**
+     * 
+     * @throws Exception 
+     */
     @Override
     public void run() throws Exception {
         int tempAddr = 0x48;
