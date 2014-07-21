@@ -2,7 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ami.system.operations.context;
+package ami.system.operations.menu;
+
+import ami.system.operations.context.TemperatureSession;
+import ami.system.operations.context.VolumeSession;
 
 import java.io.*;
 
@@ -56,6 +59,10 @@ public class Session {
        }       
     }
     
+    /**
+     * Parses the chosen menu option
+     * @param choice 
+     */
     private void parseOption(int choice) {
         VolumeSession volSession = null;
         

@@ -8,7 +8,7 @@ package ami.system.operations.context;
  *
  * @author Jonathan Perry
  */
-class MovementSession implements ISession {
+public class MovementSession implements ISession {
     
     public MovementSession() {
         

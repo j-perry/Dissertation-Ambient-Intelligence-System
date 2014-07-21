@@ -4,20 +4,22 @@
  */
 package ami.system.operations.menu;
 
+import java.util.Scanner;
+
 /**
  *
  * @author Jonathan Perry
  */
-public class AboutApp {
+public class About {
     
-    public AboutApp() {
+    public About() {
         
     }
     
     /**
-     * 
+     * Display info about the application
      */
-    public void display() {
+    public void info() {
        String message = "----------------------------------------------------" +
                         "\n\n" +
                         "About" +
@@ -26,9 +28,25 @@ public class AboutApp {
                         "University of Sussex (2014)." +
                         "\n\n" +
                         "The project seeks to explore the efficiency of workplace activity, captured through qualities employees display each day in their positions as to enhance performance as a collective team."; 
-        
+       
        System.out.println(message);
-       return;
+       
+       // until the user has pressed ENTER
+       pauseApplication();
+       
+       AmISystemMenu ami = new AmISystemMenu();
+       ami.display();
+       ami.input();
+    }
+    
+    /**
+     * Pauses our application
+     */
+    private void pauseApplication() {
+        System.out.println("\n" +
+                           "> Press Enter to Continue");
+        Scanner s = new Scanner(System.in);
+        s.nextLine();
     }
     
 }

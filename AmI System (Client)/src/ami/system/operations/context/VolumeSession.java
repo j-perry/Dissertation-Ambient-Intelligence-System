@@ -8,7 +8,7 @@ package ami.system.operations.context;
  *
  * @author Jonathan Perry
  */
-class VolumeSession implements ISession {
+public class VolumeSession implements ISession {
     
     public VolumeSession() {
         

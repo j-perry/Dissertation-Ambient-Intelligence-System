@@ -8,7 +8,7 @@ package ami.system.operations.context;
  *
  * @author Jonathan Perry
  */
-class WirelessSession implements ISession {
+public class WirelessSession implements ISession {
     
     public WirelessSession() {
         

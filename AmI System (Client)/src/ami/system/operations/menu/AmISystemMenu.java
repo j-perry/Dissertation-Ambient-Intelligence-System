@@ -4,12 +4,7 @@
  */
 package ami.system.operations.menu;
 
-import ami.system.operations.context.Session;
-import ami.system.operations.context.Settings;
-import ami.system.resources.database.Temperature;
-
 import java.io.*;
-import java.sql.SQLException;
 
 /**
  *
@@ -20,7 +15,10 @@ public class AmISystemMenu {
     public AmISystemMenu() {
         
     }
-    
+        
+    /**
+     * Displays menu options
+     */
     public void display() {
         System.out.println("--------------");
         System.out.println("Menu");
@@ -53,6 +51,10 @@ public class AmISystemMenu {
         }        
     }
     
+    /**
+     * Parses our chosen menu option
+     * @param choice 
+     */
     private void parseChoice(int choice) {
         switch(choice) {
             case 1:
@@ -63,7 +65,7 @@ public class AmISystemMenu {
                 new Settings();
                 break;
             case 3:
-                new AboutApp().display();
+                new About().info();
                 break;
             case 4:
                 System.exit(0);

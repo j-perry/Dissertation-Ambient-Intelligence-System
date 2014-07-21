@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Initialises our Ambient Intelligence Learning System
  */
 package ami.system.main;
 
@@ -23,8 +22,7 @@ public class AmISystem {
     public void menu() {
         AmISystemMenu menu = new AmISystemMenu();
         menu.display();
-        menu.input();
-        
+        menu.input();        
         menu = null; // garbage collection...
     }
     

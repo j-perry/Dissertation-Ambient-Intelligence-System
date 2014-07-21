@@ -13,7 +13,7 @@ import java.util.*;
  *
  * @author Jonathan Perry
  */
-class TemperatureSession implements ISession {
+public class TemperatureSession implements ISession {
 
     private I2CBus bus;
     private I2CDevice tempSensor;
