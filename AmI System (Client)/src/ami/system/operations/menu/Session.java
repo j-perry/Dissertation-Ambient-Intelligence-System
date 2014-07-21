@@ -1,3 +1,6 @@
+
+
+
 package ami.system.operations.menu;
 
 import ami.system.operations.engine.SystemProcess;
@@ -5,7 +8,7 @@ import ami.system.operations.engine.SystemProcess;
 import java.io.*;
 
 /**
- *
+ * Creates a new session
  * @author Jonathan Perry
  */
 public class Session {
@@ -16,6 +19,7 @@ public class Session {
                     CaptureLight;
 
     public Session() {
+        
     }
 
     /**
@@ -37,7 +41,7 @@ public class Session {
         System.out.println("> Data Acquisition");
         System.out.println();
 
-
+        // validation to check a context or contexts have been chosen to run the system
         while (minContextsChosen != true) {
 
             // context option 1: temperature
