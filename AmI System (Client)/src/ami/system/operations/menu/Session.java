@@ -102,13 +102,15 @@ public class Session {
             System.exit(0);
         }
         // enable the microphone sensor
-        else if(capture_atmosphere = true) {
-            System.exit(0);
-        }
+        // TODO
+//        else if(capture_atmosphere = true) {
+//            System.exit(0);
+//        }
         // enable the accelerometer
-        else if(capture_motion) {
-            System.exit(0);
-        }
+        // TODO
+//        else if(capture_motion) {
+//            System.exit(0);
+//        }
         // enable the RGB light sensor
         // TODO
 //        else if(capture_light) {
