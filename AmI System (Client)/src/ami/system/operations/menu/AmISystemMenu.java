@@ -23,7 +23,7 @@ public class AmISystemMenu {
         System.out.println("Menu");
         System.out.println("--------------\n");
         
-        final String option_one   = "> 1. New Session";
+        final String option_one   = "> 1. Create New Session";
         final String option_two   = "> 2. Settings";
         final String option_three = "> 3. About";
         final String option_four  = "> 4. Exit";

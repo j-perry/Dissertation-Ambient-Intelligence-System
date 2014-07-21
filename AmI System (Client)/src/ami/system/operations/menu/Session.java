@@ -1,13 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
+
+
 package ami.system.operations.menu;
 
-import ami.system.operations.context.TemperatureSession;
-import ami.system.operations.context.VolumeSession;
-
 import java.io.*;
+import java.util.Scanner;
 
 /**
  *
@@ -15,101 +12,109 @@ import java.io.*;
  */
 public class Session {
     
+    private boolean CaptureTemperature,
+                    CaptureAtmosphere,
+                    CaptureMotion,
+                    CaptureLight;
+    
     public Session() {
         
     }
     
     /**
-     * Displays options for contextual gathering - i.e., wireless devices, temperature, movement, etc.
+     * Displays options for contextual gathering - i.e., temperature, motion, etc.
      */
     public void displayOptions() {
+        Scanner scanner = new Scanner(System.in);
+        final String options = "Y/N";
+        
+        final String msg_one   = "> Would you like to capture the room temperature? ";
+        final String msg_two   = "> Would you like to capture the room volume? ";
+        final String msg_three = "> Would you like to capture the motion of the attached chair? ";
+        final String msg_four  = "> Would you like to capture the light in the room? ";
+        
         System.out.println();
         System.out.println("-----------------------------------");
         System.out.println();
-        System.out.println("> What data would you like to gather?");
+        System.out.println("> Data Acquisition");
+        System.out.println();
+                
+        // context option 1
+        System.out.println(msg_one + options);
+        CaptureTemperature = getOptionInput();
+        System.out.println();
+                
+        // context option 2
+        System.out.println(msg_two + options);
+        CaptureAtmosphere = getOptionInput();
+        System.out.println();
+                
+        // context option 3
+        System.out.println(msg_three + options);
+        CaptureMotion = getOptionInput();
+        System.out.println();  
         
-        final String option_one    = "> 1. Room temperature";
-        final String option_two    = "> 2. Wireless device activity"; // TODO privacy?
-        final String option_three  = "> 3. Chair movement";
-        final String option_four   = "> 4. Room volume";
-        final String option_five   = "> 5. Keyboard activity"; // TODO Is this possible?!
+        // context option 4
+        System.out.println(msg_four + options);
+        CaptureLight = getOptionInput();
+        System.out.println();
         
-        System.out.println(option_one);
-        System.out.println(option_two);
-        System.out.println(option_three);
-        System.out.println(option_four);
-        System.out.println(option_five);
+        processChosenContexts(CaptureTemperature, CaptureAtmosphere, CaptureMotion, CaptureLight);
     }
     
     /**
-     * Gets the user's choice of contextual gathering from the list displayed in displayOptions()
+     * Gets the user's choice of context
      */
-    public void getOptionInput() {
+    public boolean getOptionInput() {
        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-       int choice = 0;
+       String choice = "";
+       boolean result = false;
        
        try {
-           System.out.println();
            System.out.print("> Choice: ");
-           choice = Integer.valueOf(br.readLine());
-           parseOption(choice);
+           choice = br.readLine();
+           
+           if(choice == "Y") {
+               result = true;
+           }
+           else {
+               result = false;
+           }
        }
        catch(IOException ex) {
            ex.printStackTrace();
-       }       
+       }
+       finally {
+           return result;
+       }
     }
     
     /**
-     * Parses the chosen menu option
-     * @param choice 
+     * Processes chosen contexts
      */
-    private void parseOption(int choice) {
-        VolumeSession volSession = null;
+    public void processChosenContexts(boolean capture_temperature, 
+                                      boolean capture_atmosphere, 
+                                      boolean capture_motion, 
+                                      boolean capture_light) {
         
-        switch(choice) {
-            case 1:
-                TemperatureSession tempSession = new TemperatureSession();
-                
-                try {
-                    tempSession.run();
-                }
-                catch(Exception ex) {
-                    ex.printStackTrace();
-                }
-                
-                //tempSession.analyse();
-                
-                break;
-                
-                /*
-            case 2:
-                WirelessSession wireSession = new WirelessSession();
-                wireSession.run();
-                break;
-            case 3:
-                MovementSession moveSession = new MovementSession();
-                moveSession.run();
-                moveSession.analyse();
-                break;
-            case 4:
-                volSession = new VolumeSession();
-                volSession.run();
-                volSession.analyse();
-                break;
-            case 5:
-                // We're capturing lo-frequency data? Do we need a different class?
-                volSession = new VolumeSession();
-                volSession.run();
-                volSession.analyse();
-                break;
-                */
-            default:
-                System.out.println("> Invalid option. Try again.");
-                System.out.println();
-                displayOptions();
-                getOptionInput();
-                break;                
+        // enable the temperature sensor
+        if(capture_temperature == true) {
+            System.exit(0);
         }
+        // enable the microphone sensor
+        else if(capture_atmosphere = true) {
+            System.exit(0);            
+        }
+        // enable the accelerometer
+        else if(capture_motion) {
+            System.exit(0);            
+        }
+        // enable the RGB light sensor
+        else if(capture_light) {
+            System.exit(0);            
+        }
+        
+        // return a new instanceof
     }
     
 }
