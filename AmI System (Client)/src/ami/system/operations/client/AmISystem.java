@@ -4,6 +4,8 @@
  */
 package ami.system.operations.client;
 
+import ami.system.operations.client.menu.AmISystemMenu;
+
 /**
  *
  * @author Jonathan Perry
@@ -11,7 +13,7 @@ package ami.system.operations.client;
 public class AmISystem {
     
     public AmISystem() {
-        System.out.println("AmI System");
+        System.out.println("Ambient Intelligence Learning System");
     }
     
     public void init() {

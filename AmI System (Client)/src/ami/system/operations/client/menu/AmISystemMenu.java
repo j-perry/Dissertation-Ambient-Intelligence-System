@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ami.system.operations.client;
+package ami.system.operations.client.menu;
 
 import ami.system.operations.context.Session;
 import ami.system.operations.context.Settings;
@@ -28,11 +28,13 @@ public class AmISystemMenu {
         
         final String option_one   = "> 1. New Session";
         final String option_two   = "> 2. Settings";
-        final String option_three = "> 3. Exit";
+        final String option_three = "> 3. About";
+        final String option_four  = "> 4. Exit";
         
         System.out.println(option_one);
         System.out.println(option_two);
         System.out.println(option_three);
+        System.out.println(option_four);
         
         System.out.println();
     }
@@ -58,9 +60,12 @@ public class AmISystemMenu {
                 session.displayOptions();
                 session.getOptionInput();
             case 2:
-                Settings settings = new Settings();
+                new Settings();
                 break;
             case 3:
+                new AboutApp().display();
+                break;
+            case 4:
                 System.exit(0);
                 break;
             default:
