@@ -40,7 +40,7 @@ public class Session {
 
         while (minContextsChosen != true) {
 
-            // context option 1
+            // context option 1: temperature
             System.out.println(msg_one + options);
             CaptureTemperature = getOptionInput();
 
@@ -49,7 +49,7 @@ public class Session {
             System.out.println();
             
             
-            // context option 2
+            // context option 2: volume
             System.out.println(msg_two + options);
             CaptureAtmosphere = getOptionInput();
             
@@ -58,7 +58,7 @@ public class Session {
             System.out.println();
             
             
-            // context option 3
+            // context option 3: motion (acceleromter)
             System.out.println(msg_three + options);
             CaptureMotion = getOptionInput();
             
@@ -67,7 +67,7 @@ public class Session {
             System.out.println();
             
             
-            // context option 4
+            // context option 4: light
             System.out.println(msg_four + options);
             CaptureLight = getOptionInput();
             
