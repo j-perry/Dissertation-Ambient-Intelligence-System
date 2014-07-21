@@ -1,12 +1,12 @@
-/*
- * Initialises our Ambient Intelligence Learning System
- */
+
+
+
 package ami.system.main;
 
 import ami.system.operations.menu.AmISystemMenu;
 
 /**
- *
+ * Initialises our Ambient Intelligence Learning System
  * @author Jonathan Perry
  */
 public class AmISystem {
