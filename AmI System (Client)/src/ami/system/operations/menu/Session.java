@@ -67,14 +67,14 @@ public class Session {
      */
     public boolean getOptionInput() {
        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-       String choice = "";
+       String choice;
        boolean result = false;
        
        try {
            System.out.print("> Choice: ");
            choice = br.readLine();
            
-           if(choice == "Y") {
+           if(choice.equals("Y") ) {
                result = true;
            }
            else {
