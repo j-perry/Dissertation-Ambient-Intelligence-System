@@ -88,7 +88,7 @@ public class Session {
         }
 
         // TODO
-        //processChosenContexts(CaptureTemperature, CaptureAtmosphere, CaptureMotion, CaptureLight);
+        processChosenContexts(CaptureTemperature, CaptureAtmosphere, CaptureMotion, CaptureLight);
     }
 
     /**
@@ -134,6 +134,9 @@ public class Session {
                 ex.printStackTrace();
             }
         }
+        
+        systemProcess.run();
+        
         // enable the microphone sensor
         // TODO
 //        else if(capture_atmosphere = true) {
