@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ami.system.operations.client;
+package ami.system.main;
 
-import ami.system.operations.client.menu.AmISystemMenu;
+import ami.system.operations.menu.AmISystemMenu;
 
 /**
  *
