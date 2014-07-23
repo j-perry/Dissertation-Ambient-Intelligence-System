@@ -12,7 +12,9 @@ import ami.system.operations.menu.AmISystemMenu;
 public class AmISystem {
     
     public AmISystem() {
+        System.out.println();
         System.out.println("Ambient Intelligence Learning System");
+        System.out.println();
     }
     
     public void init() {

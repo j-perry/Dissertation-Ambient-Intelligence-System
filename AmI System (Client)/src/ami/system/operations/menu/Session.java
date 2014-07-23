@@ -88,11 +88,9 @@ public class Session {
             }
             else if (noContextsChosen > 0) {
                 minContextsChosen = true;
+                processChosenContexts(CaptureTemperature, CaptureAtmosphere, CaptureMotion, CaptureLight);
             }
         }
-
-        // TODO
-        processChosenContexts(CaptureTemperature, CaptureAtmosphere, CaptureMotion, CaptureLight);
     }
 
     /**
@@ -123,9 +121,9 @@ public class Session {
      * Processes chosen contexts
      */
     public void processChosenContexts(boolean capture_temperature,
-            boolean capture_atmosphere,
-            boolean capture_motion,
-            boolean capture_light) {
+                                      boolean capture_atmosphere,
+                                      boolean capture_motion,
+                                      boolean capture_light) {
 
         // not sure if this will be for definate
         SystemProcess systemProcess = new SystemProcess();
@@ -139,35 +137,34 @@ public class Session {
             }
         }
         
-        systemProcess.run();
-        
         // enable the microphone sensor
-        // TODO
-//        else if(capture_atmosphere = true) {
-//            try {
-//                systemProcess.setContextMode("microphone");
-//            } catch (IOException ex) {
-//                ex.printStackTrace();
-//            }
-//        }
-        // enable the accelerometer
-        // TODO
-//        else if(capture_motion) {
-//            try {
-//                systemProcess.setContextMode("accelerometer");
-//            } catch (IOException ex) {
-//                ex.printStackTrace();
-//            }
-//        }
+        if(capture_atmosphere = true) {
+            try {
+                systemProcess.setContextMode("microphone");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        
+//      //enable the accelerometer
+        if(capture_motion) {
+            try {
+                systemProcess.setContextMode("accelerometer");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        
         // enable the RGB light sensor
-        // TODO
-//        else if(capture_light) {
-//            try {
-//                systemProcess.setContextMode("light");
-//            } catch (IOException ex) {
-//                ex.printStackTrace();
-//            }
-//        }
+        if(capture_light) {
+            try {
+                systemProcess.setContextMode("light");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }        
+        
+        systemProcess.run();
 
         // return a new instanceof
     }

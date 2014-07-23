@@ -14,14 +14,13 @@ public class AmISystemMenu {
     public AmISystemMenu() {
         
     }
-        
+    
     /**
      * Displays menu options
      */
     public void display() {
-        System.out.println("--------------");
         System.out.println("Menu");
-        System.out.println("--------------\n");
+        System.out.println();
         
         final String option_one   = "> 1. Create New Session";
         final String option_two   = "> 2. Settings";
