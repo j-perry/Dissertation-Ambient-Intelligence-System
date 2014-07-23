@@ -121,7 +121,8 @@ public class SystemProcess {
         System.out.print("Temperature: " + temp);
         System.out.print("\t\t");
         
-        System.out.print("Accelerometer: ");
+        // output accelerometer
+        System.out.println("Accelerometer: " + accelX + ", " + accelY + ", " + accelZ);
         System.out.print("\t\t");
         
         System.out.print("Light: ");
@@ -129,9 +130,6 @@ public class SystemProcess {
         System.out.println();
         System.out.println();
         
-//        // output accelerometer
-//        System.out.println("Accelerometer: " + accelX + ", " + accelY + ", " + accelZ);
-//        System.out.print("\t");
         
         // output light
 //        System.out.println("Light: " + temp);
