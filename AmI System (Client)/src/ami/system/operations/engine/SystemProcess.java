@@ -14,12 +14,7 @@ import java.io.IOException;
  * @author Jonathan Perry
  */
 public class SystemProcess {
-    
-    private final String mode_01 = "temperature";
-    private final String mode_02 = "microphone";
-    private final String mode_03 = "accelerometer";
-    private final String mode_04 = "light";
-    
+        
     /*      Sensor Addresses       
     ******************************/
     final int tempAddr = 0x48;    
@@ -49,39 +44,7 @@ public class SystemProcess {
     public SystemProcess() {
         
     }
-    
-    /**
-     * Defines the contextual mode(s) to run on this ISL system
-     * @param mode 
-     */
-    public void setContextMode(String mode) throws IOException {       
         
-        switch (mode) {
-            case mode_01:
-                bus = I2CFactory.getInstance(I2CBus.BUS_1);
-                tempSensor = bus.getDevice(tempAddr);
-                break;
-            // accelerometer
-            case mode_02:
-                bus = I2CFactory.getInstance(I2CBus.BUS_1);
-                accelSensor = bus.getDevice(accelAddr);
-                System.out.println("Accel connected");
-                
-                
-                break;
-            case mode_03:
-                bus = I2CFactory.getInstance(I2CBus.BUS_1);
-                lightSensor = bus.getDevice(lightAddr);
-                break;
-//            case mode_04:
-//                bus = I2CFactory.getInstance(I2CBus.BUS_1);
-//                micSensor = bus.getDevice(micAddr);
-//                break;
-            default:
-                break;
-        }
-    }
-    
     /**
      * TODO - Very important method!!!!!!!!!!!!!!! This is our 2nd root point
      * Runs a new System Process

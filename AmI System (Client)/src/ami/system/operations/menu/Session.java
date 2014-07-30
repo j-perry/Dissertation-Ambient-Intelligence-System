@@ -27,6 +27,7 @@ public class Session {
      */
     public void setup() {
         SystemProcess sysProcess = new SystemProcess();
+//        systemProcess.setupSensors();
         sysProcess.run();
     }
     
