@@ -1,7 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
+
+
 package ami.system.operations.context;
 
 //import ami.system.resources.database.Temperature;
@@ -19,6 +18,14 @@ public class Temperature implements ISession {
     private I2CDevice tempSensor;
     
     public Temperature() {
+        
+    }
+
+    /**
+     * 
+     */
+    @Override
+    public void initialise() {
         
     }
 
@@ -85,12 +92,7 @@ public class Temperature implements ISession {
                 
 //        temperature.close();
     }
-
-    @Override
-    public void analyse() {
-        
-    }
-
+    
     @Override
     public void active() {
         

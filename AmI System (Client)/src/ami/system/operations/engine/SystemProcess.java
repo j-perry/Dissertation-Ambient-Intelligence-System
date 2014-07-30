@@ -1,13 +1,11 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
+
+
 package ami.system.operations.engine;
 
+import ami.system.operations.context.Movement;
 import com.pi4j.io.i2c.I2CBus;
 import com.pi4j.io.i2c.I2CDevice;
-import com.pi4j.io.i2c.I2CFactory;
-import java.io.IOException;
 
 /**
  * 
@@ -40,6 +38,9 @@ public class SystemProcess {
     private short accelY;
     private short accelZ;
     
+    // devices
+    private Movement movement;
+    
     
     public SystemProcess() {
         
@@ -49,53 +50,56 @@ public class SystemProcess {
      * TODO - Very important method!!!!!!!!!!!!!!! This is our 2nd root point
      * Runs a new System Process
      */
-    public void run() {
-        byte [] buffer = new byte [1];
-        int temp = 0;
+    public void run() {        
+        // run the accelerometer
+        movement = new Movement();
+        movement.active();
+        movement.run();
         
         
-        // temperature
-        if(tempSensor != null) {
-            
-            try {
-                int noBytes = tempSensor.read(tempAddr, buffer, 0, 1);
-                temp = buffer[0];
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
-        
-        
-        // accelerometer
-        if(accelSensor != null) {
-            
-            // NB: just capture data once! also, remember we'll need an event-driven approach
-            try {
-                // X, Y, Z
-                accelX = (short) accelSensor.read(accelAddr, buffer, 0, 1);
-                accelY = (short) accelSensor.read(accelAddr, buffer, 0, 1);
-                accelZ = (short) accelSensor.read(accelAddr, buffer, 0, 1);
-
-                // we'll do some correction, based on sensitivity (inaccuracy) of the device
-                // source from the data sheet
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
-        
+//        byte [] buffer = new byte [1];
+//        int temp = 0;
+//                
+//        // temperature
+//        if(tempSensor != null) {
+//            
+//            try {
+//                int noBytes = tempSensor.read(tempAddr, buffer, 0, 1);
+//                temp = buffer[0];
+//            } catch (IOException ex) {
+//                ex.printStackTrace();
+//            }
+//        }
+//        
+//        
+//        // accelerometer
+//        if(accelSensor != null) {
+//            
+//            // NB: just capture data once! also, remember we'll need an event-driven approach
+//            try {
+//                // X, Y, Z
+//                accelX = (short) accelSensor.read(accelAddr, buffer, 0, 1);
+//                accelY = (short) accelSensor.read(accelAddr, buffer, 0, 1);
+//                accelZ = (short) accelSensor.read(accelAddr, buffer, 0, 1);
+//
+//                // we'll do some correction, based on sensitivity (inaccuracy) of the device
+//                // source from the data sheet
+//            } catch (IOException ex) {
+//                ex.printStackTrace();
+//            }
+//        }
+                
         // output temperature    
-        System.out.print("Temperature: " + temp);
-        System.out.print("\t\t");
+//        System.out.print("Temperature: " + temp);
+//        System.out.print("\t\t");
         
         // output accelerometer
-        System.out.println("Accelerometer: " + accelX + ", " + accelY + ", " + accelZ);
-        System.out.print("\t\t");
+//        System.out.println("Accelerometer: " + accelX + ", " + accelY + ", " + accelZ);
+//        System.out.print("\t\t");
         
-        System.out.print("Light: ");
-        
-        System.out.println();
-        System.out.println();
-        
+//        System.out.print("Light: ");        
+//        System.out.println();
+//        System.out.println();
         
         // output light
 //        System.out.println("Light: " + temp);

@@ -1,7 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
+
+
 package ami.system.operations.context;
 
 /**
@@ -10,12 +9,12 @@ package ami.system.operations.context;
  */
 public interface ISession {
     
-    public void run() throws Exception;
-    
-    public void analyse();
+    public void initialise();
     
     public void active();
     
     public void standby();
     
+    public void run() throws Exception;
+        
 }

@@ -12,6 +12,8 @@ import java.io.IOException;
  */
 public class Movement implements ISession {
     
+    /*                 DEVICE INTERFACE
+     **************************************************/
     private I2CDevice accelerometer;
     private I2CBus bus;
     
@@ -24,8 +26,32 @@ public class Movement implements ISession {
     private final static int WHO_AM_I     = 0x0D;
     private final static int CTRL_REG_1   = 0x2A;
     
-    public Movement() {
+    /*                 PROPERTIES
+     *********************************************/
+    private short accelX;
+    private short accelY;
+    private short accelZ;
         
+    public Movement() {
+        initialise();
+    }
+    
+    /**
+     * First-point of call when creating a movement class
+     */
+    @Override
+    public void initialise() {
+        byte b = readRegister(WHO_AM_I);
+        
+        if(b == 0x2A) {
+            System.out.println("Accelerometer is online");
+        } else {
+            System.out.println("Could not connect to the Accelerometer");
+            System.out.println(b);
+        }
+        
+        // set the device on standby
+        standby();      
     }
     
     /**
@@ -83,11 +109,6 @@ public class Movement implements ISession {
 
     @Override
     public void run() {
-        
-    }
-
-    @Override
-    public void analyse() {
         
     }
     
