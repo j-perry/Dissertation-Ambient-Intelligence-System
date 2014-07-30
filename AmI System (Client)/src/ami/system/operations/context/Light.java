@@ -8,14 +8,6 @@ package ami.system.operations.context;
  *
  * @author Jonathan Perry
  */
-public interface ISession {
-    
-    public void run() throws Exception;
-    
-    public void analyse();
-    
-    public void active();
-    
-    public void standby();
+public class Light {
     
 }

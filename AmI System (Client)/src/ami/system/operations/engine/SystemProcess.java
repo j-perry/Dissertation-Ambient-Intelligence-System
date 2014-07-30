@@ -61,10 +61,13 @@ public class SystemProcess {
                 bus = I2CFactory.getInstance(I2CBus.BUS_1);
                 tempSensor = bus.getDevice(tempAddr);
                 break;
+            // accelerometer
             case mode_02:
                 bus = I2CFactory.getInstance(I2CBus.BUS_1);
                 accelSensor = bus.getDevice(accelAddr);
                 System.out.println("Accel connected");
+                
+                
                 break;
             case mode_03:
                 bus = I2CFactory.getInstance(I2CBus.BUS_1);

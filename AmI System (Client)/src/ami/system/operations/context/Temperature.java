@@ -4,7 +4,7 @@
  */
 package ami.system.operations.context;
 
-import ami.system.resources.database.Temperature;
+//import ami.system.resources.database.Temperature;
 import com.pi4j.io.i2c.*;
 import java.text.*;
 import java.util.*;
@@ -13,12 +13,12 @@ import java.util.*;
  *
  * @author Jonathan Perry
  */
-public class TemperatureSession implements ISession {
+public class Temperature implements ISession {
     
     private I2CBus bus;
     private I2CDevice tempSensor;
     
-    public TemperatureSession() {
+    public Temperature() {
         
     }
 
@@ -46,7 +46,7 @@ public class TemperatureSession implements ISession {
         
         System.out.println();
         
-        temperature.open();
+//        temperature.open();
         
         // capture the temperature every 10 minutes
         try {
@@ -70,7 +70,7 @@ public class TemperatureSession implements ISession {
                     
                     try {
                         // this will probably need to change
-                        temperature.insert(temp, date, time);
+//                        temperature.insert(temp, date, time);
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -83,11 +83,21 @@ public class TemperatureSession implements ISession {
             ex.printStackTrace();
         }
                 
-        temperature.close();
+//        temperature.close();
     }
 
     @Override
     public void analyse() {
+        
+    }
+
+    @Override
+    public void active() {
+        
+    }
+
+    @Override
+    public void standby() {
         
     }
     
