@@ -78,7 +78,7 @@ public class SystemProcess {
             System.out.println("It is 9:30 AM or thereafter");
             System.out.println();
             
-            
+            // main application loop
             while(run_application) {
                            
                 // if it is 17.30, terminate the application
@@ -94,12 +94,14 @@ public class SystemProcess {
                     temp.setup();
                     temp.initialise();
                     tempValue = temp.readValue();
+                                        
+                    // output the temperature value
+                    System.out.println(temperatureTitle + tempValue);
                     
                     
                     /*      Parse temperature data to our incremental learning system
                      ***********************************************************************/
                     
-                    System.out.println(temperatureTitle + tempValue);
                 }                
                 
             }
