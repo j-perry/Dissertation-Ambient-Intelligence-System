@@ -19,6 +19,8 @@ public class SystemProcess {
     
     // devices
     private Movement movement;
+    
+    private SystemProcessUtil util;
         
     
     public SystemProcess() {
@@ -45,6 +47,7 @@ public class SystemProcess {
      */
     public void run() {
         boolean run_application = true;
+        util = new SystemProcessUtil();
         
         /*      Values
           *******************/
@@ -56,61 +59,50 @@ public class SystemProcess {
         final String temperatureTitle = "Temperature Value: ";
         
         
-        /*      Parse temperature data to our incremental learning system
+        /*      
+         *      This will be our main application loop.
          * 
-         *      This will be our main application loop.          * 
-         *      The application will not terminate until 17:30 PM.         * 
+         *      The application will not terminate until 17:30 PM.
          *      The application however will also not start unless the time is 9:30am or thereafter.
          * 
          ********************************************************************************************/
-        Calendar cal = new GregorianCalendar();
         
-        final double before = 9.30;
         
-        Double actualTime = 0.0;
-        double d_hour   = 0.0;
-        double d_minute = 0.0;
-        
-        // get the current hour and minute in the hour
-        int hour   = cal.get(Calendar.HOUR_OF_DAY);
-        int minute = cal.get(Calendar.MINUTE);
-        
-        // convert to doubles
-        d_hour   = (double) hour;
-        d_minute += (double) minute / 100;
+        // check it isn't 17:30 PM or thereafter
+        if(util.afterHours() == true) {
+            System.out.println("It is beyond 17:30pm");
+            System.exit(0);
+        }
+        else if(util.beforeHours() == true) {
+            System.out.println();
+            System.out.println("It is 9:30 AM or thereafter");
+            System.out.println();
+            
+            
+            while(run_application) {
+                           
+                // if it is 17.30, terminate the application
+                if(util.checkTimeBounds() == true) {
+                    System.exit(0);
+                } else {
+                    
+                    /*      Run The Temperature
+                     **********************************/
+                    Temperature temp = new Temperature();
+                    temp.setup();
+                    temp.initialise();
+                    tempValue = temp.readValue();
+                    
+                    
+                    /*      Parse temperature data to our incremental learning system
+                     ***********************************************************************/
+                    
+                    System.out.println(temperatureTitle + tempValue);
+                }                
                 
-        // compute products
-        actualTime = d_hour;
-        actualTime += d_minute;
-        
-        // convert to .2 decimal places
-        DecimalFormat df = new DecimalFormat("#.##");
-        actualTime = Double.valueOf(df.format(actualTime) );
-        
-        // print the time
-        System.out.println("The time is: " + actualTime);
-        
-        
-//        if(actualTime >= before) {
-//            while(run_application) {
-//                
-//                /*      Run The Temperature
-//                 **********************************/
-//                Temperature temp = new Temperature();
-//                temp.setup();
-//                temp.initialise();
-//                tempValue = temp.readValue();
-//
-//                System.out.println(temperatureTitle + tempValue);
-//                
-//                
-//            }
-//        }
-        
-        
-        
-        
-        
+            }
+        }
+                        
     }    
 }
 
