@@ -14,8 +14,7 @@ import com.pi4j.io.i2c.I2CDevice;
  */
 public class SystemProcess {
             
-    private I2CBus bus;
-    
+    private I2CBus bus;    
     private I2CDevice accelSensor; // event-driven (need a callback function)
     
     // devices
