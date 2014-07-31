@@ -83,8 +83,10 @@ public class SystemProcess {
                            
                 // if it is 17.30, terminate the application
                 if(util.checkTimeBounds() == true) {
-                    System.exit(0);
-                } else {
+                    run_application = false;
+                } 
+                // else, continue running the system
+                else {
                     
                     /*      Run The Temperature
                      **********************************/
