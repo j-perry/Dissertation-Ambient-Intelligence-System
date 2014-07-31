@@ -16,15 +16,12 @@ public class SystemProcess {
             
     private I2CBus bus;    
     private I2CDevice accelSensor; // event-driven (need a callback function)
-    
-    // devices
-    private Movement movement;
-    
+        
     private SystemProcessUtil util;
         
     
     public SystemProcess() {
-        processHeading();
+        
     }
     
     private void processHeading() {
@@ -46,6 +43,8 @@ public class SystemProcess {
      * Runs a new System Process
      */
     public void run() {
+        processHeading();
+        
         boolean run_application = true;
         util = new SystemProcessUtil();
         
