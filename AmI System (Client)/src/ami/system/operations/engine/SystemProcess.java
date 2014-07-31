@@ -5,8 +5,6 @@ package ami.system.operations.engine;
 
 import ami.system.operations.context.*;
 import com.pi4j.io.i2c.*;
-import java.text.DecimalFormat;
-import java.util.*;
 
 /**
  * 
@@ -50,7 +48,7 @@ public class SystemProcess {
         
         /*      Values
           *******************/
-        int tempValue = 0;
+        int tempValue;
         
         
         /*      Titles
@@ -93,7 +91,7 @@ public class SystemProcess {
                     temp.setup();
                     temp.initialise();
                     tempValue = temp.readValue();
-                                        
+                    
                     // output the temperature value
                     System.out.println(temperatureTitle + tempValue);
                     

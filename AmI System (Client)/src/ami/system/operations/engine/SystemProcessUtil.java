@@ -1,8 +1,9 @@
+
+
 package ami.system.operations.engine;
 
-import java.text.DecimalFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.text.*;
+import java.util.*;
 
 /**
  *
@@ -13,20 +14,21 @@ public class SystemProcessUtil {
     private Calendar cal;
 
     public SystemProcessUtil() {
+        
     }
-
+    
     /**
      * Checks whether the system is in bounds (9.30 PM >) in operation terms
      *
      * @return true if it is in bounds, false if not
      */
     public boolean beforeHours() {
-        boolean result = false;
+        boolean result;
         final double beforeHours = 9.30;
         cal = new GregorianCalendar();
 
-        Double actualTime = 0.0;
-        double d_hour = 0.0;
+        Double actualTime;
+        double d_hour;
         double d_minute = 0.0;
 
         // get the current hour and minute in the hour
@@ -63,12 +65,12 @@ public class SystemProcessUtil {
      * @return true if it is out of bounds, false if not
      */
     public boolean afterHours() {
-        boolean result = false;
+        boolean result;
         final double afterHours = 17.30;
         cal = new GregorianCalendar();
 
-        Double actualTime = 0.0;
-        double d_hour = 0.0;
+        Double actualTime;
+        double d_hour;
         double d_minute = 0.0;
 
         // get the current hour and minute in the hour
@@ -103,10 +105,10 @@ public class SystemProcessUtil {
      * @return
      */
     public boolean checkTimeBounds() {
-        boolean terminate = false;
+        boolean terminate;
         cal = new GregorianCalendar();
         
-        double time = 0.0;
+        double time;
         double timeTerminate = 17.30;
         
         int hour = cal.get(Calendar.HOUR_OF_DAY);
