@@ -18,11 +18,10 @@ public class Session {
     }
 
     /**
-     * Displays options for contextual gathering - i.e., temperature, motion, etc.
+     * Sets up a new session
      */
     public void setup() {
         SystemProcess sysProcess = new SystemProcess();
-//        systemProcess.setupSensors();
         sysProcess.run();
     }
     
