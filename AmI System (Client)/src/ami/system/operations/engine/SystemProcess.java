@@ -45,11 +45,16 @@ public class SystemProcess {
      * Runs a new System Process
      */
     public void run() {
-        // values
+        
+        /*      Values
+          *******************/
         int tempValue = 0;
         
-        // titles
+        
+        /*      Titles
+         ********************/
         final String temperatureTitle = "Temperature Value: ";
+        
         
         /*      Run The Temperature
          **********************************/
@@ -60,9 +65,17 @@ public class SystemProcess {
         
         System.out.println(temperatureTitle + tempValue);
         
+        /*      Parse temperature data to our incremental learning system
+         ***********************************************************************/       
         
         
-        //        
+    }    
+}
+
+
+
+
+//        
 //        
 //        // accelerometer
 //        if(accelSensor != null) {
@@ -80,6 +93,3 @@ public class SystemProcess {
 //                ex.printStackTrace();
 //            }
 //        }
-    }
-    
-}
