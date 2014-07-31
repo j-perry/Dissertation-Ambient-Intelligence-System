@@ -69,7 +69,7 @@ public class SystemProcess {
         
         // check it isn't 17:30 PM or thereafter
         if(util.afterHours() == true) {
-            System.out.println("It is beyond 17:30pm");
+            System.out.println("It is beyond 17:30pm. Try again tomorrow at 9.30 AM or thereafter.");
             System.exit(0);
         }
         else if(util.beforeHours() == true) {
