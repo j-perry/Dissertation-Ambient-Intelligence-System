@@ -79,7 +79,7 @@ public class SystemProcess {
             
             // main application loop
             while(run_application) {
-                           
+                                           
                 // if it is 17.30, terminate the application
                 if(util.checkTimeBounds() == true) {
                     run_application = false;
@@ -101,7 +101,13 @@ public class SystemProcess {
                     /*      Parse temperature data to our incremental learning system
                      ***********************************************************************/
                     
-                }                
+                }
+                
+                // check whether to terminate the system
+                if(run_application == false) {
+                    System.out.print("The system will now terminate. ");
+                    System.exit(0);
+                }
                 
             }
         }
