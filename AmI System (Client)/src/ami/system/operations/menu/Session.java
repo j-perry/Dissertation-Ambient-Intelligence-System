@@ -5,8 +5,6 @@ package ami.system.operations.menu;
 
 import ami.system.operations.engine.SystemProcess;
 
-import java.io.*;
-
 /**
  * Creates a new session
  * @author Jonathan Perry
