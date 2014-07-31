@@ -12,12 +12,7 @@ import java.io.*;
  * @author Jonathan Perry
  */
 public class Session {
-
-    private boolean CaptureTemperature,
-                    CaptureAtmosphere,
-                    CaptureMotion,
-                    CaptureLight;
-
+    
     public Session() {
         
     }
