@@ -53,8 +53,8 @@ public class SystemProcess {
     public void run() {        
         // run the accelerometer
         movement = new Movement();
-        movement.active();
-        movement.run();
+//        movement.active();
+//        movement.run();
         
         
 //        byte [] buffer = new byte [1];

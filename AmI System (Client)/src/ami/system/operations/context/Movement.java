@@ -4,7 +4,8 @@
 package ami.system.operations.context;
 
 import com.pi4j.io.i2c.*;
-import java.io.IOException;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
 
 /**
  * 
@@ -19,7 +20,7 @@ public class Movement implements ISession {
     
     /*                 REGISTERS
      *********************************************/
-    private final static int ADDRESS = 0x1D;
+    private final static int ADDRESS = 0x1d;
     
     private final static int OUT_X_MSB    = 0x01;
     private final static int XYZ_DATA_CFG = 0x0E;
@@ -33,7 +34,20 @@ public class Movement implements ISession {
     private short accelZ;
         
     public Movement() {
+        setup();
         initialise();
+    }
+    
+    /**
+     * 
+     */
+    @Override
+    public void setup() {
+        try {
+            bus = I2CFactory.getInstance(I2CBus.BUS_1);
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
     }
     
     /**
@@ -43,15 +57,15 @@ public class Movement implements ISession {
     public void initialise() {
         byte b = readRegister(WHO_AM_I);
         
+        // check it is connected
         if(b == 0x2A) {
             System.out.println("Accelerometer is online");
         } else {
-            System.out.println("Could not connect to the Accelerometer");
-            System.out.println(b);
+            System.out.println("Could not connect to the Accelerometer: " + b);
         }
         
         // set the device on standby
-        standby();      
+//        standby();
     }
     
     /**
@@ -64,7 +78,7 @@ public class Movement implements ISession {
         
         try {
             accelerometer.write(CTRL_REG_1, active);
-        } catch(IOException ex) {
+        } catch(Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -79,7 +93,7 @@ public class Movement implements ISession {
         
         try {
             accelerometer.write(CTRL_REG_1, standby);
-        } catch(IOException ex) {
+        } catch(Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -89,24 +103,47 @@ public class Movement implements ISession {
      * @param addressToRead
      * @return 
      */
-    private byte readRegister(int addressToRead) {
-        byte b [] = new byte[1];
+    @Override
+    public byte readRegister(int addressToRead) {
+        byte b [] = new byte[4];
         byte result = 0;
         
         try {
             accelerometer = bus.getDevice(ADDRESS);
-            accelerometer.write(addressToRead, (byte) 0b000000);
+            accelerometer.write(addressToRead, (byte) 0b00000000);
             
-            accelerometer.read(ADDRESS, b, 0, 1);
-        } catch(IOException ex) {
+            int bytes = accelerometer.read(ADDRESS, b, 0, 4); // parse 'addressToRead' NOT 'ADDRESS'
+            
+            DataInputStream abc = new DataInputStream(new ByteArrayInputStream(b));
+            System.out.println("bytes: " + bytes);
+            
+            int p = 0;
+            
+            for(int i = 0; i < b.length; i++) {
+                System.out.print(abc.readByte() + ", ");
+//                p += abc.readByte();
+            }
+            
+//            p = (p << 5);
+            
+//            System.out.println("abc: " + p );
+            
+            result = b[0];
+        } catch(Exception ex) {
             ex.printStackTrace();
         }
         
-        result = b[0];
-        
         return result;
     }
+    
+    @Override
+    public void writeRegister() {
+        
+    }
 
+    /**
+     * 
+     */
     @Override
     public void run() {
         
