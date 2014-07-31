@@ -16,21 +16,7 @@ public class SystemProcess {
             
     private I2CBus bus;
     
-    private I2CDevice tempSensor;
-    private I2CDevice micSensor;
     private I2CDevice accelSensor; // event-driven (need a callback function)
-    private I2CDevice lightSensor;
-    
-    /*      Device properties
-    ******************************/
-    
-    // temperature
-    private int temperature;
-    
-    // acceleromter
-    private short accelX;
-    private short accelY;
-    private short accelZ;
     
     // devices
     private Movement movement;
@@ -44,7 +30,8 @@ public class SystemProcess {
         final String heading = "\n"                                  +
                                "-----------------------------------" +
                                "\n\n"                                +
-                               "\tStarted new system"                +
+                               "\t"                                  +
+                               "Started new system"                  +
                                "\n\n"                                +
                                "-----------------------------------" +
                                "\n";
