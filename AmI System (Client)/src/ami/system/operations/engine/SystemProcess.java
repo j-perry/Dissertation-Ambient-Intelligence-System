@@ -45,7 +45,11 @@ public class SystemProcess {
      * Runs a new System Process
      */
     public void run() {
+        // values
         int tempValue = 0;
+        
+        // titles
+        final String temperatureTitle = "Temperature Value: ";
         
         // run the temperature
         Temperature temp = new Temperature();        
@@ -53,7 +57,7 @@ public class SystemProcess {
         temp.initialise();
         tempValue = temp.readValue();
         
-        System.out.println("Temperature Value: " + tempValue);
+        System.out.println(temperatureTitle + tempValue);
         
         
 //        byte [] buffer = new byte [1];
