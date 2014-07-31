@@ -5,9 +5,7 @@ package ami.system.operations.context;
 
 //import ami.system.resources.database.Temperature;
 import com.pi4j.io.i2c.*;
-import java.io.IOException;
-import java.text.*;
-import java.util.*;
+import java.io.*;
 
 /**
  *
@@ -17,6 +15,8 @@ public class Temperature implements ISession {
     
     private I2CBus bus;
     private I2CDevice tempSensor;
+    
+    private final static int address = 0x48;
     
     public Temperature() {
         setup();
@@ -30,6 +30,7 @@ public class Temperature implements ISession {
     public void setup() {
        try {
             bus = I2CFactory.getInstance(I2CBus.BUS_1);
+            tempSensor = bus.getDevice(address);
         } catch(IOException ex) {
             ex.printStackTrace();
         } 
@@ -40,13 +41,37 @@ public class Temperature implements ISession {
      */
     @Override
     public void initialise() {
+        try {
+            
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    /**
+     * Get the temperature value
+     * @return the temperature value
+     * @throws Exception 
+     */
+    @Override
+    public int readValue() {
+        byte [] buffer = new byte[1];
+        int value = 0;
         
+        try {
+            tempSensor.read(address, buffer, 0, buffer.length);
+            value = buffer[0];
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        return value;        
     }
 
     /**
      * 
      * @throws Exception 
-     */
+    
     @Override
     public void run() throws Exception {
         int tempAddr = 0x48;
@@ -106,6 +131,7 @@ public class Temperature implements ISession {
                 
 //        temperature.close();
     }
+    */
     
     @Override
     public void active() {

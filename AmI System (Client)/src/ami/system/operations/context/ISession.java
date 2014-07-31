@@ -21,6 +21,6 @@ public interface ISession {
     
     public void writeRegister();
     
-    public void run() throws Exception;
+    public int readValue();
         
 }

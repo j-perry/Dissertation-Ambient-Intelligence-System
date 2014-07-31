@@ -4,6 +4,7 @@
 package ami.system.operations.engine;
 
 import ami.system.operations.context.Movement;
+import ami.system.operations.context.Temperature;
 import com.pi4j.io.i2c.I2CBus;
 import com.pi4j.io.i2c.I2CDevice;
 
@@ -12,14 +13,7 @@ import com.pi4j.io.i2c.I2CDevice;
  * @author Jonathan Perry
  */
 public class SystemProcess {
-        
-    /*      Sensor Addresses       
-    ******************************/
-    final int tempAddr = 0x48;    
-    final int accelAddr = 0x1d;
-    final int lightAddr = 0x44;
-    //final int micAddr = 0x;
-    
+            
     private I2CBus bus;
     
     private I2CDevice tempSensor;
@@ -43,18 +37,36 @@ public class SystemProcess {
     
     
     public SystemProcess() {
-        
+        processHeading();
     }
+    
+    private void processHeading() {
+        final String heading = "\n"                                  +
+                               "-----------------------------------" +
+                               "\n\n"                                +
+                               "\tStarted new system"                +
+                               "\n\n"                                +
+                               "-----------------------------------" +
+                               "\n";
         
+        System.out.println(heading);
+    }
+    
     /**
-     * TODO - Very important method!!!!!!!!!!!!!!! This is our 2nd root point
+     * TODO - Very important method!!! 
+     * This is our 2nd root point
      * Runs a new System Process
      */
-    public void run() {        
-        // run the accelerometer
-        movement = new Movement();
-//        movement.active();
-//        movement.run();
+    public void run() {
+        int tempValue = 0;
+        
+        // run the temperature
+        Temperature temp = new Temperature();        
+        temp.setup();
+        temp.initialise();
+        tempValue = temp.readValue();
+        
+        System.out.println("Temperature Value: " + tempValue);
         
         
 //        byte [] buffer = new byte [1];

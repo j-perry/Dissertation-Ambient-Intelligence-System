@@ -105,15 +105,14 @@ public class Movement implements ISession {
      */
     @Override
     public byte readRegister(int addressToRead) {
-        byte b [] = new byte[4];
+        byte b [] = new byte[1];
         byte result = 0;
         
         try {
             accelerometer = bus.getDevice(ADDRESS);
-            accelerometer.write(addressToRead, (byte) 0b00000000);
-            
-            int bytes = accelerometer.read(ADDRESS, b, 0, 4); // parse 'addressToRead' NOT 'ADDRESS'
-            
+            //accelerometer.write(addressToRead, (byte) 0b00000000);
+//            int bytes = accelerometer.read(ADDRESS, b, 0, 4); // parse 'addressToRead' NOT 'ADDRESS'
+            int bytes = accelerometer.read(addressToRead, b, 0, b.length); // parse 'addressToRead' NOT 'ADDRESS'
             DataInputStream abc = new DataInputStream(new ByteArrayInputStream(b));
             System.out.println("bytes: " + bytes);
             
@@ -145,8 +144,8 @@ public class Movement implements ISession {
      * 
      */
     @Override
-    public void run() {
-        
+    public int readValue() {
+        return 1;
     }
     
 }
