@@ -40,7 +40,7 @@ public class SystemProcess {
     }
     
     /**
-     * TODO - Very important method!!! 
+     * TODO - Very important method!!!
      * This is our 2nd root point
      * Runs a new System Process
      */
@@ -51,7 +51,8 @@ public class SystemProcess {
         // titles
         final String temperatureTitle = "Temperature Value: ";
         
-        // run the temperature
+        /*      Run The Temperature
+         **********************************/
         Temperature temp = new Temperature();        
         temp.setup();
         temp.initialise();
@@ -60,20 +61,8 @@ public class SystemProcess {
         System.out.println(temperatureTitle + tempValue);
         
         
-//        byte [] buffer = new byte [1];
-//        int temp = 0;
-//                
-//        // temperature
-//        if(tempSensor != null) {
-//            
-//            try {
-//                int noBytes = tempSensor.read(tempAddr, buffer, 0, 1);
-//                temp = buffer[0];
-//            } catch (IOException ex) {
-//                ex.printStackTrace();
-//            }
-//        }
-//        
+        
+        //        
 //        
 //        // accelerometer
 //        if(accelSensor != null) {
@@ -91,21 +80,6 @@ public class SystemProcess {
 //                ex.printStackTrace();
 //            }
 //        }
-                
-        // output temperature    
-//        System.out.print("Temperature: " + temp);
-//        System.out.print("\t\t");
-        
-        // output accelerometer
-//        System.out.println("Accelerometer: " + accelX + ", " + accelY + ", " + accelZ);
-//        System.out.print("\t\t");
-        
-//        System.out.print("Light: ");        
-//        System.out.println();
-//        System.out.println();
-        
-        // output light
-//        System.out.println("Light: " + temp);
     }
     
 }
