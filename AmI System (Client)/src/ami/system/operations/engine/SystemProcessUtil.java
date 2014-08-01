@@ -1,8 +1,9 @@
-
-
-
 package ami.system.operations.engine;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.text.*;
 import java.util.*;
 
@@ -14,7 +15,6 @@ public class SystemProcessUtil {
 
     // instance variables
     private Calendar cal;
-    
     // properties
     private int hours;
     private int minutes;
@@ -22,9 +22,8 @@ public class SystemProcessUtil {
     private int noSensors;
 
     public SystemProcessUtil() {
-        
     }
-    
+
     /**
      * Checks whether the system is in bounds (9.30+ PM) in operation terms
      *
@@ -107,29 +106,30 @@ public class SystemProcessUtil {
 
         return result;
     }
-    
+
     /**
      * Checks the current time. If it is 17.30 PM, stop system operation
+     *
      * @return
      */
     public boolean checkTimeBounds() {
         boolean terminate;
         cal = new GregorianCalendar();
-        
+
         double time;
         double timeTerminate = 17.30;
-        
+
         int hour = cal.get(Calendar.HOUR_OF_DAY);
         int minute = cal.get(Calendar.MINUTE);
-        
+
         double d_hour = (double) hour;
         double d_minute = (double) minute / 100;
-        
+
         time = d_hour;
         time += d_minute;
-        
+
         // if the current time is 17.30 PM
-        if(time == timeTerminate) {
+        if (time == timeTerminate) {
             // inform the system to terminate
             terminate = true;
         } else {
@@ -139,90 +139,118 @@ public class SystemProcessUtil {
 
         return terminate;
     }
-    
+
     /**
      * Returns the number of hours accumulated
-     * @return 
+     *
+     * @return
      */
     public int getAccumulatedHours() {
         return hours;
     }
-    
+
     /**
      * Set's the number of hours accumulated
-     * @param hours 
+     *
+     * @param hours
      */
     public void setAccumulatedHours(int hours) {
         this.hours = hours;
     }
-    
+
     /**
      * Returns the number of minutes accumulated
-     * @return 
+     *
+     * @return
      */
     public int getAccumulatedMinutes() {
         return minutes;
     }
-    
+
     /**
      * Set's the number of minutes accumulated
-     * @param minutes 
+     *
+     * @param minutes
      */
     public void setAccumulatedMinutes(int minutes) {
         this.minutes = minutes;
     }
-    
+
     /**
      * Returns the number of seconds accumulated
-     * @return 
+     *
+     * @return
      */
     public int getAccumulatedSeconds() {
         return seconds;
     }
-    
+
     /**
      * Set's the number of seconds accumulated
-     * @param seconds 
+     *
+     * @param seconds
      */
     public void setAccumulatedSeconds(int seconds) {
         this.seconds = seconds;
     }
-    
+
     /**
-     * Returns the number of hours and minuets accumulated during the operation of
-     * the system.
-     * @return 
+     * Returns the number of hours and minuets accumulated during the operation
+     * of the system.
+     *
+     * @return
      */
     public String getAccumulatedDuration() {
         return "";
     }
-    
+
     /**
      * Returns the total number of sensors connected to the ambient intelligence
      * learning system on the client device.
-     * @return 
+     *
+     * @return
      */
     public int getNoSensors() {
         return noSensors;
     }
-    
+
     /**
-     * Set's the number of sensors connected to the ambient intelligence learning
-     * system on the client device.
-     * @param number 
+     * Set's the number of sensors connected to the ambient intelligence
+     * learning system on the client device.
+     *
+     * @param number
      */
     public void setNoSensors(int noSensors) {
         this.noSensors = noSensors;
     }
-    
+
     /**
      * Returns the client device MAC address. This will be used to persist data
      * to the database for presentation on the web application.
-     * 
+     *
      * http://www.mkyong.com/java/how-to-get-mac-address-in-java/
-     * @return 
+     *
+     * @return the agent's MAC address
      */
     public String getDeviceAddress() {
-        return "";
-    }    
+        InetAddress ipAddr;
+        StringBuilder mac = new StringBuilder();
+
+        try {
+            ipAddr = InetAddress.getLocalHost();
+            NetworkInterface network = NetworkInterface.getByInetAddress(ipAddr);
+            byte[] macAddr = network.getHardwareAddress();
+
+            for (int i = 0; i < macAddr.length; i++) {
+                mac.append(String.format("%02X%s", macAddr[i], (i < macAddr.length - 1) ? "-" : ""));
+            }
+
+        } catch (UnknownHostException ex) {
+            ex.printStackTrace();
+        } catch (SocketException ex) {
+            ex.printStackTrace();
+        }
+        
+        return mac.toString();
+    }
 }
