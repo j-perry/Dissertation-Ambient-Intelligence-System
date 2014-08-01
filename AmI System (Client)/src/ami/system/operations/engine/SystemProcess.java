@@ -112,19 +112,24 @@ public class SystemProcess {
     }
     
     /**
-     * 
+     * Stops the operation of the ambient intelligence learning system
      */
     public void stop() {
         
     }
     
     /**
-     * 
+     * Pauses the operation of the ambient intelligence learning system
      */
     public void pause() {
         
     }
     
+    /**
+     * Delays the operation of the ambient intelligence learning system defined 
+     * in milliseconds
+     * @param milliseconds 
+     */
     public void delay(int milliseconds) {
         
     }
