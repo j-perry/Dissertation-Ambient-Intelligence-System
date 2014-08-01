@@ -1,5 +1,6 @@
 
 
+
 package ami.system.operations.engine;
 
 import java.text.*;
@@ -11,14 +12,21 @@ import java.util.*;
  */
 public class SystemProcessUtil {
 
+    // instance variables
     private Calendar cal;
+    
+    // properties
+    private int hours;
+    private int minutes;
+    private int seconds;
+    private int noSensors;
 
     public SystemProcessUtil() {
         
     }
     
     /**
-     * Checks whether the system is in bounds (9.30 PM >) in operation terms
+     * Checks whether the system is in bounds (9.30+ PM) in operation terms
      *
      * @return true if it is in bounds, false if not
      */
@@ -131,4 +139,90 @@ public class SystemProcessUtil {
 
         return terminate;
     }
+    
+    /**
+     * Returns the number of hours accumulated
+     * @return 
+     */
+    public int getAccumulatedHours() {
+        return hours;
+    }
+    
+    /**
+     * Set's the number of hours accumulated
+     * @param hours 
+     */
+    public void setAccumulatedHours(int hours) {
+        this.hours = hours;
+    }
+    
+    /**
+     * Returns the number of minutes accumulated
+     * @return 
+     */
+    public int getAccumulatedMinutes() {
+        return minutes;
+    }
+    
+    /**
+     * Set's the number of minutes accumulated
+     * @param minutes 
+     */
+    public void setAccumulatedMinutes(int minutes) {
+        this.minutes = minutes;
+    }
+    
+    /**
+     * Returns the number of seconds accumulated
+     * @return 
+     */
+    public int getAccumulatedSeconds() {
+        return seconds;
+    }
+    
+    /**
+     * Set's the number of seconds accumulated
+     * @param seconds 
+     */
+    public void setAccumulatedSeconds(int seconds) {
+        this.seconds = seconds;
+    }
+    
+    /**
+     * Returns the number of hours and minuets accumulated during the operation of
+     * the system.
+     * @return 
+     */
+    public String getAccumulatedDuration() {
+        return "";
+    }
+    
+    /**
+     * Returns the total number of sensors connected to the ambient intelligence
+     * learning system on the client device.
+     * @return 
+     */
+    public int getNoSensors() {
+        return noSensors;
+    }
+    
+    /**
+     * Set's the number of sensors connected to the ambient intelligence learning
+     * system on the client device.
+     * @param number 
+     */
+    public void setNoSensors(int noSensors) {
+        this.noSensors = noSensors;
+    }
+    
+    /**
+     * Returns the client device MAC address. This will be used to persist data
+     * to the database for presentation on the web application.
+     * 
+     * http://www.mkyong.com/java/how-to-get-mac-address-in-java/
+     * @return 
+     */
+    public String getDeviceAddress() {
+        return "";
+    }    
 }

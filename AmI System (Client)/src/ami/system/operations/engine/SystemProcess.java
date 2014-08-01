@@ -108,9 +108,27 @@ public class SystemProcess {
                 }
                 
             }
-        }
-                        
-    }    
+        }                        
+    }
+    
+    /**
+     * 
+     */
+    public void stop() {
+        
+    }
+    
+    /**
+     * 
+     */
+    public void pause() {
+        
+    }
+    
+    public void delay(int milliseconds) {
+        
+    }
+    
 }
 
 
