@@ -201,6 +201,8 @@ public class SystemProcessUtil {
      * @return
      */
     public String getAccumulatedDuration() {
+        StringBuilder duration = new StringBuilder();
+        
         return "";
     }
 
