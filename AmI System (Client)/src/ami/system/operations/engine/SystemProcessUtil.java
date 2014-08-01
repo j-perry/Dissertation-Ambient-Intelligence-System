@@ -242,9 +242,7 @@ public class SystemProcessUtil {
                 mac.append(String.format("%02X%s", macAddr[i], (i < macAddr.length - 1) ? "-" : ""));
             }
 
-        } catch (UnknownHostException ex) {
-            ex.printStackTrace();
-        } catch (SocketException ex) {
+        } catch (UnknownHostException | SocketException ex) {
             ex.printStackTrace();
         }
         
