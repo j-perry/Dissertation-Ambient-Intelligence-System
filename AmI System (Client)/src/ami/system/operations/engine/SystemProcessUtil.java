@@ -228,8 +228,6 @@ public class SystemProcessUtil {
      * Returns the client device MAC address. This will be used to persist data
      * to the database for presentation on the web application.
      *
-     * http://www.mkyong.com/java/how-to-get-mac-address-in-java/
-     *
      * @return the agent's MAC address
      */
     public String getDeviceAddress() {
