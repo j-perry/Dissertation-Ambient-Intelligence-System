@@ -76,7 +76,7 @@ public class SystemProcess {
                     // ... temperature value
                     System.out.println(temperatureTitle + getTemperature() );
                     
-
+                    
                     /*      Parse temperature data to our incremental learning system
                      ***********************************************************************/
 

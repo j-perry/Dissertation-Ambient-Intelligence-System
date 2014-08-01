@@ -5,13 +5,15 @@ import java.text.*;
 import java.util.*;
 
 /**
- *
+ * Utility class for use whilst processing system activity to hold and manipulate
+ * system meta-data
  * @author Jonathan Perry
  */
 public class SystemProcessUtil {
 
     // instance variables
     private Calendar cal;
+    
     // properties
     private int hours;
     private int minutes;
@@ -192,7 +194,7 @@ public class SystemProcessUtil {
     }
 
     /**
-     * Returns the number of hours and minuets accumulated during the operation
+     * Returns the number of hours and minutes accumulated during the operation
      * of the system.
      *
      * @return
