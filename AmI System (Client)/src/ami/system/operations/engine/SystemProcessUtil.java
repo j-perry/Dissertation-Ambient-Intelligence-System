@@ -275,7 +275,9 @@ public class SystemProcessUtil {
     }
     
     /**
-     * 
+     * Internal class handles the starting time. Note: do not implement any date
+     * related methods. We will process this on the resources level when persisting MySQL
+     * data, which will use the Timestamp function.
      */
     public static class SystemTime {
         
@@ -311,6 +313,6 @@ public class SystemProcessUtil {
             cal = new GregorianCalendar();
             return (int) cal.get(Calendar.SECOND);
         }
-        
+                
     }
 }
