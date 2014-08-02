@@ -98,6 +98,25 @@ public class SystemProcess {
             IncrementalSynchronousLearning isl = new IncrementalSynchronousLearning();
             int prevMinute = utilTime.getCurrentMinute();
             int prevSecond = utilTime.getCurrentSeconds();
+            
+            /**
+             * Check the number of devices connected to the system
+             *
+             *****************************************************************
+             */
+            SystemProcessUtil.SystemDevices utilDevices = new SystemProcessUtil.SystemDevices();
+            int noSensors = 0;
+            
+            // temperature sensor
+            if (utilDevices.temperatureSensorConnected() == true) {
+                noSensors++;
+            }
+
+            // assign number of sensors connected
+            util.setNoSensors(noSensors);
+            
+
+            System.out.println("noSensors: " + noSensors);
 
             // main application loop
             while (run_application) {
@@ -107,23 +126,6 @@ public class SystemProcess {
                     run_application = false;
                 } // else, continue running the system
                 else {
-                    int noSensors = 0;
-                    
-                    
-                    /**     Check the number of devices connected to the system
-                     ******************************************************************/
-                    SystemProcessUtil.SystemDevices utilDevices = new SystemProcessUtil.SystemDevices();
-                    
-                    // temperature sensor
-                    if(utilDevices.temperatureSensorConnected() == true) {
-                        noSensors++;
-                    }
-                    
-                    
-                    System.out.println("noSensors: " + noSensors);
-                    
-                    // assign number of sensors connected
-                    util.setNoSensors(noSensors);
 
                     // ... temperature value
                     // if the current minute is greater than the past minute
@@ -173,7 +175,7 @@ public class SystemProcess {
 
         // write a temperature value
         System.out.println(temperatureTitle + tempValue);
-
+        
         return tempValue;
     }
 
