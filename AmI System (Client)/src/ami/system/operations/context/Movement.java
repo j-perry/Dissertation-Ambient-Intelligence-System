@@ -8,7 +8,8 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 
 /**
- * 
+ * Class used to create an instance of an ultrasonic transceiver sensor
+ * (was previously used for an acceleromter device).
  * @author Jonathan Perry
  */
 public class Movement implements ISession {

@@ -1,6 +1,7 @@
 package ami.system.operations.engine;
 
 import ami.system.operations.context.*;
+import ami.system.operations.engine.isl.IncrementalSynchronousLearning;
 import com.pi4j.io.i2c.*;
 
 /**
@@ -37,14 +38,8 @@ public class SystemProcess {
         processHeading();
 
         boolean run_application = true;
-        util = new SystemProcessUtil();
         
-
-        /*      Titles
-         ********************/
-        final String temperatureTitle = "Temperature Value: ";
-
-
+        
         /*      
          *      This will be our main application loop.
          * 
@@ -63,25 +58,46 @@ public class SystemProcess {
             System.out.println("It is 9:30 AM or thereafter");
             System.out.println();
 
+            // Get the start time. We'll use this for calculation in SystemProcessUtil class later.
+            SystemProcessUtil.SystemTime utilTime = new SystemProcessUtil.SystemTime();
+            util = new SystemProcessUtil(utilTime.getCurrentHour(), // hour
+                                         utilTime.getCurrentMinute(), // minute
+                                         utilTime.getCurrentSeconds() // second
+                                         );
+
+            IncrementalSynchronousLearning isl = new IncrementalSynchronousLearning();
+            int prevMinute = utilTime.getCurrentMinute();
+            int prevSecond = utilTime.getCurrentSeconds();
+
             // main application loop
             while (run_application) {
 
                 // if it is 17.30, terminate the application
                 if (util.checkTimeBounds() == true) {
                     run_application = false;
-                } 
-                // else, continue running the system
+                } // else, continue running the system
                 else {
-                    
+
                     // ... temperature value
-                    System.out.println(temperatureTitle + getTemperature() );
-                    
-                    
-                    /*      Parse temperature data to our incremental learning system
-                     ***********************************************************************/
+                    // if the current minute is greater than the past minute
+                    // (nb: what happens if the current minute is 0 and the past minute is 59?)
+                    if (utilTime.getCurrentMinute() > prevMinute) {
+                        prevMinute = utilTime.getCurrentMinute();
 
+                        //  Parse temperature data to our incremental learning system
+                        isl.parseTemperatureValue(getTemperature());
+                        
+                    } else if (utilTime.getCurrentMinute() == 0 && prevMinute == 59) {
+                        prevMinute = 0; // reset it                        
+                    }
+
+                    //
+                    //  REPEAT FOR OTHER SENSORS
+                    //
+                    
+                    
                 }
-
+                
                 // check whether to terminate the system
                 if (run_application == false) {
                     System.out.print("The system will now terminate. ");
@@ -92,16 +108,25 @@ public class SystemProcess {
         }
     }
 
+    /**
+     * Returns the current temperature (in Fahrenheit)
+     *
+     * @return
+     */
     private int getTemperature() {
         int tempValue;
-        
+        final String temperatureTitle = "Temperature Value: ";
+
         /*      Run The Temperature
          **********************************/
         Temperature temp = new Temperature();
         temp.setup();
         temp.initialise();
         tempValue = temp.readValue();
-        
+
+        // write a temperature value
+        System.out.println(temperatureTitle + tempValue);
+
         return tempValue;
     }
 

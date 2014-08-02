@@ -15,13 +15,31 @@ public class SystemProcessUtil {
     // instance variables
     private Calendar cal;
     
+    // initialisation properties
+    private int startHour,
+                startMinute,
+                startSeconds;
+    
     // properties
     private int hours;
     private int minutes;
     private int seconds;
     private int noSensors;
 
+    /**
+     * 
+     * @param startHour the hour the system began
+     * @param startMinute the minute in the hour the system began
+     * @param startSeconds the seconds in the hour the system began
+     */
+    public SystemProcessUtil(int startHour, int startMinute, int startSeconds) {
+        this.startHour = startHour;
+        this.startMinute = startMinute;
+        this.startSeconds = startSeconds;
+    }
+    
     public SystemProcessUtil() {
+        
     }
 
     /**
@@ -155,6 +173,8 @@ public class SystemProcessUtil {
      * @param hours
      */
     public void setAccumulatedHours(int hours) {
+        
+        
         this.hours = hours;
     }
 
@@ -163,7 +183,7 @@ public class SystemProcessUtil {
      *
      * @return
      */
-    public int getAccumulatedMinutes() {
+    public int getAccumulatedMinutes() {      
         return minutes;
     }
 
@@ -173,6 +193,8 @@ public class SystemProcessUtil {
      * @param minutes
      */
     public void setAccumulatedMinutes(int minutes) {
+        
+        
         this.minutes = minutes;
     }
 
@@ -191,14 +213,15 @@ public class SystemProcessUtil {
      * @param seconds
      */
     public void setAccumulatedSeconds(int seconds) {
+        
+        
         this.seconds = seconds;
     }
 
     /**
-     * Returns the number of hours and minutes accumulated during the operation
-     * of the system.
+     * Returns the number of hours and minutes accumulated during the operation of the system.
      *
-     * @return
+     * @return HH:mm:ss
      */
     public String getAccumulatedDuration() {
         StringBuilder duration = new StringBuilder();
@@ -250,5 +273,45 @@ public class SystemProcessUtil {
         }
         
         return mac.toString();
+    }
+    
+    /**
+     * 
+     */
+    public static class SystemTime {
+        
+        private GregorianCalendar cal;
+        
+        public SystemTime() {
+            
+        }
+        
+        /**
+         * Gets the current hour in the day
+         * @return 
+         */
+        public int getCurrentHour() {
+            cal = new GregorianCalendar();
+            return (int) cal.get(Calendar.HOUR_OF_DAY); // 0 - 23           
+        }
+        
+        /**
+         * Gets the current minute in the hour
+         * @return 
+         */
+        public int getCurrentMinute() {
+            cal = new GregorianCalendar();
+            return (int) cal.get(Calendar.MINUTE);
+        }
+        
+        /**
+         * Gets the current second in the minute
+         * @return 
+         */
+        public int getCurrentSeconds() {
+            cal = new GregorianCalendar();
+            return (int) cal.get(Calendar.SECOND);
+        }
+        
     }
 }

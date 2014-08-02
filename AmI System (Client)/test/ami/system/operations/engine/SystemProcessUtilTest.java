@@ -3,11 +3,8 @@
 
 package ami.system.operations.engine;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import java.util.*;
+import org.junit.*;
 import static org.junit.Assert.*;
 
 /**
@@ -16,7 +13,10 @@ import static org.junit.Assert.*;
  */
 public class SystemProcessUtilTest {
     
+    private GregorianCalendar cal;
+    
     public SystemProcessUtilTest() {
+        
     }
     
     @BeforeClass
@@ -76,4 +76,29 @@ public class SystemProcessUtilTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+    
+    /**
+     * Test gets the current hour in the day
+     */
+    @Test
+    public void testGetCurrentHour() {
+        int expecting = 0; // hour
+        cal = new GregorianCalendar();
+        int actual = cal.get(Calendar.HOUR_OF_DAY); // 0 - 23
+        
+        assertEquals(expecting, actual);
+    }
+    
+    /**
+     * Test gets the current minute in the hour
+     */
+    @Test
+    public void testGetCurrentMinute() {
+        int expecting = 58; // minute
+        cal = new GregorianCalendar();
+        int actual = cal.get(Calendar.MINUTE);
+        
+        assertEquals(expecting, actual);
+    }
+    
 }

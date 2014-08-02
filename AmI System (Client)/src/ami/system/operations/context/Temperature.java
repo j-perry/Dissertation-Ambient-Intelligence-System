@@ -8,7 +8,7 @@ import com.pi4j.io.i2c.*;
 import java.io.*;
 
 /**
- *
+ * Class used to create an instance of a temperature sensor
  * @author Jonathan Perry
  */
 public class Temperature implements ISession {
@@ -24,25 +24,25 @@ public class Temperature implements ISession {
     }
     
     /**
-     * 
+     * Sets up our temperature sensor
      */
     @Override
     public void setup() {
        try {
             bus = I2CFactory.getInstance(I2CBus.BUS_1);
-            tempSensor = bus.getDevice(address);
+//            tempSensor = bus.getDevice(address);          DOES IT WORK WITHOUT THIS LINE OF CODE?
         } catch(IOException ex) {
             ex.printStackTrace();
         } 
     }
 
     /**
-     * 
+     * Initialises a new instance of our temperature sensor
      */
     @Override
     public void initialise() {
-        try {
-            
+        try {            
+            tempSensor = bus.getDevice(address);
         } catch(Exception ex) {
             ex.printStackTrace();
         }
