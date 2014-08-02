@@ -84,8 +84,7 @@ public class SystemProcessUtil {
     }
 
     /**
-     * Checks whether the system is out of bounds (17.30 PM >) in operation
-     * terms
+     * Checks whether the system is out of bounds (17.30 PM >) in operation terms
      *
      * @return true if it is out of bounds, false if not
      */

@@ -15,16 +15,41 @@ public class SystemProcess {
     private SystemProcessUtil util;
 
     public SystemProcess() {
+        
     }
 
-    private void processHeading() {
+    /**
+     * Make it clear the system has started and at what time
+     * @param hour
+     * @param minute
+     * @param second 
+     */
+    private void processHeading(int hour, int minute, int second) {
+        // used for formatting
+        String strMinute = "",
+               strSecond = "";
+        
+        // format the minute
+        if(minute < 10) {
+            strMinute = "0" + minute;
+        } else {
+            strMinute = String.valueOf(minute);
+        }
+        
+        // format the second
+        if(second < 10) {
+            strSecond = "0" + second;
+        } else {
+            strSecond = String.valueOf(second);
+        }
+        
         final String heading = "\n"
-                + "-----------------------------------"
+                + "---------------------------------------------"
                 + "\n\n"
                 + "\t"
-                + "Started new system"
+                + "Started new system: " + hour + ":" + strMinute + ":" + strSecond
                 + "\n\n"
-                + "-----------------------------------"
+                + "---------------------------------------------"
                 + "\n";
 
         System.out.println(heading);
@@ -35,11 +60,9 @@ public class SystemProcess {
      * System Process
      */
     public void run() {
-        processHeading();
-
         boolean run_application = true;
-        
-        
+
+
         /*      
          *      This will be our main application loop.
          * 
@@ -50,21 +73,27 @@ public class SystemProcess {
 
 
         // check it isn't 17:30 PM or thereafter
-        if (util.afterHours() == true) {
+        if (new SystemProcessUtil().afterHours() == true) {
             System.out.println("It is beyond 17:30pm. Try again tomorrow at 9.30 AM or thereafter.");
             System.exit(0);
-        } else if (util.beforeHours() == true) {
+        } else if (new SystemProcessUtil().beforeHours() == true) {
             System.out.println();
             System.out.println("It is 9:30 AM or thereafter");
             System.out.println();
-
+            
             // Get the start time. We'll use this for calculation in SystemProcessUtil class later.
             SystemProcessUtil.SystemTime utilTime = new SystemProcessUtil.SystemTime();
             util = new SystemProcessUtil(utilTime.getCurrentHour(), // hour
                                          utilTime.getCurrentMinute(), // minute
                                          utilTime.getCurrentSeconds() // second
                                          );
-
+            
+            // indicate the system has started (incl. displaying the time when it started)
+            processHeading(utilTime.getCurrentHour(),   // hour
+                           utilTime.getCurrentMinute(), // minute
+                           utilTime.getCurrentSeconds() // second
+                           );
+            
             IncrementalSynchronousLearning isl = new IncrementalSynchronousLearning();
             int prevMinute = utilTime.getCurrentMinute();
             int prevSecond = utilTime.getCurrentSeconds();
@@ -86,7 +115,7 @@ public class SystemProcess {
 
                         //  Parse temperature data to our incremental learning system
                         isl.parseTemperatureValue(getTemperature());
-                        
+
                     } else if (utilTime.getCurrentMinute() == 0 && prevMinute == 59) {
                         prevMinute = 0; // reset it                        
                     }
@@ -94,10 +123,10 @@ public class SystemProcess {
                     //
                     //  REPEAT FOR OTHER SENSORS
                     //
-                    
-                    
+
+
                 }
-                
+
                 // check whether to terminate the system
                 if (run_application == false) {
                     System.out.print("The system will now terminate. ");
