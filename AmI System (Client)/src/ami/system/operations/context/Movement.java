@@ -55,15 +55,20 @@ public class Movement implements ISession {
      * First-point of call when creating a movement class
      */
     @Override
-    public void initialise() {
+    public boolean initialise() {
+        boolean connected;
         byte b = readRegister(WHO_AM_I);
         
         // check it is connected
         if(b == 0x2A) {
             System.out.println("Accelerometer is online");
+            connected = true;
         } else {
             System.out.println("Could not connect to the Accelerometer: " + b);
+            connected = false;
         }
+        
+        return connected;
         
         // set the device on standby
 //        standby();

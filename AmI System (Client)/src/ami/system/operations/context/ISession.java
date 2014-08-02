@@ -11,7 +11,7 @@ public interface ISession {
     
     public void setup();
     
-    public void initialise();
+    public boolean initialise();
     
     public void active();
     

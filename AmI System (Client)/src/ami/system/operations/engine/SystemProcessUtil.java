@@ -1,5 +1,6 @@
 package ami.system.operations.engine;
 
+import ami.system.operations.context.Temperature;
 import java.net.*;
 import java.text.*;
 import java.util.*;
@@ -314,5 +315,34 @@ public class SystemProcessUtil {
             return (int) cal.get(Calendar.SECOND);
         }
                 
+    }
+    
+    /**
+     * Internal class used for device-related utility functionality
+     */
+    public static class SystemDevices {
+        
+        private boolean connected;
+        
+        public SystemDevices() {
+            
+        }
+        
+        /**
+         * Checks whether the temperature sensor is connected to the agent
+         * @return 
+         */
+        public boolean temperatureSensorConnected() {
+            Temperature temp = new Temperature();
+            
+            if(temp.initialise() == true) {
+                connected = true;                
+            } else {
+                connected = false;
+            }
+            
+            return connected;
+        }
+        
     }
 }

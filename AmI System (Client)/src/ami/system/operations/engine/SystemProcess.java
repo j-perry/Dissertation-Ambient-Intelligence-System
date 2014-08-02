@@ -15,34 +15,34 @@ public class SystemProcess {
     private SystemProcessUtil util;
 
     public SystemProcess() {
-        
     }
 
     /**
      * Make it clear the system has started and at what time
+     *
      * @param hour
      * @param minute
-     * @param second 
+     * @param second
      */
     private void processHeading(int hour, int minute, int second) {
         // used for formatting
         String strMinute = "",
-               strSecond = "";
-        
+                strSecond = "";
+
         // format the minute
-        if(minute < 10) {
+        if (minute < 10) {
             strMinute = "0" + minute;
         } else {
             strMinute = String.valueOf(minute);
         }
-        
+
         // format the second
-        if(second < 10) {
+        if (second < 10) {
             strSecond = "0" + second;
         } else {
             strSecond = String.valueOf(second);
         }
-        
+
         final String heading = "\n"
                 + "---------------------------------------------"
                 + "\n\n"
@@ -69,31 +69,32 @@ public class SystemProcess {
          *      The application will not terminate until 17:30 PM.
          *      The application however will also not start unless the time is 9:30am or thereafter.
          * 
-         ********************************************************************************************/
+         *************************************************************************************************/
 
 
         // check it isn't 17:30 PM or thereafter
         if (new SystemProcessUtil().afterHours() == true) {
             System.out.println("It is beyond 17:30pm. Try again tomorrow at 9.30 AM or thereafter.");
             System.exit(0);
-        } else if (new SystemProcessUtil().beforeHours() == true) {
+        } // check it is 9:00 AM or thereafter
+        else if (new SystemProcessUtil().beforeHours() == true) {
             System.out.println();
             System.out.println("It is 9:30 AM or thereafter");
             System.out.println();
-            
+
             // Get the start time. We'll use this for calculation in SystemProcessUtil class later.
             SystemProcessUtil.SystemTime utilTime = new SystemProcessUtil.SystemTime();
             util = new SystemProcessUtil(utilTime.getCurrentHour(), // hour
-                                         utilTime.getCurrentMinute(), // minute
-                                         utilTime.getCurrentSeconds() // second
-                                         );
-            
+                    utilTime.getCurrentMinute(), // minute
+                    utilTime.getCurrentSeconds() // second
+                    );
+
             // indicate the system has started (incl. displaying the time when it started)
-            processHeading(utilTime.getCurrentHour(),   // hour
-                           utilTime.getCurrentMinute(), // minute
-                           utilTime.getCurrentSeconds() // second
-                           );
-            
+            processHeading(utilTime.getCurrentHour(), // hour
+                    utilTime.getCurrentMinute(), // minute
+                    utilTime.getCurrentSeconds() // second
+                    );
+
             IncrementalSynchronousLearning isl = new IncrementalSynchronousLearning();
             int prevMinute = utilTime.getCurrentMinute();
             int prevSecond = utilTime.getCurrentSeconds();
@@ -106,24 +107,41 @@ public class SystemProcess {
                     run_application = false;
                 } // else, continue running the system
                 else {
+                    int noSensors = 0;
+                    
+                    
+                    /**     Check the number of devices connected to the system
+                     ******************************************************************/
+                    SystemProcessUtil.SystemDevices utilDevices = new SystemProcessUtil.SystemDevices();
+                    
+                    // temperature sensor
+                    if(utilDevices.temperatureSensorConnected() == true) {
+                        noSensors++;
+                    }
+                    
+                    
+                    System.out.println("noSensors: " + noSensors);
+                    
+                    // assign number of sensors connected
+                    util.setNoSensors(noSensors);
 
                     // ... temperature value
                     // if the current minute is greater than the past minute
                     // (nb: what happens if the current minute is 0 and the past minute is 59?)
                     if (utilTime.getCurrentMinute() > prevMinute) {
                         prevMinute = utilTime.getCurrentMinute();
-
+                        
                         //  Parse temperature data to our incremental learning system
                         isl.parseTemperatureValue(getTemperature());
+
+                        //
+                        //  REPEAT FOR OTHER SENSORS
+                        //
+                        
 
                     } else if (utilTime.getCurrentMinute() == 0 && prevMinute == 59) {
                         prevMinute = 0; // reset it                        
                     }
-
-                    //
-                    //  REPEAT FOR OTHER SENSORS
-                    //
-
 
                 }
 
@@ -136,7 +154,7 @@ public class SystemProcess {
             }
         }
     }
-
+    
     /**
      * Returns the current temperature (in Fahrenheit)
      *

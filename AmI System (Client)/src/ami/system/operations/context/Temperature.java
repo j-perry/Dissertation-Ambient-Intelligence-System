@@ -40,12 +40,18 @@ public class Temperature implements ISession {
      * Initialises a new instance of our temperature sensor
      */
     @Override
-    public void initialise() {
+    public boolean initialise() {
+        boolean connected;
+        
         try {            
             tempSensor = bus.getDevice(address);
+            connected = true;
         } catch(Exception ex) {
+            connected = false;
             ex.printStackTrace();
         }
+        
+        return connected;
     }
     
     /**
