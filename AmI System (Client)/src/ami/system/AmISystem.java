@@ -24,9 +24,16 @@ public class AmISystem {
         System.out.println();
     }
     
+    /**
+     * Starts our application
+     */
     public void init() {
-        // attempt to auto start and run a new system process
-        // this is reliant on conditions set between 9:00 - 17:30
-        new SystemProcess().run();
+        // attempt to auto start and run a new system process.
+        // this is reliant on conditions set between 9:00 - 17:30.
+        // however, before doing so, delay the start by 15 seconds to ensure
+        // a network connection is established (just as a precaution).
+        SystemProcess systemProcess = new SystemProcess();
+        systemProcess.delay(15);
+        systemProcess.run();
     }
 }

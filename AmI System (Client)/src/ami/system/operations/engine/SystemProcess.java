@@ -202,7 +202,14 @@ public class SystemProcess {
      *
      * @param milliseconds
      */
-    public void delay(int milliseconds) {
+    public void delay(int seconds) {
+        int milliseconds = (seconds * 1000);
+        
+        try {
+            Thread.sleep(milliseconds);
+        } catch(InterruptedException ex) {
+            ex.printStackTrace();
+        }
     }
 }
 //        
