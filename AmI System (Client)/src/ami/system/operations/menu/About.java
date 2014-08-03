@@ -35,7 +35,6 @@ public class About {
        pauseApplication();
        
        AmISystemMenu ami = new AmISystemMenu();
-       ami.display();
        ami.input();
     }
     

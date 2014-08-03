@@ -1,5 +1,6 @@
 package ami.system.operations.engine;
 
+import ami.system.operations.menu.AmISystemMenu;
 import ami.system.operations.context.*;
 import ami.system.operations.engine.isl.IncrementalSynchronousLearning;
 import com.pi4j.io.i2c.*;
@@ -56,13 +57,12 @@ public class SystemProcess {
     }
 
     /**
-     * TODO - Very important method!!! This is our 2nd root point Runs a new
-     * System Process
+     * This is our 2nd root point and runs a new system process
      */
     public void run() {
         boolean run_application = true;
-
-
+        
+        
         /*      
          *      This will be our main application loop.
          * 
@@ -75,7 +75,10 @@ public class SystemProcess {
         // check it isn't 17:30 PM or thereafter
         if (new SystemProcessUtil().afterHours() == true) {
             System.out.println("It is beyond 17:30pm. Try again tomorrow at 9.30 AM or thereafter.");
-            System.exit(0);
+            
+            // display the application menu
+            AmISystemMenu menu = new AmISystemMenu();
+            menu.input();
         } // check it is 9:00 AM or thereafter
         else if (new SystemProcessUtil().beforeHours() == true) {
             System.out.println();
@@ -100,10 +103,9 @@ public class SystemProcess {
             int prevSecond = utilTime.getCurrentSeconds();
             
             /**
-             * Check the number of devices connected to the system
+             *      Check the number of devices connected to the system
              *
-             *****************************************************************
-             */
+             *******************************************************************/
             SystemProcessUtil.SystemDevices utilDevices = new SystemProcessUtil.SystemDevices();
             int noSensors = 0;
             
@@ -115,7 +117,7 @@ public class SystemProcess {
             // assign number of sensors connected
             util.setNoSensors(noSensors);
             
-
+            // display number of sensors connected
             System.out.println("noSensors: " + noSensors);
 
             // main application loop
@@ -147,10 +149,13 @@ public class SystemProcess {
 
                 }
 
-                // check whether to terminate the system
+                // check whether to terminate the system process
                 if (run_application == false) {
-                    System.out.print("The system will now terminate. ");
-                    System.exit(0);
+                    System.out.print("System has finished for the day. ");
+                    
+                    // display the application menu
+                    AmISystemMenu menu = new AmISystemMenu();
+                    menu.input();
                 }
 
             }

@@ -5,8 +5,6 @@
  */
 package ami.system;
 
-import ami.system.AmISystem;
-
 /**
  *
  * @author Jonathan Perry

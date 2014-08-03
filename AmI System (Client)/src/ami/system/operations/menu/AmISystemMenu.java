@@ -12,13 +12,13 @@ import java.io.*;
 public class AmISystemMenu {
     
     public AmISystemMenu() {
-        
+        display();
     }
     
     /**
      * Displays menu options
      */
-    public void display() {
+    private void display() {
         System.out.println("Menu");
         System.out.println();
         
