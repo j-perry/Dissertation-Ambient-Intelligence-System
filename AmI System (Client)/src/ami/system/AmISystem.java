@@ -32,8 +32,10 @@ public class AmISystem {
         // this is reliant on conditions set between 9:00 - 17:30.
         // however, before doing so, delay the start by 15 seconds to ensure
         // a network connection is established (just as a precaution).
+        final int seconds = 15;
+        
         SystemProcess systemProcess = new SystemProcess();
-        systemProcess.delay(15);
+        systemProcess.delay(seconds);
         systemProcess.run();
     }
 }
