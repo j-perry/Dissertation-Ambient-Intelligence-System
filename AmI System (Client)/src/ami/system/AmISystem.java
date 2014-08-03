@@ -29,15 +29,4 @@ public class AmISystem {
         // this is reliant on conditions set between 9:00 - 17:30
         new SystemProcess().run();
     }
-    
-    /*
-    public void init() {
-        menu();
-    }
-    
-    public void menu() {
-        AmISystemMenu menu = new AmISystemMenu();
-        menu.input();
-    }
-    */
 }
