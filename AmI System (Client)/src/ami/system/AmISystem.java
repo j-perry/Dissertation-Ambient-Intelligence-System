@@ -3,7 +3,6 @@
 
 package ami.system;
 
-//import ami.system.operations.menu.AmISystemMenu;
 import ami.system.operations.engine.SystemProcess;
 
 /**
@@ -28,9 +27,9 @@ public class AmISystem {
      * Starts our application
      */
     public void init() {
-        // attempt to auto start and run a new system process.
-        // this is reliant on conditions set between 9:00 - 17:30.
-        // however, before doing so, delay the start by 15 seconds to ensure
+        // Attempt to auto start and run a new system process.
+        // This is reliant on conditions set between 9:00 - 17:30.
+        // However, before doing so, delay the start by 15 seconds to ensure
         // a network connection is established (just as a precaution).
         final int seconds = 15;
         

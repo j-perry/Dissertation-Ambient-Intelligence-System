@@ -204,8 +204,10 @@ public class SystemProcess {
      */
     public void delay(int seconds) {
         int milliseconds = (seconds * 1000);
+        final String msg = "System will start in 15 seconds to ensure a network connection is established";
         
         try {
+            System.out.println(msg);
             Thread.sleep(milliseconds);
         } catch(InterruptedException ex) {
             ex.printStackTrace();
