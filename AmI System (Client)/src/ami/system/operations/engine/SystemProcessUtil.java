@@ -50,7 +50,7 @@ public class SystemProcessUtil {
      */
     public boolean beforeHours() {
         boolean result;
-        final double beforeHours = 9.30;
+        final double beforeHours = 9.00;
         cal = new GregorianCalendar();
 
         Double actualTime;

@@ -67,22 +67,26 @@ public class SystemProcess {
          *      This will be our main application loop.
          * 
          *      The application will not terminate until 17:30 PM.
-         *      The application however will also not start unless the time is 9:30am or thereafter.
+         *      The application however will also not start unless the time is 9:00am or thereafter.
          * 
          *************************************************************************************************/
 
 
         // check it isn't 17:30 PM or thereafter
         if (new SystemProcessUtil().afterHours() == true) {
-            System.out.println("It is beyond 17:30pm. Try again tomorrow at 9.30 AM or thereafter.");
+            String msg = "It is beyond 17:30pm. Try again tomorrow at 9.00 AM or thereafter.";
+            
+            System.out.println(msg);
             
             // display the application menu
             AmISystemMenu menu = new AmISystemMenu();
             menu.input();
         } // check it is 9:00 AM or thereafter
         else if (new SystemProcessUtil().beforeHours() == true) {
+            String msg = "It is 9:00 AM or thereafter";
+            
             System.out.println();
-            System.out.println("It is 9:30 AM or thereafter");
+            System.out.println(msg);
             System.out.println();
 
             // Get the start time. We'll use this for calculation in SystemProcessUtil class later.
@@ -118,6 +122,7 @@ public class SystemProcess {
             util.setNoSensors(noSensors);
             
             // display number of sensors connected
+            System.out.println();
             System.out.println("noSensors: " + noSensors);
 
             // main application loop
