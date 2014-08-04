@@ -116,4 +116,19 @@ public class SystemProcessUtilTest {
        assertEquals(expecting, actual);
     }
     
+    /**
+     * Test calculates the number of minutes accumulated since starting
+     */
+    @Test
+    public void testGetAccumulatedMinutes() {
+        cal = new GregorianCalendar();
+        int expecting = 4;
+        
+        int startMinute = 41;
+        int minute = cal.get(Calendar.MINUTE);
+        int actual = minute - startMinute;
+        
+        assertEquals(expecting, actual);
+    }
+    
 }

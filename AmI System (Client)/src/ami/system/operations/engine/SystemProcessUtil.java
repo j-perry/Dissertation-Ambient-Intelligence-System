@@ -184,7 +184,11 @@ public class SystemProcessUtil {
      *
      * @return
      */
-    public int getAccumulatedMinutes() {      
+    public int getAccumulatedMinutes() {   
+        cal = new GregorianCalendar();
+        int minute = cal.get(Calendar.MINUTE);
+        minutes = minute - startMinute;
+        
         return minutes;
     }
     
