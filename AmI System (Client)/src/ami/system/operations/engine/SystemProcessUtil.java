@@ -30,6 +30,9 @@ public class SystemProcessUtil {
                 startSeconds;
     
     // properties
+    private int hours = 0,
+                minutes = 0,
+                seconds = 0;
     private int noSensors;
 
     /**
@@ -178,20 +181,17 @@ public class SystemProcessUtil {
     }
     
     /**
-     * 
+     * Validation method for hours accumulated
      * @return 
      */
-    private int adjustAccumulatedHours() {
+    private void adjustAccumulatedHours() {
         cal = new GregorianCalendar();
-        int hours;
         
         // reduce the hour by one
         startHour--;
         int hour = cal.get(Calendar.HOUR_OF_DAY);
         
-        hours = hour - startHour;
-        
-        return hours;
+        this.hours = (hour - startHour);
     }
     
     /**
@@ -199,8 +199,7 @@ public class SystemProcessUtil {
      *
      * @return
      */
-    public int getAccumulatedMinutes() { 
-        int minutes;        
+    public int getAccumulatedMinutes() {
         cal = new GregorianCalendar();
         
         // what if...
@@ -220,20 +219,17 @@ public class SystemProcessUtil {
     }
     
     /**
-     * 
+     * Validation method for minutes accumulated
      * @return 
      */
-    private int adjustAccumulatedMinutes() {
-        int minutes;        
+    private void adjustAccumulatedMinutes() {
         cal = new GregorianCalendar();
         
         // reduce minutes by one
         startMinute--;
         int minute = cal.get(Calendar.MINUTE);
         
-        minutes = minute - startMinute;
-                
-        return minutes;
+        this.minutes = (minute - startMinute);
     }
     
     /**
@@ -242,7 +238,6 @@ public class SystemProcessUtil {
      * @return
      */
     public int getAccumulatedSeconds() {
-        int seconds;        
         cal = new GregorianCalendar();
         
         // what if...
