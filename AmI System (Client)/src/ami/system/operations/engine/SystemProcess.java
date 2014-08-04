@@ -14,13 +14,15 @@ import ami.system.operations.context.*;
 import ami.system.operations.engine.isl.IncrementalSynchronousLearning;
 
 /**
- *
+ * Class used to create a new system process
  * @author Jonathan Perry
  */
 public class SystemProcess {
 
-    private I2CBus bus;
-    private I2CDevice accelSensor; // event-driven (need a callback function)
+    // NB: for each sensor we will need an event-driven, callback function to detect
+    // changes in user interaction
+    
+    // properties
     private SystemProcessUtil util;
 
     public SystemProcess() {
@@ -89,7 +91,8 @@ public class SystemProcess {
             // display the application menu
             AmISystemMenu menu = new AmISystemMenu();
             menu.input();
-        } // check it is 9:00 AM or thereafter
+        } 
+        // check it is 9:00 AM or thereafter
         else if (new SystemProcessUtil().beforeHours() == true) {
             String msg = "It is 9:00 AM or thereafter";
             
