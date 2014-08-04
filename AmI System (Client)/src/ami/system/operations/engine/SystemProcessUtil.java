@@ -174,18 +174,7 @@ public class SystemProcessUtil {
     public int getAccumulatedHours() {
         return hours;
     }
-
-    /**
-     * Set's the number of hours accumulated
-     *
-     * @param hours
-     */
-    public void setAccumulatedHours(int hours) {
-        
-        
-        this.hours = hours;
-    }
-
+    
     /**
      * Returns the number of minutes accumulated
      *
@@ -194,18 +183,7 @@ public class SystemProcessUtil {
     public int getAccumulatedMinutes() {      
         return minutes;
     }
-
-    /**
-     * Set's the number of minutes accumulated
-     *
-     * @param minutes
-     */
-    public void setAccumulatedMinutes(int minutes) {
-        
-        
-        this.minutes = minutes;
-    }
-
+    
     /**
      * Returns the number of seconds accumulated
      *
@@ -214,18 +192,7 @@ public class SystemProcessUtil {
     public int getAccumulatedSeconds() {
         return seconds;
     }
-
-    /**
-     * Set's the number of seconds accumulated
-     *
-     * @param seconds
-     */
-    public void setAccumulatedSeconds(int seconds) {
-        
-        
-        this.seconds = seconds;
-    }
-
+    
     /**
      * Returns the number of hours and minutes accumulated during the operation of the system.
      *
