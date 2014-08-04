@@ -178,6 +178,23 @@ public class SystemProcessUtil {
     }
     
     /**
+     * 
+     * @return 
+     */
+    private int adjustAccumulatedHours() {
+        cal = new GregorianCalendar();
+        int hours;
+        
+        // reduce the hour by one
+        startHour--;
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        
+        hours = hour - startHour;
+        
+        return hours;
+    }
+    
+    /**
      * Returns the number of minutes accumulated
      *
      * @return
@@ -193,6 +210,29 @@ public class SystemProcessUtil {
         int minute = cal.get(Calendar.MINUTE);
         minutes = minute - startMinute;
         
+        if(minutes < 0) {
+            int left = minutes; // suppose 12 - 45 = -33 seconds
+            adjustAccumulatedHours();
+            minutes = (60 - left);
+        }
+        
+        return minutes;
+    }
+    
+    /**
+     * 
+     * @return 
+     */
+    private int adjustAccumulatedMinutes() {
+        int minutes;        
+        cal = new GregorianCalendar();
+        
+        // reduce minutes by one
+        startMinute--;
+        int minute = cal.get(Calendar.MINUTE);
+        
+        minutes = minute - startMinute;
+                
         return minutes;
     }
     
@@ -211,6 +251,12 @@ public class SystemProcessUtil {
         // we would need to reduce no. of accumulated minutes by 1
         int second = cal.get(Calendar.SECOND);
         seconds = second - startSeconds;
+        
+        if(seconds < 0) {
+            int left = seconds; // suppose 12 - 45 = -33 seconds
+            adjustAccumulatedMinutes();
+            seconds = (60 - left);
+        }
         
         return seconds;
     }
