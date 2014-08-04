@@ -1,3 +1,8 @@
+/*
+ * MSc Advanced Computer Science, University of Sussex
+ * Jonathan Perry
+ * Candidate No. 102235
+ */
 package ami.system.operations.engine;
 
 // Java APIs
