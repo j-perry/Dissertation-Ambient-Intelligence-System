@@ -172,6 +172,10 @@ public class SystemProcessUtil {
      * @return
      */
     public int getAccumulatedHours() {
+        cal = new GregorianCalendar();
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        hours = hour - startHour;
+        
         return hours;
     }
     

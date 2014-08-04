@@ -101,4 +101,19 @@ public class SystemProcessUtilTest {
         assertEquals(expecting, actual);
     }
     
+    /**
+     * Test calculates the number of hours accumulated since starting
+     */
+    @Test
+    public void testGetAccumulatedHours() {
+       cal = new GregorianCalendar();
+       int expecting = 3;
+       
+       int startHour = 14;
+       int hour = cal.get(Calendar.HOUR_OF_DAY);
+       int actual = hour - startHour;
+       
+       assertEquals(expecting, actual);
+    }
+    
 }
