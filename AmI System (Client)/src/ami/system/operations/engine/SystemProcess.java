@@ -1,9 +1,12 @@
 package ami.system.operations.engine;
 
+// libraries
+import com.pi4j.io.i2c.*;
+
+// internal classes
 import ami.system.operations.menu.AmISystemMenu;
 import ami.system.operations.context.*;
 import ami.system.operations.engine.isl.IncrementalSynchronousLearning;
-import com.pi4j.io.i2c.*;
 
 /**
  *

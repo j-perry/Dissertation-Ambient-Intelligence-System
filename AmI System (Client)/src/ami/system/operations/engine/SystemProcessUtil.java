@@ -1,9 +1,12 @@
 package ami.system.operations.engine;
 
-import ami.system.operations.context.Temperature;
+// Java APIs
 import java.net.*;
 import java.text.*;
 import java.util.*;
+
+// internal classes
+import ami.system.operations.context.Temperature;
 
 /**
  * Utility class for use whilst processing system activity to hold and manipulate
