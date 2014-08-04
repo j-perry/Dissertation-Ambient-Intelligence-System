@@ -198,6 +198,10 @@ public class SystemProcessUtil {
      * @return
      */
     public int getAccumulatedSeconds() {
+        cal = new GregorianCalendar();
+        int second = cal.get(Calendar.SECOND);
+        seconds = second - startSeconds;
+        
         return seconds;
     }
     
