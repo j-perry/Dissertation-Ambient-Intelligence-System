@@ -183,9 +183,13 @@ public class SystemProcessUtil {
      * @return
      */
     public int getAccumulatedMinutes() { 
-        int minutes;
-        
+        int minutes;        
         cal = new GregorianCalendar();
+        
+        // what if...
+        // the current minute in the hour is '12'
+        // and the minute on the hour it started was '45'?
+        // we would need to reduce no. of accumulated hours by 1
         int minute = cal.get(Calendar.MINUTE);
         minutes = minute - startMinute;
         
@@ -198,9 +202,13 @@ public class SystemProcessUtil {
      * @return
      */
     public int getAccumulatedSeconds() {
-        int seconds;
-        
+        int seconds;        
         cal = new GregorianCalendar();
+        
+        // what if...
+        // the current second in the minute is '12'
+        // and the second on the hour it started was '31'?
+        // we would need to reduce no. of accumulated minutes by 1
         int second = cal.get(Calendar.SECOND);
         seconds = second - startSeconds;
         
