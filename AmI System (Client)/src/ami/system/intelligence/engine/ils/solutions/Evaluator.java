@@ -1,7 +1,7 @@
 
 
 
-package ami.system.operations.engine.isl.solutions;
+package ami.system.intelligence.engine.ils.solutions;
 
 /**
  *

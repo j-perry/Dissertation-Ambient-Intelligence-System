@@ -5,7 +5,7 @@
  */
 package ami.system;
 
-import ami.system.operations.engine.SystemProcess;
+import ami.system.intelligence.engine.SystemProcess;
 
 /**
  * Initialises our Ambient Intelligence Learning System

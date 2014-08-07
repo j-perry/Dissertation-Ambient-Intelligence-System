@@ -3,7 +3,7 @@
 
 package ami.system.operations.menu;
 
-import ami.system.operations.engine.SystemProcess;
+import ami.system.intelligence.engine.SystemProcess;
 
 /**
  * Creates a new session

@@ -1,7 +1,7 @@
 
 
 
-package ami.system.operations.engine.isl.rules;
+package ami.system.intelligence.engine.ils.rules;
 
 /**
  *

@@ -3,7 +3,7 @@
  * Jonathan Perry
  * Candidate No. 102235
  */
-package ami.system.operations.engine;
+package ami.system.intelligence.engine;
 
 // libraries
 import com.pi4j.io.i2c.*;
@@ -11,7 +11,7 @@ import com.pi4j.io.i2c.*;
 // internal classes
 import ami.system.operations.menu.AmISystemMenu;
 import ami.system.operations.context.*;
-import ami.system.operations.engine.isl.IncrementalSynchronousLearning;
+import ami.system.intelligence.engine.ils.IncrementalSynchronousLearning;
 
 /**
  * Class used to create a new system process

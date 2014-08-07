@@ -1,7 +1,9 @@
 
 
 
-package ami.system.operations.engine.isl;
+package ami.system.intelligence.engine.ils;
+
+import java.util.ArrayList;
 
 /**
  *
@@ -15,7 +17,7 @@ public class IncrementalSynchronousLearning {
     private PromptContext pContext;
     
     // sensor values (for processing)
-    private int tempValue;
+    private ArrayList<Integer> tempValues;
     
     public IncrementalSynchronousLearning() {
         
@@ -26,7 +28,7 @@ public class IncrementalSynchronousLearning {
      * @param tempValue 
      */    
     public void parseTemperatureValue(int tempValue) {
-        this.tempValue = tempValue;
+        this.tempValues.add(tempValue);
     }
     
 }
