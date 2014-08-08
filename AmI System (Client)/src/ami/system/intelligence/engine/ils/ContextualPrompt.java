@@ -7,9 +7,9 @@ package ami.system.intelligence.engine.ils;
  *
  * @author Jonathan Perry
  */
-public class PromptContext {
+public class ContextualPrompt {
     
-    public PromptContext() {
+    public ContextualPrompt() {
         
     }
     

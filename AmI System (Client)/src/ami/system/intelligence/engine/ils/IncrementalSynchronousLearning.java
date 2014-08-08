@@ -14,7 +14,8 @@ public class IncrementalSynchronousLearning {
     // instance variables
     private Coordinator coord;
     private ExperienceBank exBank;
-    private PromptContext pContext;
+    private ContextualPrompt pContext;
+    private InitialMonitoringPhase initialMonitoringPhase;
     
     // sensor values (for processing)
     private ArrayList<Integer> tempValues;
@@ -29,6 +30,14 @@ public class IncrementalSynchronousLearning {
      */    
     public void parseTemperatureValue(int tempValue) {
         this.tempValues.add(tempValue);
+    }
+    
+    /**
+     * 
+     */
+    public void runInitialMonitoringPhase() {
+        initialMonitoringPhase = new InitialMonitoringPhase(tempValues);
+        initialMonitoringPhase.run();
     }
     
 }
