@@ -39,7 +39,7 @@ public class InitialMonitoringPhase {
     public void run() {
         String startDate = null,
                currentDate = null;
-        final String fileName = "/xml/ami-config.xml";        
+        final String fileName = "projects/AmI_System/xml/ami_config.xml";
         date = new Date();
 
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
@@ -47,10 +47,10 @@ public class InitialMonitoringPhase {
 
         // XML File
         initialMonitoringPhaseConfig = new File(fileName);
-
+        
         try {
             xmlBuilderFactory = DocumentBuilderFactory.newInstance();
-            xmlBuilderFactory.newDocumentBuilder();
+            xmlBuilder = xmlBuilderFactory.newDocumentBuilder();
             Document doc = xmlBuilder.parse(initialMonitoringPhaseConfig);
             NodeList parentNode = doc.getElementsByTagName("initial-monitoring");
 
@@ -76,7 +76,8 @@ public class InitialMonitoringPhase {
                 transformer.transform(source, result);
                 
                 // then run the initial monitoring phase                
-                
+                generateSaturatedModel();
+                generateUnsaturatedModel();
                 
             } else if (startDate.equals(currentDate)) {
                 return;
@@ -90,17 +91,18 @@ public class InitialMonitoringPhase {
      *
      */
     public void identifyContext() {
+        
     }
 
     /**
      *
      */
-    private void saturatedModel() {
+    private void generateSaturatedModel() {
     }
 
     /**
      *
      */
-    private void unsaturatedModel() {
+    private void generateUnsaturatedModel() {
     }
 }

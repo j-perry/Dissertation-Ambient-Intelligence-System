@@ -21,7 +21,7 @@ public class IncrementalSynchronousLearning {
     private ArrayList<Integer> tempValues;
     
     public IncrementalSynchronousLearning() {
-        
+        tempValues = new ArrayList<>();
     }
     
     /**

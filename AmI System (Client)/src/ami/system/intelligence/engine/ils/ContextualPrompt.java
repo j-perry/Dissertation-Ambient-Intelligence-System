@@ -13,4 +13,15 @@ public class ContextualPrompt {
         
     }
     
+    public String parse(int value) {
+        String label = null;
+        
+        // temperature
+        if(value > 4 && value < 40) {
+            label = "temperature";
+        }
+        
+        return label;
+    }
+    
 }

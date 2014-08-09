@@ -153,6 +153,7 @@ public class SystemProcess {
                         
                         //  Parse temperature data to our incremental learning system
                         isl.parseTemperatureValue(getTemperature());
+                        isl.runInitialMonitoringPhase();
 
                         //
                         //  REPEAT FOR OTHER SENSORS
