@@ -8,7 +8,6 @@ import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
 import org.w3c.dom.*;
 
@@ -41,12 +40,16 @@ public class InitialMonitoringPhase {
      */
     public void run() {
         String startDate = null,
-                currentDate = null;
-        final String fileName = "projects/AmI_System/xml/ami_config.xml";
+               currentDate = null;
+        final String fileName = "projects/AmI_System/config.xml";
         date = new Date();
 
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        currentDate = df.format(date).toString();
+        GregorianCalendar cal = new GregorianCalendar();
+        currentDate = String.valueOf(cal.get(Calendar.DAY_OF_MONTH) ) +
+                      "/" +
+                      String.valueOf(cal.get(Calendar.MONTH) ) +
+                      "/" +
+                      String.valueOf(cal.get(Calendar.YEAR) );
 
         try {
             initialMonitoringPhaseConfig = new File(fileName);
@@ -58,51 +61,29 @@ public class InitialMonitoringPhase {
             XPath path = pathFactory.newXPath();
             startDate = (String) path.evaluate("config/initial-monitoring/startDate", doc);
             
+            // if empty
             if(startDate.isEmpty()) {
-                System.out.println("EMPTY");
-            } else {
-                System.out.println(startDate);
-            }
-            
-//            NodeList parentNode = doc.getElementsByTagName("initial-monitoring");
-            
-//            // we only have one level in our XML file
-//            Node childrenNodes = parentNode.item(1);
-//            
-////            if (childrenNodes.getNodeType() == Node.ELEMENT_NODE) {
-//                Element element = (Element) parentNode;
-//                startDate = element.getElementsByTagName("startDate").item(0).getTextContent();
-////            }
-//            
-//            /*
-
-            /*
-            // if the 'start-date' element is empty...
-            if (startDate.equals("")) {
-                // set the element...
-                Element element = (Element) parentNode;
-                element.appendChild(doc.createTextNode(startDate));
-
-                // and write it...
-                TransformerFactory transformerFactory = TransformerFactory.newInstance();
-                Transformer transformer = transformerFactory.newTransformer();
-                DOMSource source = new DOMSource(doc);
-                StreamResult result = new StreamResult(new File(fileName));
-                transformer.transform(source, result);
-
-                // then run the initial monitoring phase                
-                generateSaturatedModel();
-                generateUnsaturatedModel();
-
-            } else if (startDate.equals(currentDate)) {
-                return;
-            }
-            */
+                Node root = doc.getFirstChild();
+                Node sd = doc.getElementsByTagName("startDate").item(0);
+                startDate = String.valueOf(cal.get(Calendar.DAY_OF_MONTH) ) +
+                            "/" +
+                            String.valueOf(cal.get(Calendar.MONTH) ) +
+                            "/" +
+                            String.valueOf(cal.get(Calendar.YEAR) );
+                sd.setTextContent(startDate);
+                
+                // write the content into xml file
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		Transformer transformer = transformerFactory.newTransformer();
+		DOMSource source = new DOMSource(doc);
+		StreamResult result = new StreamResult(new File(fileName));
+		transformer.transform(source, result);
+            }          
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
-
+    
     /**
      *
      */
