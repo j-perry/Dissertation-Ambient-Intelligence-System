@@ -3,10 +3,8 @@
 
 package ami.system.intelligence.engine.ils;
 
-import java.util.ArrayList;
-
 /**
- *
+ * 
  * @author Jonathan Perry
  */
 public class IncrementalSynchronousLearning {
@@ -18,26 +16,36 @@ public class IncrementalSynchronousLearning {
     private InitialMonitoringPhase initialMonitoringPhase;
     
     // sensor values (for processing)
-    private ArrayList<Integer> tempValues;
+    private int tempValue;
     
-    public IncrementalSynchronousLearning() {
-        tempValues = new ArrayList<>();
+    public IncrementalSynchronousLearning() {        
+        exBank = new ExperienceBank();
+        pContext = new ContextualPrompt();
+        initialMonitoringPhase = new InitialMonitoringPhase();
     }
-    
+        
     /**
-     * 
-     * @param tempValue 
-     */    
-    public void parseTemperatureValue(int tempValue) {
-        this.tempValues.add(tempValue);
+     * Runs an initial monitoring phase
+     */
+    public boolean runInitialMonitoringPhase(int tempValue) {
+        boolean run;
+        
+        if(initialMonitoringPhase.hasRun() == false) {
+            initialMonitoringPhase.run(tempValue);
+            run = true;
+        } else {
+            run = false;
+        }
+        return run;
     }
     
     /**
      * 
      */
-    public void runInitialMonitoringPhase() {
-        initialMonitoringPhase = new InitialMonitoringPhase(tempValues);
-        initialMonitoringPhase.run();
+    public void run(int tempValue) {
+        if(runInitialMonitoringPhase(0) == false) {
+            // carry out operations
+        }
     }
     
 }

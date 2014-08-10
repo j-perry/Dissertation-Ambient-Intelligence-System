@@ -6,7 +6,7 @@
 package ami.system.intelligence.engine;
 
 // libraries
-import com.pi4j.io.i2c.*;
+
 
 // internal classes
 import ami.system.operations.menu.AmISystemMenu;
@@ -30,7 +30,6 @@ public class SystemProcess {
 
     /**
      * Make it clear the system has started and at what time
-     *
      * @param hour
      * @param minute
      * @param second
@@ -38,7 +37,7 @@ public class SystemProcess {
     private void processHeading(int hour, int minute, int second) {
         // used for formatting
         String strMinute = "",
-                strSecond = "";
+               strSecond = "";
 
         // format the minute
         if (minute < 10) {
@@ -112,7 +111,7 @@ public class SystemProcess {
                     utilTime.getCurrentMinute(), // minute
                     utilTime.getCurrentSeconds() // second
                     );
-
+            
             IncrementalSynchronousLearning isl = new IncrementalSynchronousLearning();
             int prevMinute = utilTime.getCurrentMinute();
             int prevSecond = utilTime.getCurrentSeconds();
@@ -147,19 +146,17 @@ public class SystemProcess {
 
                     // ... temperature value
                     // if the current minute is greater than the past minute
-                    // (nb: what happens if the current minute is 0 and the past minute is 59?)
+                    // (NB: what happens if the current minute is 0 and the past minute is 59?)
                     if (utilTime.getCurrentMinute() > prevMinute) {
                         prevMinute = utilTime.getCurrentMinute();
                         
-                        //  Parse temperature data to our incremental learning system
-                        isl.parseTemperatureValue(getTemperature());
-                        isl.runInitialMonitoringPhase();
-
-                        //
-                        //  REPEAT FOR OTHER SENSORS
-                        //
+                        // see if we need to run an initial monitoring phase
+                        // if not, the method call inside this method will get ignored
+                        isl.runInitialMonitoringPhase(getTemperature() );
                         
-
+                        // this is our main loop
+                        isl.run(getTemperature() );
+                        
                     } else if (utilTime.getCurrentMinute() == 0 && prevMinute == 59) {
                         prevMinute = 0; // reset it                        
                     }
@@ -231,21 +228,3 @@ public class SystemProcess {
         }
     }
 }
-//        
-//        
-//        // accelerometer
-//        if(accelSensor != null) {
-//            
-//            // NB: just capture data once! also, remember we'll need an event-driven approach
-//            try {
-//                // X, Y, Z
-//                accelX = (short) accelSensor.read(accelAddr, buffer, 0, 1);
-//                accelY = (short) accelSensor.read(accelAddr, buffer, 0, 1);
-//                accelZ = (short) accelSensor.read(accelAddr, buffer, 0, 1);
-//
-//                // we'll do some correction, based on sensitivity (inaccuracy) of the device
-//                // source from the data sheet
-//            } catch (IOException ex) {
-//                ex.printStackTrace();
-//            }
-//        }

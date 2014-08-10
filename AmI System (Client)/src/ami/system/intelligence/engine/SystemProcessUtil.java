@@ -99,7 +99,7 @@ public class SystemProcessUtil {
      */
     public boolean afterHours() {
         boolean result;
-        final double afterHours = 17.30;
+        final double afterHours = 22.30; // 17.30
         cal = new GregorianCalendar();
 
         Double actualTime;
@@ -143,7 +143,7 @@ public class SystemProcessUtil {
         cal = new GregorianCalendar();
 
         double time;
-        double timeTerminate = 17.30;
+        double timeTerminate = 22.30; // 17.30
 
         int hour = cal.get(Calendar.HOUR_OF_DAY);
         int minute = cal.get(Calendar.MINUTE);
