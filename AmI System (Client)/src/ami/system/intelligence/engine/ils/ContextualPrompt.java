@@ -3,8 +3,10 @@
 
 package ami.system.intelligence.engine.ils;
 
+import java.util.HashMap;
+
 /**
- *
+ * 
  * @author Jonathan Perry
  */
 public class ContextualPrompt {
@@ -13,15 +15,28 @@ public class ContextualPrompt {
         
     }
     
-    public String parse(int value) {
-        String label = null;
+    /**
+     * Identifies the context being parsed before being processed through
+     * the fuzzy logic controller.
+     * @param value
+     * @return 
+     */
+    public String identify(int value) {
+        // what context
+        String context = null;
         
         // temperature
-        if(value > 4 && value < 40) {
-            label = "temperature";
+        int minTemp = 0;
+        int maxTemp = 40;
+                
+        // temperature
+        if(value > minTemp && value < maxTemp) {
+            context = "temperature";
         }
         
-        return label;
+        // others
+        
+        return context;
     }
     
 }

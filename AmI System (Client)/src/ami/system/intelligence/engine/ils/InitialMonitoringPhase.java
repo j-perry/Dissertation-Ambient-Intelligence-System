@@ -1,5 +1,6 @@
 package ami.system.intelligence.engine.ils;
 
+import ami.system.intelligence.engine.isl.behaviours.FuzzyLogicController;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -23,17 +24,24 @@ public class InitialMonitoringPhase {
     private File initialMonitoringPhaseConfig;
     private DocumentBuilderFactory xmlBuilderFactory;
     private DocumentBuilder xmlBuilder;
-    private ArrayList<Integer> tempValues;
+    private Stack<Integer> tempValues;
     private final String fileName = "projects/AmI_System/config.xml";
     private String startDate;
     private String currentDate;
+    private FuzzyLogicController flc;
+    private ContextualPrompt contextualPrompt;
     
+    private int hour;
+    private int minute;
+
     public InitialMonitoringPhase() {
-        tempValues = new ArrayList<>();
+        tempValues = new Stack<>();
+        flc = new FuzzyLogicController();
     }
-    
+
     /**
      * Checks to see if an initial monitoring phase has been run
+     *
      * @return
      */
     public boolean hasRun() {
@@ -72,25 +80,49 @@ public class InitialMonitoringPhase {
     }
 
     /**
-     * Performs an initial monitoring phase. 
-     * 
-     * This is conditional based on whether the present date exceeds the 
-     * first date it started - i.e., start date: 08-08-2014, current date: 09-08-2014. 
-     * 
-     * In this instance it wouldn't perform one, but instead return a model as a 
+     * Performs an initial monitoring phase.
+     *
+     * This is conditional based on whether the present date exceeds the first
+     * date it started - i.e., start date: 08-08-2014, current date: 09-08-2014.
+     *
+     * In this instance it wouldn't perform one, but instead return a model as a
      * basis for learning activities and behaviours later-on.
      */
-    public void run(int tempValue) {
+    public void run(int tempValue, int hour, int minute) {
         String date = null;
+//        HashMap<String, Integer> context = null;
+        String context;
         d = new Date();
         String deadline = "17.30";
         SimpleDateFormat sdf = new SimpleDateFormat("HH.mm");
         date = sdf.format(d).toString();
         
         // if it is not 17.30pm
-        if(!date.equals(deadline) ) {
-            tempValues.add(tempValue);
+        if (!date.equals(deadline)) {
+//            tempValues.push(tempValue);
+            
+            // identify the context
+            contextualPrompt = new ContextualPrompt();
+            context = contextualPrompt.identify(tempValue);
+            
+            // apply a fuzzy logic controller
+            // NB: we will need to return a set of data to write to the database/JSON/XML file
+            // agent controller??
+//            Map map = null;
+//            Iterator it = context.entrySet().iterator();
+//            it.hasNext();
+//            Map.Entry pairs = (Map.Entry) it.next();
+            
+            // generate and update a fuzzy logic model based on defined and pre-defined rules
+            flc.create(tempValue, context);
+//            flc.create((Integer) pairs.getValue(),  // value
+//                       (String)  pairs.getKey());   // context
+            
+            // serialize the generated fuzzy model into JSON representation
+            flc.serialize(hour, minute);
         } else {
+            generateSaturatedModel();
+            generateUnsaturatedModel();
             writeIntent();
         }
     }
@@ -100,7 +132,7 @@ public class InitialMonitoringPhase {
      */
     private void writeIntent() {
         cal = new GregorianCalendar();
-        
+
         try {
             initialMonitoringPhaseConfig = new File(fileName);
             xmlBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -124,21 +156,16 @@ public class InitialMonitoringPhase {
                 StreamResult result = new StreamResult(new File(fileName));
                 transformer.transform(source, result);
             }
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
     
     /**
-     * Identifies the type of context parsed data is
-     */
-    public void identifyContext() {
-    }
-
-    /**
      *
      */
     private void generateSaturatedModel() {
+        
     }
 
     /**

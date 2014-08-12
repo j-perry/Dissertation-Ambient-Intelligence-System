@@ -6,22 +6,22 @@
 package ami.system.intelligence.engine;
 
 // libraries
-
-
 // internal classes
 import ami.system.operations.menu.AmISystemMenu;
 import ami.system.operations.context.*;
 import ami.system.intelligence.engine.ils.IncrementalSynchronousLearning;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  * Class used to create a new system process
+ *
  * @author Jonathan Perry
  */
 public class SystemProcess {
 
     // NB: for each sensor we will need an event-driven, callback function to detect
     // changes in user interaction
-    
     // properties
     private SystemProcessUtil util;
 
@@ -30,6 +30,7 @@ public class SystemProcess {
 
     /**
      * Make it clear the system has started and at what time
+     *
      * @param hour
      * @param minute
      * @param second
@@ -37,7 +38,7 @@ public class SystemProcess {
     private void processHeading(int hour, int minute, int second) {
         // used for formatting
         String strMinute = "",
-               strSecond = "";
+                strSecond = "";
 
         // format the minute
         if (minute < 10) {
@@ -70,8 +71,8 @@ public class SystemProcess {
      */
     public void run() {
         boolean run_application = true;
-        
-        
+
+
         /*      
          *      This will be our main application loop.
          * 
@@ -84,17 +85,16 @@ public class SystemProcess {
         // check it isn't 17:30 PM or thereafter
         if (new SystemProcessUtil().afterHours() == true) {
             String msg = "It is beyond 17:30pm. Try again tomorrow at 9.00 AM or thereafter.";
-            
+
             System.out.println(msg);
-            
+
             // display the application menu
             AmISystemMenu menu = new AmISystemMenu();
             menu.input();
-        } 
-        // check it is 9:00 AM or thereafter
+        } // check it is 9:00 AM or thereafter
         else if (new SystemProcessUtil().beforeHours() == true) {
             String msg = "It is 9:00 AM or thereafter";
-            
+
             System.out.println();
             System.out.println(msg);
             System.out.println();
@@ -111,18 +111,19 @@ public class SystemProcess {
                     utilTime.getCurrentMinute(), // minute
                     utilTime.getCurrentSeconds() // second
                     );
-            
+
             IncrementalSynchronousLearning isl = new IncrementalSynchronousLearning();
             int prevMinute = utilTime.getCurrentMinute();
             int prevSecond = utilTime.getCurrentSeconds();
-            
+
             /**
-             *      Check the number of devices connected to the system
+             * Check the number of devices connected to the system
              *
-             *******************************************************************/
+             ******************************************************************
+             */
             SystemProcessUtil.SystemDevices utilDevices = new SystemProcessUtil.SystemDevices();
             int noSensors = 0;
-            
+
             // temperature sensor
             if (utilDevices.temperatureSensorConnected() == true) {
                 noSensors++;
@@ -130,7 +131,7 @@ public class SystemProcess {
 
             // assign number of sensors connected
             util.setNoSensors(noSensors);
-            
+
             // display number of sensors connected
             System.out.println();
             System.out.println("noSensors: " + noSensors);
@@ -150,13 +151,17 @@ public class SystemProcess {
                     if (utilTime.getCurrentMinute() > prevMinute) {
                         prevMinute = utilTime.getCurrentMinute();
                         
+                        GregorianCalendar cal = new GregorianCalendar();
+                        
                         // see if we need to run an initial monitoring phase
                         // if not, the method call inside this method will get ignored
-                        isl.runInitialMonitoringPhase(getTemperature() );
-                        
+                        isl.runInitialMonitoringPhase(getTemperature(),           // temperature
+                                Integer.valueOf(cal.get(Calendar.HOUR_OF_DAY)),  // hour
+                                Integer.valueOf(cal.get(Calendar.MINUTE)) );     // minute
+
                         // this is our main loop
-                        isl.run(getTemperature() );
-                        
+//                        isl.run(getTemperature());
+
                     } else if (utilTime.getCurrentMinute() == 0 && prevMinute == 59) {
                         prevMinute = 0; // reset it                        
                     }
@@ -166,7 +171,7 @@ public class SystemProcess {
                 // check whether to terminate the system process
                 if (run_application == false) {
                     System.out.print("System has finished for the day. ");
-                    
+
                     // display the application menu
                     AmISystemMenu menu = new AmISystemMenu();
                     menu.input();
@@ -175,7 +180,7 @@ public class SystemProcess {
             }
         }
     }
-    
+
     /**
      * Returns the current temperature (in Fahrenheit)
      *
@@ -194,7 +199,7 @@ public class SystemProcess {
 
         // write a temperature value
         System.out.println(temperatureTitle + tempValue);
-        
+
         return tempValue;
     }
 
@@ -219,11 +224,11 @@ public class SystemProcess {
     public void delay(int seconds) {
         int milliseconds = (seconds * 1000);
         final String msg = "System will start in 15 seconds to ensure a network connection is established";
-        
+
         try {
             System.out.println(msg);
             Thread.sleep(milliseconds);
-        } catch(InterruptedException ex) {
+        } catch (InterruptedException ex) {
             ex.printStackTrace();
         }
     }

@@ -3,6 +3,8 @@
 
 package ami.system.intelligence.engine.ils;
 
+import java.util.HashMap;
+
 /**
  * 
  * @author Jonathan Perry
@@ -15,6 +17,8 @@ public class IncrementalSynchronousLearning {
     private ContextualPrompt pContext;
     private InitialMonitoringPhase initialMonitoringPhase;
     
+    private HashMap<String, Integer> context;
+    
     // sensor values (for processing)
     private int tempValue;
     
@@ -23,15 +27,15 @@ public class IncrementalSynchronousLearning {
         pContext = new ContextualPrompt();
         initialMonitoringPhase = new InitialMonitoringPhase();
     }
-        
+    
     /**
      * Runs an initial monitoring phase
      */
-    public boolean runInitialMonitoringPhase(int tempValue) {
+    public boolean runInitialMonitoringPhase(int tempValue, int hour, int minute) {
         boolean run;
         
         if(initialMonitoringPhase.hasRun() == false) {
-            initialMonitoringPhase.run(tempValue);
+            initialMonitoringPhase.run(tempValue, hour, minute);
             run = true;
         } else {
             run = false;
@@ -40,11 +44,12 @@ public class IncrementalSynchronousLearning {
     }
     
     /**
-     * 
+     * Runs our learning system (ISL?), following the initial monitoring phase
+     * which keeps our overall model nice and consistent (well, that's the idea anyway!)
      */
     public void run(int tempValue) {
-        if(runInitialMonitoringPhase(0) == false) {
-            // carry out operations
+        if(runInitialMonitoringPhase(0, 0, 0) == true) {
+//            context = pContext.identify(tempValue);
         }
     }
     

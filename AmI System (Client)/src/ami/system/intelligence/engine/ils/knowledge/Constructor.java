@@ -1,7 +1,7 @@
 
 
 
-package ami.system.intelligence.engine.ils.rules;
+package ami.system.intelligence.engine.ils.knowledge;
 
 /**
  *
