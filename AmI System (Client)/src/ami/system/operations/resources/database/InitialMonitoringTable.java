@@ -10,7 +10,7 @@ import java.sql.*;
  *
  * @author Jonathan Perry
  */
-public class InitialMonitoringDB implements IDatabase {
+public class InitialMonitoringTable implements IDatabase {
     
     private String query;
     
@@ -19,7 +19,7 @@ public class InitialMonitoringDB implements IDatabase {
     private ResultSet resultSet;
     private Connection conn;
     
-    public InitialMonitoringDB() {
+    public InitialMonitoringTable() {
         // register the driver
         try {
             Class.forName(driver);

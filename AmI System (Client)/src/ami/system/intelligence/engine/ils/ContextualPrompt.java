@@ -3,10 +3,8 @@
 
 package ami.system.intelligence.engine.ils;
 
-import java.util.HashMap;
-
 /**
- * 
+ * Identifies the context being parsed
  * @author Jonathan Perry
  */
 public class ContextualPrompt {

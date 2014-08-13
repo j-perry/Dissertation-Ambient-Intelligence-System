@@ -1,6 +1,7 @@
 package ami.system.intelligence.engine.ils;
 
 import ami.system.intelligence.engine.isl.behaviours.FuzzyLogicController;
+
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -115,9 +116,7 @@ public class InitialMonitoringPhase {
             
             // generate and update a fuzzy logic model based on defined and pre-defined rules
             flc.create(tempValue, context);
-//            flc.create((Integer) pairs.getValue(),  // value
-//                       (String)  pairs.getKey());   // context
-            
+
             // persist the generated fuzzy model to a MySQL database table
             flc.persist(hour, minute);
         } else {

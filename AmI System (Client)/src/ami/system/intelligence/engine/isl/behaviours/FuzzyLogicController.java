@@ -1,6 +1,6 @@
 package ami.system.intelligence.engine.isl.behaviours;
 
-import ami.system.operations.resources.database.InitialMonitoringDB;
+import ami.system.operations.resources.database.InitialMonitoringTable;
 
 /**
  * Based on implementation in
@@ -13,13 +13,13 @@ public class FuzzyLogicController {
     private DataBase dataBase;
     private RuleBase ruleBase;
     private DecisionTree decisionTree;
-    private InitialMonitoringDB dbInitial;
+    private InitialMonitoringTable dbInitial;
 
     public FuzzyLogicController() {
         dataBase = new DataBase();
         ruleBase = new RuleBase();
         decisionTree = new DecisionTree();        
-        dbInitial = new InitialMonitoringDB();
+        dbInitial = new InitialMonitoringTable();
     }
 
     /**
