@@ -100,12 +100,13 @@ public class ClientInfo implements IDatabase {
      */
     private void createTable() {
         String tableName = "SystemInfo";
+        
         query = "CREATE TABLE IF NOT EXISTS " + tableName + " " +
                 "( " +
                 "  Id             INTEGER AUTO_INCREMENT PRIMARY KEY, " +
                 "  Hours          INTEGER, " + 
                 "  Minutes        INTEGER, " + 
-                "  MacAddr        INTEGER, " + 
+                "  MacAddr        VARCHAR(30), " + 
                 "  NoSensors      INTEGER  " +
                 ")";
         
@@ -129,14 +130,12 @@ public class ClientInfo implements IDatabase {
      * @param noSensors 
      */
     public void persist(int hours, int minutes, String macAddr, int noSensors) {
-        query = "INSERT INTO SystemInfo (Hours, Minutes, MacAddr, NoSensors" +
+        query = "INSERT INTO SystemInfo (Hours, Minutes, MacAddr, NoSensors) " +
                 "VALUES " +
-                "( " +
-                    "'" + hours     + "', " +
-                    "'" + minutes   + "', " +
-                    "'" + macAddr   + "', " +
-                    "'" + noSensors + "'" +
-                ")";
+                "(" + hours + ", " +
+                + minutes + ", "
+                + "'" + macAddr + "', " +
+                + noSensors + ")";
         
         int status = 0;
         

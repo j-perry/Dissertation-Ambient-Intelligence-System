@@ -132,7 +132,7 @@ public class SystemProcessUtil {
 
         return result;
     }
-
+    
     /**
      * Checks the current time. If it is 17.30 PM, stop system operation
      *
@@ -142,7 +142,7 @@ public class SystemProcessUtil {
         boolean terminate;
         cal = new GregorianCalendar();
         
-        double test = 19.55;
+        double test = 20.50;
 
         double time;
 //        double timeTerminate = 22.30; // 17.30
@@ -157,8 +157,6 @@ public class SystemProcessUtil {
         time = d_hour;
         time += d_minute;
         
-        System.out.println("THE TIME NOW IS: " + time);
-
         // if the current time is 17.30 PM
         if (time == timeTerminate) {
             // inform the system to terminate
