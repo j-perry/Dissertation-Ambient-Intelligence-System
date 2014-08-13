@@ -41,7 +41,7 @@ public class InitialMonitoringTable implements IDatabase {
             
             // create the table if necessary
             createTable();
-            System.out.println("> Connection has been found");
+            System.out.println("> Connection to table Initial has been found.");
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
