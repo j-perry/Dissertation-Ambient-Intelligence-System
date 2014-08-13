@@ -118,7 +118,7 @@ public class InitialMonitoringPhase {
             flc.create(tempValue, context);
 
             // persist the generated fuzzy model to a MySQL database table
-            flc.persist(hour, minute);
+            flc.persist(hour, minute);            
         } else {
             generateSaturatedModel();
             generateUnsaturatedModel();

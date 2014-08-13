@@ -10,6 +10,7 @@ package ami.system.intelligence.engine;
 import ami.system.operations.menu.AmISystemMenu;
 import ami.system.operations.context.*;
 import ami.system.intelligence.engine.ils.IncrementalSynchronousLearning;
+import ami.system.operations.resources.database.ClientInfo;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -71,6 +72,7 @@ public class SystemProcess {
      */
     public void run() {
         boolean run_application = true;
+        ClientInfo clientInfo = null;
 
 
         /*      
@@ -142,7 +144,16 @@ public class SystemProcess {
                 // if it is 17.30, terminate the application
                 if (util.checkTimeBounds() == true) {
                     run_application = false;
-                } // else, continue running the system
+                    
+                    // write data about the client and this session
+                    clientInfo.open();
+                    clientInfo.persist(util.getAccumulatedHours(), 
+                            util.getAccumulatedMinutes(), 
+                            util.getDeviceAddress(), 
+                            noSensors);                    
+                    clientInfo.close();
+                } 
+                // else, continue running the system
                 else {
 
                     // ... temperature value
