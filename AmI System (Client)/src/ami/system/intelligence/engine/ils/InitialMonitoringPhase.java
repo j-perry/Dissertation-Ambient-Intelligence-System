@@ -118,8 +118,8 @@ public class InitialMonitoringPhase {
 //            flc.create((Integer) pairs.getValue(),  // value
 //                       (String)  pairs.getKey());   // context
             
-            // serialize the generated fuzzy model into JSON representation
-            flc.serialize(hour, minute);
+            // persist the generated fuzzy model to a MySQL database table
+            flc.persist(hour, minute);
         } else {
             generateSaturatedModel();
             generateUnsaturatedModel();
