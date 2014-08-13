@@ -60,13 +60,12 @@ public class RuleBase {
             currTempEntry = (Map.Entry) it.next();
 
             while (it.hasNext()) {
+                // store the previous entry
                 prevTempEntry = currTempEntry;
                 
+                // get the next entry
                 currTempEntry = (Map.Entry) it.next();
-                
-                System.out.println("prevTempEntry: " + prevTempEntry.getKey() );
-                System.out.println("currTempEntry: " + currTempEntry.getKey() );
-                
+                                
                 // if... then...
                 // very cold vs cold, cold vs warm, etc.
                 // if value is between 0 AND value is between 10
