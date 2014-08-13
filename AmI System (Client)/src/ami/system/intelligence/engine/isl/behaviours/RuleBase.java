@@ -54,7 +54,6 @@ public class RuleBase {
             it = tempRules.entrySet().iterator();
             Map.Entry currTempEntry = null;
             Map.Entry prevTempEntry = null;
-            int i = 0;
             
             // get the first entry
             currTempEntry = (Map.Entry) it.next();
