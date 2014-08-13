@@ -142,7 +142,7 @@ public class SystemProcessUtil {
         boolean terminate;
         cal = new GregorianCalendar();
         
-        double test = 20.50;
+        double test = 21.11;
 
         double time;
 //        double timeTerminate = 22.30; // 17.30
