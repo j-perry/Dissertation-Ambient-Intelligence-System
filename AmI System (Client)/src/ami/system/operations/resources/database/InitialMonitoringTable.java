@@ -18,6 +18,8 @@ public class InitialMonitoringTable implements IDatabase {
     private PreparedStatement prepQuery;
     private ResultSet resultSet;
     private Connection conn;
+        
+    private final String tableName = "InitialMonitoring";
     
     public InitialMonitoringTable() {
         // register the driver
@@ -41,7 +43,7 @@ public class InitialMonitoringTable implements IDatabase {
             
             // create the table if necessary
             createTable();
-            System.out.println("> Connection to table Initial has been found.");
+            System.out.println("> Connection to table '" + tableName + "' has been found.");
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -63,7 +65,6 @@ public class InitialMonitoringTable implements IDatabase {
      * Creates a table if it doesn't exist
      */
     private void createTable() {
-        String tableName = "initial";
         query = "CREATE TABLE IF NOT EXISTS " + tableName + " " +
                 "( " +
                 "  Id             INTEGER AUTO_INCREMENT PRIMARY KEY, " +

@@ -77,7 +77,7 @@ public class ClientInfo implements IDatabase {
             
             // create the table if necessary
             createTable();
-            System.out.println("> Connection to table SystemInfo has been found.");
+            System.out.println("> Connection to table 'SystemInfo' has been found.");
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
