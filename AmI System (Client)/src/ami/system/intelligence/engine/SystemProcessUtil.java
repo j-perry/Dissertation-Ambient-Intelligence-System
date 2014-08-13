@@ -141,9 +141,12 @@ public class SystemProcessUtil {
     public boolean checkTimeBounds() {
         boolean terminate;
         cal = new GregorianCalendar();
+        
+        double test = 19.55;
 
         double time;
-        double timeTerminate = 22.30; // 17.30
+//        double timeTerminate = 22.30; // 17.30
+        double timeTerminate = test;
 
         int hour = cal.get(Calendar.HOUR_OF_DAY);
         int minute = cal.get(Calendar.MINUTE);
@@ -153,6 +156,8 @@ public class SystemProcessUtil {
 
         time = d_hour;
         time += d_minute;
+        
+        System.out.println("THE TIME NOW IS: " + time);
 
         // if the current time is 17.30 PM
         if (time == timeTerminate) {
@@ -299,29 +304,23 @@ public class SystemProcessUtil {
     }
 
     /**
-     * Returns the client device MAC address. This will be used to persist data
+     * Returns the client (host) name. This will be used to persist data
      * to the database for presentation on the web application.
      *
-     * @return the agent's MAC address
+     * @return the agent's host name
      */
-    public String getDeviceAddress() {
+    public String getDeviceName() {
         InetAddress ipAddr;
-        StringBuilder mac = new StringBuilder();
+        StringBuilder hostName = new StringBuilder();
 
         try {
             ipAddr = InetAddress.getLocalHost();
-            NetworkInterface network = NetworkInterface.getByInetAddress(ipAddr);
-            byte[] macAddr = network.getHardwareAddress();
-
-            for (int i = 0; i < macAddr.length; i++) {
-                mac.append(String.format("%02X%s", macAddr[i], (i < macAddr.length - 1) ? "-" : ""));
-            }
-
-        } catch (UnknownHostException | SocketException ex) {
+            hostName.append(ipAddr.getHostName() );
+        } catch (UnknownHostException ex) {
             ex.printStackTrace();
         }
         
-        return mac.toString();
+        return hostName.toString();
     }
     
     /**

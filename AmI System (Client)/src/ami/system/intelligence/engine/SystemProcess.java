@@ -100,6 +100,9 @@ public class SystemProcess {
             System.out.println();
             System.out.println(msg);
             System.out.println();
+            
+            // create a new ClientInfo object
+            clientInfo = new ClientInfo();
 
             // Get the start time. We'll use this for calculation in SystemProcessUtil class later.
             SystemProcessUtil.SystemTime utilTime = new SystemProcessUtil.SystemTime();
@@ -149,7 +152,7 @@ public class SystemProcess {
                     clientInfo.open();
                     clientInfo.persist(util.getAccumulatedHours(), 
                             util.getAccumulatedMinutes(), 
-                            util.getDeviceAddress(), 
+                            util.getDeviceName(),
                             noSensors);                    
                     clientInfo.close();
                 } 

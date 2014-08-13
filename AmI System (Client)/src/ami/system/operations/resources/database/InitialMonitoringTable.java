@@ -87,10 +87,10 @@ public class InitialMonitoringTable implements IDatabase {
     } 
     
     /**
-     * 
+     * Writes data to our table
      */
     public void persist(int hour, int minute, int value, String context, String linguisticType) {
-        query = "INSERT INTO initial (Hour, Minute, Value, Context, LinguisticType)" +
+        query = "INSERT INTO " + tableName + " (Hour, Minute, Value, Context, LinguisticType)" +
                 "VALUES ('" + hour + "', " +
                         "'" + minute + "', " +
                         "'" + value + "', " +
