@@ -90,16 +90,13 @@ public class InitialMonitoringTable implements IDatabase {
      */
     public void persist(int hour, int minute, int value, String context, String linguisticType) {
         query = "INSERT INTO initial (Hour, Minute, Value, Context, LinguisticType)" +
-                "VALUES ('" + hour + "' ," +
-                        "'" + minute + "' ," +
-                        "'" + value + "' ," +
-                        "'" + context + "' ," +
+                "VALUES ('" + hour + "', " +
+                        "'" + minute + "', " +
+                        "'" + value + "', " +
+                        "'" + context + "', " +
                         "'" + linguisticType + "')";
         int status = 0;
                 
-        // create the database table, if it doen't exist
-        
-        
         try {
             qryStatement = conn.createStatement();
             status = qryStatement.executeUpdate(query);

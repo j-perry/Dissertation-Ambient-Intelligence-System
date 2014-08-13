@@ -7,6 +7,7 @@ import static ami.system.operations.resources.database.IDatabase.dbUrl;
 import static ami.system.operations.resources.database.IDatabase.driver;
 import static ami.system.operations.resources.database.IDatabase.password;
 import static ami.system.operations.resources.database.IDatabase.username;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -23,8 +24,8 @@ public class ClientInfo implements IDatabase {
     /**
      * Properties
      */
-    private int hour;
-    private int minute;
+    private int hours;
+    private int minutes;
     private String macAddr;
     private int noSensors;
     
@@ -38,7 +39,7 @@ public class ClientInfo implements IDatabase {
     private Connection conn;
     
     
-    public ClientInfo(int hour, int minute, String macAddr, int noSensors) {
+    public ClientInfo(int hours, int minutes, String macAddr, int noSensors) {
         // register the driver
         try {
             Class.forName(driver);
@@ -48,8 +49,8 @@ public class ClientInfo implements IDatabase {
             ex.printStackTrace();
         }
         
-        this.hour = hour;
-        this.minute = minute;
+        this.hours = hours;
+        this.minutes = minutes;
         this.macAddr = macAddr;
         this.noSensors = noSensors;
     }
@@ -105,7 +106,7 @@ public class ClientInfo implements IDatabase {
                 "  Hours          INTEGER, " + 
                 "  Minutes        INTEGER, " + 
                 "  MacAddr        INTEGER, " + 
-                "  Context        INTEGER  " +
+                "  NoSensors      INTEGER  " +
                 ")";
         
         int status = 0;
@@ -122,13 +123,33 @@ public class ClientInfo implements IDatabase {
     /**
      * Write info about our client device for this session to the SystemInfo table
      * 
-     * @param hour
-     * @param minute
+     * @param hours
+     * @param minutes
      * @param macAddr
      * @param noSensors 
      */
-    public void persist(int hour, int minute, String macAddr, int noSensors) {
+    public void persist(int hours, int minutes, String macAddr, int noSensors) {
+        query = "INSERT INTO SystemInfo (Hours, Minutes, MacAddr, NoSensors" +
+                "VALUES " +
+                "( " +
+                    "'" + hours     + "', " +
+                    "'" + minutes   + "', " +
+                    "'" + macAddr   + "', " +
+                    "'" + noSensors + "'" +
+                ")";
         
+        int status = 0;
+        
+        try {
+            qryStatement = conn.createStatement();
+            status = qryStatement.executeUpdate(query);
+            
+            System.out.println("> Data has been written");
+            System.out.println();
+        }
+        catch(SQLException ex) {
+            ex.printStackTrace();
+        }
     }
     
 }
