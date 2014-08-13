@@ -31,6 +31,11 @@ public class FuzzyLogicController {
      */
     public void create(int i, String context) {
         dataBase = decisionTree.generate(i, context);
+        
+        // type
+        System.out.println();
+        System.out.println("Linguistic Type: " + dataBase.getLinguisticType());
+        System.out.println();        
     }
 
     /**
