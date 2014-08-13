@@ -106,7 +106,7 @@ public class ClientInfo implements IDatabase {
                 "  Id             INTEGER AUTO_INCREMENT PRIMARY KEY, " +
                 "  Hours          INTEGER, " + 
                 "  Minutes        INTEGER, " + 
-                "  MacAddr        VARCHAR(30), " + 
+                "  HostName       VARCHAR(30), " + 
                 "  NoSensors      INTEGER  " +
                 ")";
         
@@ -129,13 +129,15 @@ public class ClientInfo implements IDatabase {
      * @param macAddr
      * @param noSensors 
      */
-    public void persist(int hours, int minutes, String macAddr, int noSensors) {
-        query = "INSERT INTO SystemInfo (Hours, Minutes, MacAddr, NoSensors) " +
+    public void persist(int hours, int minutes, String hostname, int noSensors) {
+        query = "INSERT INTO SystemInfo (Hours, Minutes, HostName, NoSensors) " +
                 "VALUES " +
-                "(" + hours + ", " +
-                + minutes + ", "
-                + "'" + macAddr + "', " +
-                + noSensors + ")";
+                "(" 
+                   + hours + ", "
+                   + minutes + ", "
+                   + "'" + hostname + "', "
+                   + noSensors + 
+                ")";
         
         int status = 0;
         
