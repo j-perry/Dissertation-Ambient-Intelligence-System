@@ -95,6 +95,36 @@ public class ClientInfo implements IDatabase {
         }
     }
     
+    
+    /**
+     * Returns the number of sessions from the SystemInfo table
+     * @return 
+     */
+    public int getSessionId() {
+       int sessionId = 0;
+       query = "SELECT COUNT(*) FROM SystemInfo";
+       int status = 0;
+       
+       try {
+           qryStatement = conn.createStatement();
+           ResultSet rs = qryStatement.executeQuery(query);
+           
+           rs.next();
+           sessionId = rs.getInt(1);
+           rs.close();
+           conn.close();
+       } catch(SQLException ex) {
+           ex.printStackTrace();
+       }
+       
+       // if none exist, start at 1
+       if(sessionId == 0) {
+           sessionId = 1;
+       }
+       
+       return sessionId;
+    }
+    
     /**
      * Creates a SystemInfo table if it doesn't yet exist
      */

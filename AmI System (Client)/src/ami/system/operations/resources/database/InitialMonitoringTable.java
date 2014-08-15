@@ -68,8 +68,13 @@ public class InitialMonitoringTable implements IDatabase {
         query = "CREATE TABLE IF NOT EXISTS " + tableName + " " +
                 "( " +
                 "  Id             INTEGER AUTO_INCREMENT PRIMARY KEY, " +
+                "  SessionId      INTEGER, " + 
+                "  Hostname       VARCHAR(30), " +
                 "  Hour           INTEGER, " + 
                 "  Minute         INTEGER, " + 
+                "  Day            VARCHAR(20), " +
+                "  Month          VARCHAR(20), " +
+                "  Year           INTEGER, " +
                 "  Value          INTEGER, " + 
                 "  Context        VARCHAR(20), " + 
                 "  LinguisticType VARCHAR(30) " + 
@@ -84,15 +89,20 @@ public class InitialMonitoringTable implements IDatabase {
         catch(SQLException ex) {
             ex.printStackTrace();
         }
-    } 
-    
+    }
+        
     /**
      * Writes data to our table
      */
-    public void persist(int hour, int minute, int value, String context, String linguisticType) {
-        query = "INSERT INTO " + tableName + " (Hour, Minute, Value, Context, LinguisticType)" +
-                "VALUES ('" + hour + "', " +
+    public void persist(int sessionId, String hostname, int hour, int minute, String day, String month, int year, int value, String context, String linguisticType) {
+        query = "INSERT INTO " + tableName + " (SessionId, Hostname, Hour, Minute, Value, Context, LinguisticType)" +
+                "VALUES ('" + sessionId + "', " +
+                        "'" + hostname + "', " +
+                        "'" + hour + "', " +
                         "'" + minute + "', " +
+                        "'" + day + "', " +
+                        "'" + month + "', " +
+                        "'" + year + "', " +
                         "'" + value + "', " +
                         "'" + context + "', " +
                         "'" + linguisticType + "')";

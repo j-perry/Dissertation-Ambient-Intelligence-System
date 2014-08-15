@@ -30,21 +30,25 @@ public class SystemProcessUtil {
                 startSeconds;
     
     // properties
-    private int hours = 0,
-                minutes = 0,
-                seconds = 0;
+    private int hours,
+                minutes,
+                seconds;
+    
+    private int sessionId;
     private int noSensors;
 
     /**
      * 
-     * @param startHour the hour the system began
-     * @param startMinute the minute in the hour the system began
+     * @param startHour    the hour the system began
+     * @param startMinute  the minute in the hour the system began
      * @param startSeconds the seconds in the hour the system began
+     * @param sessionId    the session ID
      */
-    public SystemProcessUtil(int startHour, int startMinute, int startSeconds) {
+    public SystemProcessUtil(int startHour, int startMinute, int startSeconds, int sessionId) {
         this.startHour = startHour;
         this.startMinute = startMinute;
         this.startSeconds = startSeconds;
+        this.sessionId = sessionId;
     }
     
     public SystemProcessUtil() {
@@ -99,7 +103,7 @@ public class SystemProcessUtil {
      */
     public boolean afterHours() {
         boolean result;
-        final double afterHours = 22.30; // 17.30
+        final double afterHours = 17.30;
         cal = new GregorianCalendar();
 
         Double actualTime;
@@ -117,7 +121,7 @@ public class SystemProcessUtil {
         // compute products
         actualTime = d_hour;
         actualTime += d_minute;
-
+        
         // convert to .2 decimal places
         DecimalFormat df = new DecimalFormat("#.##");
         actualTime = Double.valueOf(df.format(actualTime));
@@ -142,7 +146,7 @@ public class SystemProcessUtil {
         boolean terminate;
         cal = new GregorianCalendar();
         
-        double test = 21.19;
+        double test = 18.01;
 
         double time;
 //        double timeTerminate = 22.30; // 17.30
@@ -158,7 +162,7 @@ public class SystemProcessUtil {
         time += d_minute;
         
         // if the current time is 17.30 PM
-        if (time == timeTerminate) {
+        if (time == timeTerminate || time > timeTerminate) {
             // inform the system to terminate
             terminate = true;
         } else {
@@ -257,6 +261,22 @@ public class SystemProcessUtil {
         }
         
         return seconds;
+    }
+    
+    /**
+     * 
+     * @param sessionId 
+     */
+    public void setSessionId(int sessionId) {
+        this.sessionId = sessionId;
+    }
+    
+    /**
+     * 
+     * @return 
+     */
+    public int getSessionId() {
+        return sessionId;
     }
     
     /**

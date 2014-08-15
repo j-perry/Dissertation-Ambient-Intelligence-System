@@ -33,9 +33,8 @@ public class FuzzyLogicController {
         dataBase = decisionTree.generate(i, context);
         
         // type
-        System.out.println();
         System.out.println("Linguistic Type: " + dataBase.getLinguisticType());
-        System.out.println();        
+        System.out.println();
     }
 
     /**
@@ -45,9 +44,18 @@ public class FuzzyLogicController {
      * @param hour
      * @param minute
      */
-    public void persist(int hour, int minute) {
+    public void persist(int sessionId, String hostname, int hour, int minute, String day, String month, int year) {
         dbInitial.open();
-        dbInitial.persist(hour, minute, dataBase.getValue(), dataBase.getType(), dataBase.getLinguisticType());
+        dbInitial.persist(sessionId, 
+                hostname,
+                hour, 
+                minute, 
+                day, 
+                month, 
+                year,
+                dataBase.getValue(), 
+                dataBase.getType(), 
+                dataBase.getLinguisticType());
         dbInitial.close();
     }
 }

@@ -31,11 +31,11 @@ public class IncrementalSynchronousLearning {
     /**
      * Runs an initial monitoring phase
      */
-    public boolean runInitialMonitoringPhase(int tempValue, int hour, int minute) {
+    public boolean runInitialMonitoringPhase(int sessionId, String hostname, int tempValue, int hour, int minute) {
         boolean run;
         
         if(initialMonitoringPhase.hasRun() == false) {
-            initialMonitoringPhase.run(tempValue, hour, minute);
+            initialMonitoringPhase.run(sessionId, hostname, tempValue, hour, minute);
             run = true;
         } else {
             run = false;
@@ -48,7 +48,7 @@ public class IncrementalSynchronousLearning {
      * which keeps our overall model nice and consistent (well, that's the idea anyway!)
      */
     public void run(int tempValue) {
-        if(runInitialMonitoringPhase(0, 0, 0) == true) {
+        if(runInitialMonitoringPhase(0, null, 0, 0, 0) == true) {
 //            context = pContext.identify(tempValue);
         }
     }

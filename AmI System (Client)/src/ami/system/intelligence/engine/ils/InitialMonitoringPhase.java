@@ -34,7 +34,7 @@ public class InitialMonitoringPhase {
     
     private int hour;
     private int minute;
-
+    
     public InitialMonitoringPhase() {
         tempValues = new Stack<>();
         flc = new FuzzyLogicController();
@@ -89,7 +89,7 @@ public class InitialMonitoringPhase {
      * In this instance it wouldn't perform one, but instead return a model as a
      * basis for learning activities and behaviours later-on.
      */
-    public void run(int tempValue, int hour, int minute) {
+    public void run(int sessionId, String hostname, int tempValue, int hour, int minute) {
         String date = null;
 //        HashMap<String, Integer> context = null;
         String context;
@@ -116,13 +116,22 @@ public class InitialMonitoringPhase {
             
             // generate and update a fuzzy logic model based on defined and pre-defined rules
             flc.create(tempValue, context);
-
+            
+            cal = new GregorianCalendar();
+            d = new Date();
+            
+            // day, month, year
+            String day   = new SimpleDateFormat("dd").format(d).toString();
+            String month = new SimpleDateFormat("MM").format(d).toString();
+            int year     = Integer.valueOf(new SimpleDateFormat("yyyy").format(d).toString() );
+            
             // persist the generated fuzzy model to a MySQL database table
-            flc.persist(hour, minute);            
+//            flc.persist(hour, minute);   
+            flc.persist(sessionId, hostname, hour, minute, day, month, year);
         } else {
             generateSaturatedModel();
             generateUnsaturatedModel();
-            writeIntent();
+            writeIntent();            
         }
     }
 
@@ -147,7 +156,7 @@ public class InitialMonitoringPhase {
                         + "/"
                         + String.valueOf(cal.get(Calendar.YEAR));
                 sd.setTextContent(startDate);
-
+                
                 // write the content into xml file
                 TransformerFactory transformerFactory = TransformerFactory.newInstance();
                 Transformer transformer = transformerFactory.newTransformer();

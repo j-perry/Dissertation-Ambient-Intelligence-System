@@ -11,6 +11,7 @@ import ami.system.operations.menu.AmISystemMenu;
 import ami.system.operations.context.*;
 import ami.system.intelligence.engine.ils.IncrementalSynchronousLearning;
 import ami.system.operations.resources.database.ClientInfo;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -36,7 +37,7 @@ public class SystemProcess {
      * @param minute
      * @param second
      */
-    private void processHeading(int hour, int minute, int second) {
+    private void processHeading(int sessionId, int hour, int minute, int second) {
         // used for formatting
         String strMinute = "",
                 strSecond = "";
@@ -60,6 +61,9 @@ public class SystemProcess {
                 + "\n\n"
                 + "\t"
                 + "Started new system: " + hour + ":" + strMinute + ":" + strSecond
+                + "\n\n"
+                + "\t"
+                + "Session ID: " + sessionId 
                 + "\n\n"
                 + "---------------------------------------------"
                 + "\n";
@@ -103,24 +107,30 @@ public class SystemProcess {
             
             // create a new ClientInfo object
             clientInfo = new ClientInfo();
+            clientInfo.open();            
+            int sessionId = clientInfo.getSessionId();
+            clientInfo.close();
 
             // Get the start time. We'll use this for calculation in SystemProcessUtil class later.
             SystemProcessUtil.SystemTime utilTime = new SystemProcessUtil.SystemTime();
-            util = new SystemProcessUtil(utilTime.getCurrentHour(), // hour
+            util = new SystemProcessUtil(sessionId,
+                    utilTime.getCurrentHour(), // hour
                     utilTime.getCurrentMinute(), // minute
                     utilTime.getCurrentSeconds() // second
                     );
 
             // indicate the system has started (incl. displaying the time when it started)
-            processHeading(utilTime.getCurrentHour(), // hour
+            processHeading(
+                    sessionId,
+                    utilTime.getCurrentHour(), // hour
                     utilTime.getCurrentMinute(), // minute
                     utilTime.getCurrentSeconds() // second
                     );
-
+            
             IncrementalSynchronousLearning isl = new IncrementalSynchronousLearning();
             int prevMinute = utilTime.getCurrentMinute();
             int prevSecond = utilTime.getCurrentSeconds();
-
+            
             /**
              * Check the number of devices connected to the system
              *
@@ -140,10 +150,10 @@ public class SystemProcess {
             // display number of sensors connected
             System.out.println();
             System.out.println("noSensors: " + noSensors);
-
+            
             // main application loop
             while (run_application) {
-
+                
                 // if it is 17.30, terminate the application
                 if (util.checkTimeBounds() == true) {
                     run_application = false;
@@ -166,10 +176,22 @@ public class SystemProcess {
                         prevMinute = utilTime.getCurrentMinute();
                         
                         GregorianCalendar cal = new GregorianCalendar();
+                        double time = 0.0; 
+                        double hour = cal.get(Calendar.HOUR_OF_DAY);
+                        double minute = cal.get(Calendar.MINUTE);
+                        
+                        time = (double) hour;
+                        time += (minute / 100);
+                        
+                        DecimalFormat df = new DecimalFormat("#.##");
+                        time = Double.valueOf(df.format(time).toString() );
                         
                         // see if we need to run an initial monitoring phase
                         // if not, the method call inside this method will get ignored
-                        isl.runInitialMonitoringPhase(getTemperature(),           // temperature
+                        isl.runInitialMonitoringPhase(
+                                util.getSessionId(),                              // session ID
+                                util.getDeviceName(),                             // hostname
+                                getTemperature(time),                             // temperature
                                 Integer.valueOf(cal.get(Calendar.HOUR_OF_DAY)),  // hour
                                 Integer.valueOf(cal.get(Calendar.MINUTE)) );     // minute
 
@@ -200,7 +222,7 @@ public class SystemProcess {
      *
      * @return
      */
-    private int getTemperature() {
+    private int getTemperature(double time) {
         int tempValue;
         final String temperatureTitle = "Temperature Value: ";
 
@@ -212,7 +234,7 @@ public class SystemProcess {
         tempValue = temp.readValue();
 
         // write a temperature value
-        System.out.println(temperatureTitle + tempValue);
+        System.out.println(temperatureTitle + tempValue + "\t\t" + "Time: " + time);
 
         return tempValue;
     }
@@ -237,7 +259,7 @@ public class SystemProcess {
      */
     public void delay(int seconds) {
         int milliseconds = (seconds * 1000);
-        final String msg = "System will start in 15 seconds to ensure a network connection is established";
+        final String msg = "System will start in 10 seconds to ensure a network connection is established";
 
         try {
             System.out.println(msg);
