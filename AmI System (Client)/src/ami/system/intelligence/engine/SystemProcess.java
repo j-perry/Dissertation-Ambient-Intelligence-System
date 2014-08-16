@@ -12,8 +12,11 @@ import ami.system.operations.context.*;
 import ami.system.intelligence.engine.ils.IncrementalSynchronousLearning;
 import ami.system.operations.resources.database.ClientInfo;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Stack;
 
 /**
  * Class used to create a new system process
@@ -40,7 +43,7 @@ public class SystemProcess {
     private void processHeading(int sessionId, int hour, int minute, int second) {
         // used for formatting
         String strMinute = "",
-                strSecond = "";
+               strSecond = "";
 
         // format the minute
         if (minute < 10) {
@@ -63,7 +66,7 @@ public class SystemProcess {
                 + "Started new system: " + hour + ":" + strMinute + ":" + strSecond
                 + "\n\n"
                 + "\t"
-                + "Session ID: " + sessionId 
+                + "Session ID: " + sessionId
                 + "\n\n"
                 + "---------------------------------------------"
                 + "\n";
@@ -78,6 +81,10 @@ public class SystemProcess {
         boolean run_application = true;
         ClientInfo clientInfo = null;
 
+        // used to check it hasn't been inserted into the stack for insertion
+        // if the value has, don't write it.
+        Stack<Double> hourlyValues = new Stack<>();
+
 
         /*      
          *      This will be our main application loop.
@@ -87,7 +94,7 @@ public class SystemProcess {
          * 
          *************************************************************************************************/
 
-
+        
         // check it isn't 17:30 PM or thereafter
         if (new SystemProcessUtil().afterHours() == true) {
             String msg = "It is beyond 17:30pm. Try again tomorrow at 9.00 AM or thereafter.";
@@ -104,19 +111,20 @@ public class SystemProcess {
             System.out.println();
             System.out.println(msg);
             System.out.println();
-            
+
             // create a new ClientInfo object
             clientInfo = new ClientInfo();
-            clientInfo.open();            
+            clientInfo.open();
             int sessionId = clientInfo.getSessionId();
             clientInfo.close();
 
             // Get the start time. We'll use this for calculation in SystemProcessUtil class later.
             SystemProcessUtil.SystemTime utilTime = new SystemProcessUtil.SystemTime();
-            util = new SystemProcessUtil(sessionId,
+            util = new SystemProcessUtil(
                     utilTime.getCurrentHour(), // hour
                     utilTime.getCurrentMinute(), // minute
-                    utilTime.getCurrentSeconds() // second
+                    utilTime.getCurrentSeconds(), // second
+                    sessionId // session ID
                     );
 
             // indicate the system has started (incl. displaying the time when it started)
@@ -126,11 +134,11 @@ public class SystemProcess {
                     utilTime.getCurrentMinute(), // minute
                     utilTime.getCurrentSeconds() // second
                     );
-            
+
             IncrementalSynchronousLearning isl = new IncrementalSynchronousLearning();
             int prevMinute = utilTime.getCurrentMinute();
             int prevSecond = utilTime.getCurrentSeconds();
-            
+
             /**
              * Check the number of devices connected to the system
              *
@@ -150,23 +158,22 @@ public class SystemProcess {
             // display number of sensors connected
             System.out.println();
             System.out.println("noSensors: " + noSensors);
-            
+
             // main application loop
             while (run_application) {
-                
+
                 // if it is 17.30, terminate the application
                 if (util.checkTimeBounds() == true) {
                     run_application = false;
-                    
+
                     // write data about the client and this session
                     clientInfo.open();
-                    clientInfo.persist(util.getAccumulatedHours(), 
-                            util.getAccumulatedMinutes(), 
+                    clientInfo.persist(util.getAccumulatedHours(),
+                            util.getAccumulatedMinutes(),
                             util.getDeviceName(),
-                            noSensors);                    
+                            noSensors);
                     clientInfo.close();
-                } 
-                // else, continue running the system
+                } // else, continue running the system
                 else {
 
                     // ... temperature value
@@ -174,32 +181,65 @@ public class SystemProcess {
                     // (NB: what happens if the current minute is 0 and the past minute is 59?)
                     if (utilTime.getCurrentMinute() > prevMinute) {
                         prevMinute = utilTime.getCurrentMinute();
-                        
+
                         GregorianCalendar cal = new GregorianCalendar();
-                        double time = 0.0; 
+                        double time = 0.0;
                         double hour = cal.get(Calendar.HOUR_OF_DAY);
-                        double minute = cal.get(Calendar.MINUTE);
-                        
+                        double minute = (Double.valueOf(new SimpleDateFormat("mm").format(new Date()).toString()) / 100);
+
                         time = (double) hour;
-                        time += (minute / 100);
-                        
-                        DecimalFormat df = new DecimalFormat("#.##");
-                        time = Double.valueOf(df.format(time).toString() );
-                        
-                        // see if we need to run an initial monitoring phase
-                        // if not, the method call inside this method will get ignored
-                        isl.runInitialMonitoringPhase(
-                                util.getSessionId(),                              // session ID
-                                util.getDeviceName(),                             // hostname
-                                getTemperature(time),                             // temperature
-                                Integer.valueOf(cal.get(Calendar.HOUR_OF_DAY)),  // hour
-                                Integer.valueOf(cal.get(Calendar.MINUTE)) );     // minute
+                        time += minute;
 
-                        // this is our main loop
+                        DecimalFormat df = new DecimalFormat("0.00");
+                        time = Double.valueOf(df.format(time));
+
+                        if (!hourlyValues.contains(time)) {
+                            hourlyValues.add(time);
+
+                            // see if we need to run an initial monitoring phase
+                            // if not, the method call inside this method will get ignored
+                            isl.runInitialMonitoringPhase(
+                                    util.getSessionId(), // session ID
+                                    util.getDeviceName(), // hostname
+                                    getTemperature(time), // temperature
+                                    Integer.valueOf(cal.get(Calendar.HOUR_OF_DAY)), // hour
+                                    Integer.valueOf(cal.get(Calendar.MINUTE)));     // minute
+
+                            // this is our main loop
 //                        isl.run(getTemperature());
+                        }
+                    } else if (utilTime.getCurrentMinute() == 0) {
+                        prevMinute = utilTime.getCurrentMinute(); // reset it
 
-                    } else if (utilTime.getCurrentMinute() == 0 && prevMinute == 59) {
-                        prevMinute = 0; // reset it                        
+                        GregorianCalendar cal = new GregorianCalendar();
+                        double time = 0.0;
+                        double hour = cal.get(Calendar.HOUR_OF_DAY);
+                        double minute = (Double.valueOf(new SimpleDateFormat("mm").format(new Date()).toString()) / 100);
+
+                        time = (double) hour;
+                        time += minute;
+
+                        DecimalFormat df = new DecimalFormat("0.00");
+                        time = Double.valueOf(df.format(time));
+
+                        // to make sure we don't keep writing duplicate values more than once!!!
+                        if (!hourlyValues.contains(time)) {
+                            hourlyValues.add(time);
+
+                            // see if we need to run an initial monitoring phase
+                            // if not, the method call inside this method will get ignored
+                            isl.runInitialMonitoringPhase(
+                                    util.getSessionId(), // session ID
+                                    util.getDeviceName(), // hostname
+                                    getTemperature(time), // temperature
+                                    Integer.valueOf(cal.get(Calendar.HOUR_OF_DAY)), // hour
+                                    Integer.valueOf(cal.get(Calendar.MINUTE)));     // minute
+
+                            // this is our main loop
+//                        isl.run(getTemperature());
+                        }
+
+
                     }
 
                 }
@@ -214,6 +254,12 @@ public class SystemProcess {
                 }
 
             }
+        } else if (new SystemProcessUtil().beforeHours() == false) {
+            System.out.println("It is before 9:00. Try again later.");
+
+            // display the application menu
+            AmISystemMenu menu = new AmISystemMenu();
+            menu.input();
         }
     }
 
@@ -233,8 +279,10 @@ public class SystemProcess {
         temp.initialise();
         tempValue = temp.readValue();
 
+        String strTime = new DecimalFormat("0.00").format(time).toString();
+
         // write a temperature value
-        System.out.println(temperatureTitle + tempValue + "\t\t" + "Time: " + time);
+        System.out.println(temperatureTitle + tempValue + "\t\t" + "Time: " + strTime);
 
         return tempValue;
     }
@@ -249,23 +297,5 @@ public class SystemProcess {
      * Pauses the operation of the ambient intelligence learning system
      */
     public void pause() {
-    }
-
-    /**
-     * Delays the operation of the ambient intelligence learning system defined
-     * in milliseconds
-     *
-     * @param milliseconds
-     */
-    public void delay(int seconds) {
-        int milliseconds = (seconds * 1000);
-        final String msg = "System will start in 10 seconds to ensure a network connection is established";
-
-        try {
-            System.out.println(msg);
-            Thread.sleep(milliseconds);
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
-        }
     }
 }

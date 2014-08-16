@@ -19,7 +19,8 @@ public class AmISystemMenu {
      * Displays menu options
      */
     private void display() {
-        System.out.println("Menu");
+        System.out.println();
+        System.out.println("Menu:");
         System.out.println();
         
         final String option_one   = "> 1. Create New Session";

@@ -39,7 +39,8 @@ public class InitialMonitoringTable implements IDatabase {
     public void open() {
         try {
             // https://mysql.student.sussex.ac.uk/phpmyadmin/
-            conn = DriverManager.getConnection(dbUrl, username, password);
+//            conn = DriverManager.getConnection(dbUrl, username, password);
+            conn = DriverManager.getConnection(dbUrl);
             
             // create the table if necessary
             createTable();
@@ -95,7 +96,20 @@ public class InitialMonitoringTable implements IDatabase {
      * Writes data to our table
      */
     public void persist(int sessionId, String hostname, int hour, int minute, String day, String month, int year, int value, String context, String linguisticType) {
-        query = "INSERT INTO " + tableName + " (SessionId, Hostname, Hour, Minute, Value, Context, LinguisticType)" +
+        System.out.println("SESSION ID: " + sessionId);
+        
+        System.out.println(sessionId + ", " + 
+                           hour + ", " +
+                           minute + ", " +
+                           day + ", " +
+                           month + ", " + 
+                           year + ", " +
+                           value + ", " + 
+                           context + ", " +
+                           linguisticType
+                          );
+        
+        query = "INSERT INTO " + tableName + " (SessionId, Hostname, Hour, Minute, Day, Month, Year, Value, Context, LinguisticType)" +
                 "VALUES ('" + sessionId + "', " +
                         "'" + hostname + "', " +
                         "'" + hour + "', " +
@@ -107,7 +121,7 @@ public class InitialMonitoringTable implements IDatabase {
                         "'" + context + "', " +
                         "'" + linguisticType + "')";
         int status = 0;
-                
+        
         try {
             qryStatement = conn.createStatement();
             status = qryStatement.executeUpdate(query);

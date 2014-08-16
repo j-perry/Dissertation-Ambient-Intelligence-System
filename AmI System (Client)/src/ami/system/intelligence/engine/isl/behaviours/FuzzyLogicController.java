@@ -20,6 +20,8 @@ public class FuzzyLogicController {
         ruleBase = new RuleBase();
         decisionTree = new DecisionTree();        
         dbInitial = new InitialMonitoringTable();
+        
+        dbInitial.open();
     }
 
     /**
@@ -29,14 +31,16 @@ public class FuzzyLogicController {
      * @param i
      * @param context
      */
-    public void create(int i, String context) {
+    public DataBase create(int i, String context) {
         dataBase = decisionTree.generate(i, context);
         
         // type
         System.out.println("Linguistic Type: " + dataBase.getLinguisticType());
         System.out.println();
+        
+        return dataBase;
     }
-
+    
     /**
      * Write our sampled contextual data to a MySQL database table for computation on
      * the web server.
@@ -44,9 +48,17 @@ public class FuzzyLogicController {
      * @param hour
      * @param minute
      */
-    public void persist(int sessionId, String hostname, int hour, int minute, String day, String month, int year) {
+    public void persist(int sessionId, 
+            String hostname, 
+            int hour, 
+            int minute, 
+            String day, 
+            String month, 
+            int year) {
+        
         dbInitial.open();
-        dbInitial.persist(sessionId, 
+        dbInitial.persist(
+                sessionId, 
                 hostname,
                 hour, 
                 minute, 
@@ -58,4 +70,5 @@ public class FuzzyLogicController {
                 dataBase.getLinguisticType());
         dbInitial.close();
     }
+    
 }

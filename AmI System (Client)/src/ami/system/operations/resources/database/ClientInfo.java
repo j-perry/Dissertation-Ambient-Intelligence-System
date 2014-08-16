@@ -3,10 +3,7 @@
 
 package ami.system.operations.resources.database;
 
-import static ami.system.operations.resources.database.IDatabase.dbUrl;
-import static ami.system.operations.resources.database.IDatabase.driver;
-import static ami.system.operations.resources.database.IDatabase.password;
-import static ami.system.operations.resources.database.IDatabase.username;
+import static ami.system.operations.resources.database.IDatabase.*;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -38,23 +35,6 @@ public class ClientInfo implements IDatabase {
     private ResultSet resultSet;
     private Connection conn;
     
-    
-    public ClientInfo(int hours, int minutes, String macAddr, int noSensors) {
-        // register the driver
-        try {
-            Class.forName(driver);
-        }
-        catch(ClassNotFoundException ex) {
-            // if not found
-            ex.printStackTrace();
-        }
-        
-        this.hours = hours;
-        this.minutes = minutes;
-        this.macAddr = macAddr;
-        this.noSensors = noSensors;
-    }
-    
     public ClientInfo() {
         // register the driver
         try {
@@ -73,7 +53,8 @@ public class ClientInfo implements IDatabase {
     public void open() {
         try {
             // https://mysql.student.sussex.ac.uk/phpmyadmin/
-            conn = DriverManager.getConnection(dbUrl, username, password);
+//            conn = DriverManager.getConnection(dbUrl, username, password);
+            conn = DriverManager.getConnection(dbUrl);
             
             // create the table if necessary
             createTable();
@@ -116,6 +97,8 @@ public class ClientInfo implements IDatabase {
        } catch(SQLException ex) {
            ex.printStackTrace();
        }
+       
+       System.out.println("getSessionId(): " + sessionId);
        
        // if none exist, start at 1
        if(sessionId == 0) {

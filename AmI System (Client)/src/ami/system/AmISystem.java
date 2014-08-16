@@ -36,7 +36,6 @@ public class AmISystem {
         final int seconds = 10;
         
         SystemProcess systemProcess = new SystemProcess();
-        systemProcess.delay(seconds);
         systemProcess.run();
     }
 }

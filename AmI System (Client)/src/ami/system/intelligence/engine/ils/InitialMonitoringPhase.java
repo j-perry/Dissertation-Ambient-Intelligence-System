@@ -1,8 +1,11 @@
 package ami.system.intelligence.engine.ils;
 
+import ami.system.intelligence.engine.SystemProcessUtil;
+import ami.system.intelligence.engine.isl.behaviours.DataBase;
 import ami.system.intelligence.engine.isl.behaviours.FuzzyLogicController;
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.xml.parsers.*;
@@ -31,6 +34,8 @@ public class InitialMonitoringPhase {
     private String currentDate;
     private FuzzyLogicController flc;
     private ContextualPrompt contextualPrompt;
+        
+    private DataBase entry;
     
     private int hour;
     private int minute;
@@ -94,12 +99,32 @@ public class InitialMonitoringPhase {
 //        HashMap<String, Integer> context = null;
         String context;
         d = new Date();
-        String deadline = "17.30";
-        SimpleDateFormat sdf = new SimpleDateFormat("HH.mm");
-        date = sdf.format(d).toString();
+        cal = new GregorianCalendar();
+        double time = 0.0;
         
+        
+        SystemProcessUtil.SystemTime util = new SystemProcessUtil.SystemTime();
+        time = (double) cal.get(Calendar.HOUR_OF_DAY);
+        System.out.println("The time is: " + time);
+        time += (double) (Double.valueOf(new SimpleDateFormat("mm").format(new Date()).toString()) / 100);
+        System.out.println("The time is: " + time);
+        
+        DecimalFormat df = new DecimalFormat("#.00");
+        time = Double.valueOf(df.format(time).toString() );
+        
+        
+//        if (time == SystemProcessUtil.terminate_time) {
+//            generateSaturatedModel();
+//            generateUnsaturatedModel();
+//            writeIntent();
+//            
+//            System.out.println("INITIAL MONITORING PHASE");
+//            
+//            // write all entries to the database
+//            flc.persist(log);
+//        }
         // if it is not 17.30pm
-        if (!date.equals(deadline)) {
+        if(time != SystemProcessUtil.terminate_time) {
 //            tempValues.push(tempValue);
             
             // identify the context
@@ -114,24 +139,17 @@ public class InitialMonitoringPhase {
 //            it.hasNext();
 //            Map.Entry pairs = (Map.Entry) it.next();
             
-            // generate and update a fuzzy logic model based on defined and pre-defined rules
-            flc.create(tempValue, context);
-            
-            cal = new GregorianCalendar();
-            d = new Date();
+            // generate and update a fuzzy logic model based on defined and pre-defined rules                         
+            entry = new DataBase();
+            entry = flc.create(tempValue, context);
             
             // day, month, year
-            String day   = new SimpleDateFormat("dd").format(d).toString();
-            String month = new SimpleDateFormat("MM").format(d).toString();
-            int year     = Integer.valueOf(new SimpleDateFormat("yyyy").format(d).toString() );
+            String day   = String.valueOf(cal.get(Calendar.DAY_OF_WEEK) ); //new SimpleDateFormat("dd").format(d).toString();
+            String month = String.valueOf(cal.get(Calendar.MONTH) ); //new SimpleDateFormat("MM").format(d).toString();
+            int year     = cal.get(Calendar.YEAR); // Integer.valueOf(new SimpleDateFormat("yyyy").format(d).toString() );
             
             // persist the generated fuzzy model to a MySQL database table
-//            flc.persist(hour, minute);   
             flc.persist(sessionId, hostname, hour, minute, day, month, year);
-        } else {
-            generateSaturatedModel();
-            generateUnsaturatedModel();
-            writeIntent();            
         }
     }
 

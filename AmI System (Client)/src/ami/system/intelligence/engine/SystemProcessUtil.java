@@ -20,6 +20,9 @@ import ami.system.operations.context.Temperature;
  * @author Jonathan Perry
  */
 public class SystemProcessUtil {
+    
+    // this constant variable should be kept initialised at 17.30
+    public static final double terminate_time = 18.21;
 
     // instance variables
     private Calendar cal;
@@ -56,7 +59,7 @@ public class SystemProcessUtil {
     }
 
     /**
-     * Checks whether the system is in bounds (9.30+ PM) in operation terms
+     * Checks whether the system is in bounds (9.00+ PM) in operation terms
      *
      * @return true if it is in bounds, false if not
      */
@@ -82,7 +85,7 @@ public class SystemProcessUtil {
         actualTime += d_minute;
 
         // convert to .2 decimal places
-        DecimalFormat df = new DecimalFormat("#.##");
+        DecimalFormat df = new DecimalFormat("#.00");
         actualTime = Double.valueOf(df.format(actualTime));
 
         // if the time equals 9.30 AM or thereafter
@@ -103,13 +106,13 @@ public class SystemProcessUtil {
      */
     public boolean afterHours() {
         boolean result;
-        final double afterHours = 17.30;
+        final double afterHours = 20.30;
         cal = new GregorianCalendar();
-
+        
         Double actualTime;
         double d_hour;
         double d_minute = 0.0;
-
+        
         // get the current hour and minute in the hour
         int hour = cal.get(Calendar.HOUR_OF_DAY);
         int minute = cal.get(Calendar.MINUTE);
@@ -123,7 +126,7 @@ public class SystemProcessUtil {
         actualTime += d_minute;
         
         // convert to .2 decimal places
-        DecimalFormat df = new DecimalFormat("#.##");
+        DecimalFormat df = new DecimalFormat("#.00");
         actualTime = Double.valueOf(df.format(actualTime));
 
         // if the time is greater than or equal to 17.30 PM
@@ -146,7 +149,7 @@ public class SystemProcessUtil {
         boolean terminate;
         cal = new GregorianCalendar();
         
-        double test = 18.01;
+        double test = terminate_time;
 
         double time;
 //        double timeTerminate = 22.30; // 17.30
