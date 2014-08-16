@@ -104,24 +104,12 @@ public class InitialMonitoringPhase {
         
         SystemProcessUtil.SystemTime util = new SystemProcessUtil.SystemTime();
         time = (double) cal.get(Calendar.HOUR_OF_DAY);
-        System.out.println("The time is: " + time);
         time += (double) (Double.valueOf(new SimpleDateFormat("mm").format(new Date()).toString()) / 100);
         System.out.println("The time is: " + time);
         
         DecimalFormat df = new DecimalFormat("#.00");
         time = Double.valueOf(df.format(time).toString() );
-        
-        
-//        if (time == SystemProcessUtil.terminate_time) {
-//            generateSaturatedModel();
-//            generateUnsaturatedModel();
-//            writeIntent();
-//            
-//            System.out.println("INITIAL MONITORING PHASE");
-//            
-//            // write all entries to the database
-//            flc.persist(log);
-//        }
+                
         // if it is not 17.30pm
         if(time != SystemProcessUtil.terminate_time) {
             
@@ -143,6 +131,10 @@ public class InitialMonitoringPhase {
             
             // persist the generated fuzzy model to a MySQL database table
             flc.persist(sessionId, hostname, hour, minute, day, month, year);
+        } else {
+            generateSaturatedModel();
+            generateUnsaturatedModel();
+            writeIntent();
         }
     }
 
