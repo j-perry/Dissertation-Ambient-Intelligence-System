@@ -4,6 +4,7 @@
 package ami.system.operations.context;
 
 import com.pi4j.io.i2c.*;
+import com.pi4j.wiringpi.Gpio;
 
 /**
  * Class used to create an instance of an ultrasonic transceiver sensor
@@ -14,9 +15,9 @@ public class Movement implements ISession {
     
     /*                 DEVICE INTERFACE
      **************************************************/
+    Gpio ultraSonicTransceiver;
     
     
-        
     /*                 PROPERTIES
      *********************************************/
     
