@@ -3,7 +3,6 @@
 
 package ami.system.intelligence.engine.ils;
 
-import java.util.HashMap;
 
 /**
  * 
@@ -11,22 +10,22 @@ import java.util.HashMap;
  */
 public class IncrementalSynchronousLearning {
     
-    // instance variables
-    private Coordinator coord;
-    private ExperienceBank exBank;
+    /*
+     * instance variables
+     */
+//    private Coordinator coord;
+//    private ExperienceBank exBank;
     private ContextualPrompt pContext;
     private InitialMonitoringPhase initialMonitoringPhase;
     private MonitoringPhase sessionPhase;
     
-    private HashMap<String, Integer> context;
-    
     // sensor values (for processing)
     private int tempValue;
     
-    public IncrementalSynchronousLearning() {        
-        exBank = new ExperienceBank();
+    public IncrementalSynchronousLearning() {
         pContext = new ContextualPrompt();
         initialMonitoringPhase = new InitialMonitoringPhase();
+        sessionPhase = new MonitoringPhase();
     }
     
     /**
