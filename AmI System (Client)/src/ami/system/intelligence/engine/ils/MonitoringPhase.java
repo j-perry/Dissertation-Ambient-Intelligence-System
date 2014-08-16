@@ -21,7 +21,7 @@ import org.w3c.dom.*;
  *
  * @author Jonathan Perry
  */
-public class InitialMonitoringPhase {
+public class MonitoringPhase {
 
     private GregorianCalendar cal;
     private Date d;
@@ -41,7 +41,7 @@ public class InitialMonitoringPhase {
     private int hour;
     private int minute;
     
-    public InitialMonitoringPhase() {
+    public MonitoringPhase() {
         flc = new FuzzyLogicController();
     }
 
@@ -130,7 +130,7 @@ public class InitialMonitoringPhase {
             int year     = cal.get(Calendar.YEAR);
             
             // persistInitialMonitoringSession the generated fuzzy model to a MySQL database table
-            flc.persistInitialMonitoringSession(sessionId, hostname, hour, minute, day, month, year);
+            flc.persistMonitoringSession(sessionId, hostname, hour, minute, day, month, year);
         } else {
             generateSaturatedModel();
             generateUnsaturatedModel();

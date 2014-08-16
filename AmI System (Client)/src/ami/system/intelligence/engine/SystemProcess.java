@@ -43,7 +43,7 @@ public class SystemProcess {
     private void processHeading(int sessionId, int hour, int minute, int second) {
         // used for formatting
         String strMinute = "",
-               strSecond = "";
+                strSecond = "";
 
         // format the minute
         if (minute < 10) {
@@ -94,7 +94,7 @@ public class SystemProcess {
          * 
          *************************************************************************************************/
 
-        
+
         // check it isn't 17:30 PM or thereafter
         if (new SystemProcessUtil().afterHours() == true) {
             String msg = "It is beyond 17:30pm. Try again tomorrow at 9.00 AM or thereafter.";
@@ -236,7 +236,12 @@ public class SystemProcess {
                                     Integer.valueOf(cal.get(Calendar.MINUTE)));     // minute
 
                             // this is our main loop
-//                        isl.run(getTemperature());
+                            isl.run(
+                                    util.getSessionId(), // session ID
+                                    util.getDeviceName(), // hostname
+                                    getTemperature(time), // temperature
+                                    Integer.valueOf(cal.get(Calendar.HOUR_OF_DAY)), // hour
+                                    Integer.valueOf(cal.get(Calendar.MINUTE)));     // minute
                         }
 
 

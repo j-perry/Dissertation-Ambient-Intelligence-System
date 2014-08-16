@@ -1,6 +1,7 @@
 package ami.system.intelligence.engine.isl.behaviours;
 
 import ami.system.operations.resources.database.InitialMonitoringTable;
+import ami.system.operations.resources.database.MonitoringTable;
 
 /**
  * Based on implementation in
@@ -13,15 +14,15 @@ public class FuzzyLogicController {
     private DataBase dataBase;
     private RuleBase ruleBase;
     private DecisionTree decisionTree;
-    private InitialMonitoringTable dbInitial;
+    private MonitoringTable dbMonitoring;
 
     public FuzzyLogicController() {
         dataBase = new DataBase();
         ruleBase = new RuleBase();
         decisionTree = new DecisionTree();        
-        dbInitial = new InitialMonitoringTable();
+        dbMonitoring = new MonitoringTable();
         
-        dbInitial.open();
+        dbMonitoring.open();
     }
 
     /**
@@ -48,7 +49,7 @@ public class FuzzyLogicController {
      * @param hour
      * @param minute
      */
-    public void persist(int sessionId, 
+    public void persistInitialMonitoringSession(int sessionId, 
             String hostname, 
             int hour, 
             int minute, 
@@ -56,8 +57,8 @@ public class FuzzyLogicController {
             String month, 
             int year) {
         
-        dbInitial.open();
-        dbInitial.persist(
+        dbMonitoring.open();
+        dbMonitoring.persist(
                 sessionId, 
                 hostname,
                 hour, 
@@ -68,7 +69,41 @@ public class FuzzyLogicController {
                 dataBase.getValue(), 
                 dataBase.getType(), 
                 dataBase.getLinguisticType());
-        dbInitial.close();
+        dbMonitoring.close();
+    }
+    
+    /**
+     * Write contextual data to our monitoring session table
+     * 
+     * @param sessionId
+     * @param hostname
+     * @param hour
+     * @param minute
+     * @param day
+     * @param month
+     * @param year 
+     */
+    public void persistMonitoringSession(int sessionId, 
+            String hostname, 
+            int hour, 
+            int minute, 
+            String day, 
+            String month, 
+            int year) {
+        
+        dbMonitoring.open();
+        dbMonitoring.persist(
+                sessionId, 
+                hostname,
+                hour, 
+                minute, 
+                day, 
+                month, 
+                year,
+                dataBase.getValue(), 
+                dataBase.getType(), 
+                dataBase.getLinguisticType());
+        dbMonitoring.close();
     }
     
 }

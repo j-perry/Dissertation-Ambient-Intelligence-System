@@ -16,6 +16,7 @@ public class IncrementalSynchronousLearning {
     private ExperienceBank exBank;
     private ContextualPrompt pContext;
     private InitialMonitoringPhase initialMonitoringPhase;
+    private MonitoringPhase sessionPhase;
     
     private HashMap<String, Integer> context;
     
@@ -34,6 +35,7 @@ public class IncrementalSynchronousLearning {
     public boolean runInitialMonitoringPhase(int sessionId, String hostname, int tempValue, int hour, int minute) {
         boolean run;
         
+        // if it hasn't run yet
         if(initialMonitoringPhase.hasRun() == false) {
             initialMonitoringPhase.run(sessionId, hostname, tempValue, hour, minute);
             run = true;
@@ -47,9 +49,9 @@ public class IncrementalSynchronousLearning {
      * Runs our learning system (ISL?), following the initial monitoring phase
      * which keeps our overall model nice and consistent (well, that's the idea anyway!)
      */
-    public void run(int tempValue) {
+    public void run(int sessionId, String hostname, int tempValue, int hour, int minute) {
         if(runInitialMonitoringPhase(0, null, 0, 0, 0) == true) {
-//            context = pContext.identify(tempValue);
+            sessionPhase.run(sessionId, hostname, tempValue, hour, minute);
         }
     }
     
