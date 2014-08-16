@@ -35,11 +35,12 @@ public class IncrementalSynchronousLearning {
     public boolean runInitialMonitoringPhase(int sessionId, String hostname, int tempValue, int hour, int minute) {
         boolean run;
         
-        // if it hasn't run yet
-        if(initialMonitoringPhase.hasRun() == false) {
-            initialMonitoringPhase.run(sessionId, hostname, tempValue, hour, minute);
+        // if it has already been performed
+        if(initialMonitoringPhase.hasRun() == true) {
             run = true;
         } else {
+            // if it hasn't run yet
+            initialMonitoringPhase.run(sessionId, hostname, tempValue, hour, minute);
             run = false;
         }
         return run;
