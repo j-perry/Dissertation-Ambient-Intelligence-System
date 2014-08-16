@@ -206,7 +206,12 @@ public class SystemProcess {
                                     Integer.valueOf(cal.get(Calendar.MINUTE)));     // minute
 
                             // this is our main loop
-//                        isl.run(getTemperature());
+                            isl.run(
+                                    util.getSessionId(), // session ID
+                                    util.getDeviceName(), // hostname
+                                    getTemperature(time), // temperature
+                                    Integer.valueOf(cal.get(Calendar.HOUR_OF_DAY)), // hour
+                                    Integer.valueOf(cal.get(Calendar.MINUTE)));     // minute
                         }
                     } else if (utilTime.getCurrentMinute() == 0) {
                         prevMinute = utilTime.getCurrentMinute(); // reset it
