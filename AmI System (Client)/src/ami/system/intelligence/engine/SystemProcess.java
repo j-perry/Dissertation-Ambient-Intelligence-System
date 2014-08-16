@@ -248,8 +248,7 @@ public class SystemProcess {
                                     Integer.valueOf(cal.get(Calendar.HOUR_OF_DAY)), // hour
                                     Integer.valueOf(cal.get(Calendar.MINUTE)));     // minute
                         }
-
-
+                        
                     }
 
                 }
@@ -257,6 +256,7 @@ public class SystemProcess {
                 // check whether to terminate the system process
                 if (run_application == false) {
                     System.out.print("System has finished for the day. ");
+                    System.out.println();
 
                     // display the application menu
                     AmISystemMenu menu = new AmISystemMenu();
@@ -272,7 +272,7 @@ public class SystemProcess {
             menu.input();
         }
     }
-
+    
     /**
      * Returns the current temperature (in Fahrenheit)
      *
@@ -295,6 +295,27 @@ public class SystemProcess {
         System.out.println(temperatureTitle + tempValue + "\t\t" + "Time: " + strTime);
 
         return tempValue;
+    }
+    
+    /**
+     * Returns the ultra-sonic transceiver distance (in Fahrenheit)
+     * 
+     * @return 
+     */
+    private double getUltrasonicDistance() {
+        double usValue = 0.0;
+        final String ultrasonicTitle = "Ultrasonic Transceiver Value: ";
+        
+        /*      Run The Ultrasonic Transceiver
+         *******************************************/
+        Movement usSensor = new Movement();
+        usSensor.setup();
+        usSensor.initialise();
+        
+        // get the distance
+        usValue = usSensor.readValue();
+        
+        return usValue;
     }
 
     /**
