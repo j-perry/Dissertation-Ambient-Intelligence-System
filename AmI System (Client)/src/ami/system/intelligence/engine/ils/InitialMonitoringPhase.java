@@ -28,10 +28,11 @@ public class InitialMonitoringPhase {
     private File initialMonitoringPhaseConfig;
     private DocumentBuilderFactory xmlBuilderFactory;
     private DocumentBuilder xmlBuilder;
-    private Stack<Integer> tempValues;
     private final String fileName = "projects/AmI_System/config.xml";
+    
     private String startDate;
     private String currentDate;
+    
     private FuzzyLogicController flc;
     private ContextualPrompt contextualPrompt;
         
@@ -41,7 +42,6 @@ public class InitialMonitoringPhase {
     private int minute;
     
     public InitialMonitoringPhase() {
-        tempValues = new Stack<>();
         flc = new FuzzyLogicController();
     }
 
@@ -96,7 +96,6 @@ public class InitialMonitoringPhase {
      */
     public void run(int sessionId, String hostname, int tempValue, int hour, int minute) {
         String date = null;
-//        HashMap<String, Integer> context = null;
         String context;
         d = new Date();
         cal = new GregorianCalendar();
@@ -125,7 +124,6 @@ public class InitialMonitoringPhase {
 //        }
         // if it is not 17.30pm
         if(time != SystemProcessUtil.terminate_time) {
-//            tempValues.push(tempValue);
             
             // identify the context
             contextualPrompt = new ContextualPrompt();
@@ -134,19 +132,14 @@ public class InitialMonitoringPhase {
             // apply a fuzzy logic controller
             // NB: we will need to return a set of data to write to the database/JSON/XML file
             // agent controller??
-//            Map map = null;
-//            Iterator it = context.entrySet().iterator();
-//            it.hasNext();
-//            Map.Entry pairs = (Map.Entry) it.next();
-            
             // generate and update a fuzzy logic model based on defined and pre-defined rules                         
             entry = new DataBase();
             entry = flc.create(tempValue, context);
             
             // day, month, year
-            String day   = String.valueOf(cal.get(Calendar.DAY_OF_MONTH) ); //new SimpleDateFormat("dd").format(d).toString();
-            String month = String.valueOf(cal.get(Calendar.MONTH) + 1); //new SimpleDateFormat("MM").format(d).toString();
-            int year     = cal.get(Calendar.YEAR); // Integer.valueOf(new SimpleDateFormat("yyyy").format(d).toString() );
+            String day   = String.valueOf(cal.get(Calendar.DAY_OF_MONTH) );
+            String month = String.valueOf(cal.get(Calendar.MONTH) + 1);
+            int year     = cal.get(Calendar.YEAR);
             
             // persist the generated fuzzy model to a MySQL database table
             flc.persist(sessionId, hostname, hour, minute, day, month, year);
