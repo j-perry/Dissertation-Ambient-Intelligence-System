@@ -144,8 +144,8 @@ public class InitialMonitoringPhase {
             entry = flc.create(tempValue, context);
             
             // day, month, year
-            String day   = String.valueOf(cal.get(Calendar.DAY_OF_WEEK) ); //new SimpleDateFormat("dd").format(d).toString();
-            String month = String.valueOf(cal.get(Calendar.MONTH) ); //new SimpleDateFormat("MM").format(d).toString();
+            String day   = String.valueOf(cal.get(Calendar.DAY_OF_MONTH) ); //new SimpleDateFormat("dd").format(d).toString();
+            String month = String.valueOf(cal.get(Calendar.MONTH) + 1); //new SimpleDateFormat("MM").format(d).toString();
             int year     = cal.get(Calendar.YEAR); // Integer.valueOf(new SimpleDateFormat("yyyy").format(d).toString() );
             
             // persist the generated fuzzy model to a MySQL database table

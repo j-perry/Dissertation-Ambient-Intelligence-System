@@ -22,7 +22,7 @@ import ami.system.operations.context.Temperature;
 public class SystemProcessUtil {
     
     // this constant variable should be kept initialised at 17.30
-    public static final double terminate_time = 18.21;
+    public static final double terminate_time = 20.00;
 
     // instance variables
     private Calendar cal;
