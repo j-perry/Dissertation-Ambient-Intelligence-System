@@ -21,9 +21,9 @@ import ami.system.operations.context.Temperature;
  */
 public class SystemProcessUtil {
     
-    // this constant variable should be kept initialised at 17.30
-    public static final double terminate_time = 20.00;
-
+    // this constant variable should be kept initialised at 17.00
+    public static final double terminate_time = 17.01;
+    
     // instance variables
     private Calendar cal;
     
@@ -106,7 +106,7 @@ public class SystemProcessUtil {
      */
     public boolean afterHours() {
         boolean result;
-        final double afterHours = 20.30;
+        final double afterHours = 17.00;
         cal = new GregorianCalendar();
         
         Double actualTime;
@@ -129,7 +129,7 @@ public class SystemProcessUtil {
         DecimalFormat df = new DecimalFormat("#.00");
         actualTime = Double.valueOf(df.format(actualTime));
 
-        // if the time is greater than or equal to 17.30 PM
+        // if the time is greater than or equal to 17.00 PM (was 17.30 PM)
         if (actualTime >= afterHours) {
             // inform the application to terminate
             result = true;

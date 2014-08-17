@@ -29,30 +29,47 @@ public class IncrementalSynchronousLearning {
     }
     
     /**
-     * Runs an initial monitoring phase
+     * Runs our learning system (ISL?), following the initial monitoring phase
+     * which keeps our overall model nice and consistent (well, that's the idea anyway!)
      */
-    public boolean runInitialMonitoringPhase(int sessionId, String hostname, int tempValue, int hour, int minute) {
+    public void run(int sessionId, String hostname, int tempValue, int hour, int minute) {
         boolean run;
         
         // if it has already been performed
         if(initialMonitoringPhase.hasRun() == true) {
-            run = true;
+            run = false;
         } else {
             // if it hasn't run yet
             initialMonitoringPhase.run(sessionId, hostname, tempValue, hour, minute);
-            run = false;
+            run = true;
         }
-        return run;
     }
+    
+    /**
+     * Runs an initial monitoring phase
+     */
+//    public boolean runInitialMonitoringPhase(int sessionId, String hostname, int tempValue, int hour, int minute) {
+//        boolean run;
+//        
+//        // if it has already been performed
+//        if(initialMonitoringPhase.hasRun() == true) {
+//            run = false;
+//        } else {
+//            // if it hasn't run yet
+//            initialMonitoringPhase.run(sessionId, hostname, tempValue, hour, minute);
+//            run = true;
+//        }
+//        return run;
+//    }
     
     /**
      * Runs our learning system (ISL?), following the initial monitoring phase
      * which keeps our overall model nice and consistent (well, that's the idea anyway!)
      */
-    public void run(int sessionId, String hostname, int tempValue, int hour, int minute) {
-        if(runInitialMonitoringPhase(0, null, 0, 0, 0) == true) {
-            sessionPhase.run(sessionId, hostname, tempValue, hour, minute);
-        }
-    }
+//    public void run(int sessionId, String hostname, int tempValue, int hour, int minute) {
+//        if(runInitialMonitoringPhase(0, null, 0, 0, 0) == true) {
+//            sessionPhase.run(sessionId, hostname, tempValue, hour, minute);
+//        }
+//    }
     
 }

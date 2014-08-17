@@ -74,9 +74,11 @@ public class InitialMonitoringPhase {
             if (!startDate.isEmpty()) {
                 // don't run it                
                 hasRun = true;
+                System.out.println("Initial Monitoring Phase has been passsed");
             } else {
                 // otherwise run
                 hasRun = false;
+                System.out.println("Initial Monitoring Phase has not been passsed");
             }
         } catch (Exception ex) {
             ex.printStackTrace();

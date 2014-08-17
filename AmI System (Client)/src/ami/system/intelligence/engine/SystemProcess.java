@@ -198,18 +198,18 @@ public class SystemProcess {
 
                             // see if we need to run an initial monitoring phase
                             // if not, the method call inside this method will get ignored
-                            isl.runInitialMonitoringPhase(
-                                    util.getSessionId(), // session ID
-                                    util.getDeviceName(), // hostname
-                                    getTemperature(time), // temperature
-                                    Integer.valueOf(cal.get(Calendar.HOUR_OF_DAY)), // hour
-                                    Integer.valueOf(cal.get(Calendar.MINUTE)));     // minute
+//                            isl.runInitialMonitoringPhase(
+//                                    util.getSessionId(), // session ID
+//                                    util.getDeviceName(), // hostname
+//                                    getTemperature(time), // temperature
+//                                    Integer.valueOf(cal.get(Calendar.HOUR_OF_DAY)), // hour
+//                                    Integer.valueOf(cal.get(Calendar.MINUTE)));     // minute
 
                             // this is our main loop
                             isl.run(
-                                    util.getSessionId(), // session ID
-                                    util.getDeviceName(), // hostname
-                                    getTemperature(time), // temperature
+                                    util.getSessionId(),                            // session ID
+                                    util.getDeviceName(),                           // hostname
+                                    getTemperature(time),                           // temperature
                                     Integer.valueOf(cal.get(Calendar.HOUR_OF_DAY)), // hour
                                     Integer.valueOf(cal.get(Calendar.MINUTE)));     // minute
                         }
@@ -233,12 +233,12 @@ public class SystemProcess {
 
                             // see if we need to run an initial monitoring phase
                             // if not, the method call inside this method will get ignored
-                            isl.runInitialMonitoringPhase(
-                                    util.getSessionId(), // session ID
-                                    util.getDeviceName(), // hostname
-                                    getTemperature(time), // temperature
-                                    Integer.valueOf(cal.get(Calendar.HOUR_OF_DAY)), // hour
-                                    Integer.valueOf(cal.get(Calendar.MINUTE)));     // minute
+//                            isl.runInitialMonitoringPhase(
+//                                    util.getSessionId(), // session ID
+//                                    util.getDeviceName(), // hostname
+//                                    getTemperature(time), // temperature
+//                                    Integer.valueOf(cal.get(Calendar.HOUR_OF_DAY)), // hour
+//                                    Integer.valueOf(cal.get(Calendar.MINUTE)));     // minute
 
                             // this is our main loop
                             isl.run(
