@@ -15,14 +15,17 @@ public class FuzzyLogicController {
     private RuleBase ruleBase;
     private DecisionTree decisionTree;
     private MonitoringTable dbMonitoring;
+    private InitialMonitoringTable dbInitialMonitoring;
 
     public FuzzyLogicController() {
         dataBase = new DataBase();
         ruleBase = new RuleBase();
         decisionTree = new DecisionTree();        
         dbMonitoring = new MonitoringTable();
+        dbInitialMonitoring = new InitialMonitoringTable();
         
         dbMonitoring.open();
+        dbInitialMonitoring.open();
     }
 
     /**
@@ -57,8 +60,8 @@ public class FuzzyLogicController {
             String month, 
             int year) {
         
-        dbMonitoring.open();
-        dbMonitoring.persist(
+        dbInitialMonitoring.open();
+        dbInitialMonitoring.persist(
                 sessionId, 
                 hostname,
                 hour, 
@@ -69,7 +72,7 @@ public class FuzzyLogicController {
                 dataBase.getValue(), 
                 dataBase.getType(), 
                 dataBase.getLinguisticType());
-        dbMonitoring.close();
+        dbInitialMonitoring.close();
     }
     
     /**

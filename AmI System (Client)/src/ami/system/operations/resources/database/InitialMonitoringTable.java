@@ -1,9 +1,14 @@
-
-
-
+/*
+ * MSc Advanced Computer Science, University of Sussex
+ * Jonathan Perry
+ * Candidate No. 102235
+ */
 package ami.system.operations.resources.database;
 
+// libraries
 import static ami.system.operations.resources.database.IDatabase.*;
+
+// Java APIs
 import java.sql.*;
 
 /**
@@ -39,7 +44,6 @@ public class InitialMonitoringTable implements IDatabase {
     public void open() {
         try {
             // https://mysql.student.sussex.ac.uk/phpmyadmin/
-//            conn = DriverManager.getConnection(dbUrl, username, password);
             conn = DriverManager.getConnection(dbUrl);
             
             // create the table if necessary

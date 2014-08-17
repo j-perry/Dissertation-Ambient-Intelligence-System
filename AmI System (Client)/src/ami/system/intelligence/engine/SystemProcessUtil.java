@@ -57,6 +57,31 @@ public class SystemProcessUtil {
     public SystemProcessUtil() {
         
     }
+    
+    /**
+     * Determines whether the system is operating between Monday and Friday
+     * @return whether to start the system or not
+     */
+    public boolean withinWeekdays() {
+        boolean start;
+        cal = new GregorianCalendar();
+        int SUNDAY = 1;
+        int SATURDAY = 7;
+        
+        // get the current day in the week (1 - 7)
+        int day = cal.get(Calendar.DAY_OF_WEEK);
+        
+        // if it is either Saturday or Sunday
+        if(day == SATURDAY || day == SUNDAY) {
+            // don't start the system
+            start = false;
+        } else {
+            // otherwise, flag the system to start (post other conditions)
+            start = true;
+        }
+        
+        return start;
+    }
 
     /**
      * Checks whether the system is in bounds (9.00+ PM) in operation terms
