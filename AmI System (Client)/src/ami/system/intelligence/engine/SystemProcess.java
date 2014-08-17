@@ -196,22 +196,20 @@ public class SystemProcess {
                         if (!hourlyValues.contains(time)) {
                             hourlyValues.add(time);
 
-                            // see if we need to run an initial monitoring phase
-                            // if not, the method call inside this method will get ignored
-//                            isl.runInitialMonitoringPhase(
-//                                    util.getSessionId(), // session ID
-//                                    util.getDeviceName(), // hostname
-//                                    getTemperature(time), // temperature
-//                                    Integer.valueOf(cal.get(Calendar.HOUR_OF_DAY)), // hour
-//                                    Integer.valueOf(cal.get(Calendar.MINUTE)));     // minute
-
-                            // this is our main loop
+                            /**
+                             * This is our main loop
+                             * 
+                             * First, see if we need to run an initial monitoring phase.
+                             * If not, the first method call inside this method will get ignored,
+                             * and a full system process will execute
+                             */
                             isl.run(
-                                    util.getSessionId(),                            // session ID
-                                    util.getDeviceName(),                           // hostname
-                                    getTemperature(time),                           // temperature
+                                    util.getSessionId(), // session ID
+                                    util.getDeviceName(), // hostname
+                                    getTemperature(time), // temperature
                                     Integer.valueOf(cal.get(Calendar.HOUR_OF_DAY)), // hour
                                     Integer.valueOf(cal.get(Calendar.MINUTE)));     // minute
+                            
                         }
                     } else if (utilTime.getCurrentMinute() == 0) {
                         prevMinute = utilTime.getCurrentMinute(); // reset it
@@ -231,16 +229,13 @@ public class SystemProcess {
                         if (!hourlyValues.contains(time)) {
                             hourlyValues.add(time);
 
-                            // see if we need to run an initial monitoring phase
-                            // if not, the method call inside this method will get ignored
-//                            isl.runInitialMonitoringPhase(
-//                                    util.getSessionId(), // session ID
-//                                    util.getDeviceName(), // hostname
-//                                    getTemperature(time), // temperature
-//                                    Integer.valueOf(cal.get(Calendar.HOUR_OF_DAY)), // hour
-//                                    Integer.valueOf(cal.get(Calendar.MINUTE)));     // minute
-
-                            // this is our main loop
+                            /**
+                             * This is our main loop
+                             * 
+                             * First, see if we need to run an initial monitoring phase.
+                             * If not, the first method call inside this method will get ignored,
+                             * and a full system process will execute
+                             */
                             isl.run(
                                     util.getSessionId(), // session ID
                                     util.getDeviceName(), // hostname
