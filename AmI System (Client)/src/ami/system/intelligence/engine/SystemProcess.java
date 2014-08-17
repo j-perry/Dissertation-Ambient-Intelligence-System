@@ -274,8 +274,8 @@ public class SystemProcess {
             }
         } // if it is Saturday or Sunday, don't start the system
         else {
-            System.out.println("> The system is only operational weekdays (Monday to Friday).");
-            System.out.println("> Please try again on those days.");
+            String msg = "> The system is only operational weekdays (Monday to Friday).\n> Please try again on those days.";
+            System.out.println(msg);
             
             // display the application menu
             AmISystemMenu menu = new AmISystemMenu();
