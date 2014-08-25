@@ -22,7 +22,7 @@ import ami.system.operations.context.Temperature;
 public class SystemProcessUtil {
     
     // this constant variable should be kept initialised at 17.00
-    public static final double terminate_time = 17.01;
+    public static final double terminate_time = 21.05; //17.01;
     
     // instance variables
     private Calendar cal;
@@ -131,7 +131,7 @@ public class SystemProcessUtil {
      */
     public boolean afterHours() {
         boolean result;
-        final double afterHours = 17.00;
+        final double afterHours = 23.00; // 17.00;
         cal = new GregorianCalendar();
         
         Double actualTime;

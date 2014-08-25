@@ -5,49 +5,24 @@
  */
 package ami.system.operations.context;
 
-//import com.pi4j.io.gpio.GpioController;
-//import com.pi4j.io.gpio.GpioFactory;
-//import com.pi4j.io.gpio.GpioPinDigitalInput;
-//import com.pi4j.io.gpio.GpioPinDigitalOutput;
-//import com.pi4j.io.gpio.PinMode;
-//import com.pi4j.io.gpio.PinState;
-//import com.pi4j.io.gpio.RaspiPin;
-
 import com.pi4j.wiringpi.Gpio;
-import com.pi4j.wiringpi.GpioUtil;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Class used to create an instance of an ultrasonic transceiver sensor
+ * Article: https://www.modmypi.com/blog/hc-sr04-ultrasonic-range-sensor-on-the-raspberry-pi
  * 
  * @author Jonathan Perry
  */
 public class Movement implements ISession {
     
-    /*                 DEVICE INTERFACE
-     **************************************************/
-//    private final GpioController ultraSonicTransceiverCtrl;    
-//    private final GpioPinDigitalOutput trigPin;
-//    private final GpioPinDigitalInput echoPin;
-    
-    private final Gpio ultraSonicTransceiver;
-    
-    
-    /*                 PROPERTIES
+    /*                 GPIO PINS
      *********************************************/
-    private final int TRIG = 23; // input pin
-    private final int ECHO = 24; // output pin
+    private final int TRIG = 23; // input
+    private final int ECHO = 24; // output
     
+    
+    public Movement() {        
         
-    public Movement() {
-//        ultraSonicTransceiverCtrl = GpioFactory.getInstance();
-////        ultraSonicTransceiverCtrl.setMode(PinMode.PWM_OUTPUT, pin);
-//        ultraSonicTransceiverCtrl.setMode(GpioPin., pin);
-//        trigPin = null;
-//        echoPin = null;
-        
-        ultraSonicTransceiver = null;
     }
     
     /**
@@ -55,41 +30,68 @@ public class Movement implements ISession {
      */
     @Override
     public void setup() {
-        if(Gpio.wiringPiSetup() == -1) {
+        // note: all comments in this method are what was provided in the 
+        // setup tutorial for the ultra sonic transceiver written in Python using
+        // the Raspberry Pi GPIO library.
+        // 
+        // Tutorial: https://www.modmypi.com/blog/hc-sr04-ultrasonic-range-sensor-on-the-raspberry-pi
+        // Reference: http://wiringpi.com/reference/setup/
+        int pulse_start = 0;
+        int pulse_end = 0;
+        int pulse_duration = 0;
+        int distance = 0;
+        
+        // same as GPIO.setmode(GPIO.BCM in Python)
+        if(Gpio.wiringPiSetupGpio() == -1) {
             System.out.println("> GPIO SETUP FAILED");
+        } else {
+            System.out.println("> GPIO SETUP SUCCESSFUL");
         }
+           
+        // GPIO.setup(TRIG,GPIO.OUT)
+        // GPIO.setup(ECHO,GPIO.IN)
+        Gpio.pinMode(TRIG, Gpio.OUTPUT);
+        Gpio.pinMode(ECHO, Gpio.INPUT);
+               
+        // time.sleep(2)
+        // (measured in seconds)
+        Gpio.delay(2000);
+        
+        // GPIO.output(TRIG, False)
+        Gpio.digitalWrite(TRIG, true);
+        
+        // time.sleep(0.00001)
+        // (or thereabouts)
+        Gpio.delay(1);
+        
+        // GPIO.output(TRIG, False)
+        Gpio.digitalWrite(TRIG, false);
                 
-        // set GPIO # as the INPUT trigger 
-//        GpioUtil.export(/* GPIO PIN */, GpioUtil.DIRECTION_IN);
-        GpioUtil.getEdgeDetection(TRIG);
-        Gpio.pinMode(TRIG, Gpio.INPUT);
-        Gpio.pullUpDnControl(TRIG, Gpio.LOW);
-        
-        // set GPIO # as the OUTPUT trigger
-//        GpioUtil.export(/* GPIO PIN */, GpioUtil.DIRECTION_OUT);
-        GpioUtil.getEdgeDetection(ECHO);
-        Gpio.pinMode(ECHO, Gpio.OUTPUT);
-        Gpio.pullUpDnControl(ECHO, Gpio.LOW);
-        
-        
-        
-        // sleep for 2 seconds
-        try {
-            Thread.sleep((2 * 1000));
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Movement.class.getName()).log(Level.SEVERE, null, ex);
+        // while GPIO.input(ECHO) == 0:
+        // pulse_start = time.time()
+        while(Gpio.digitalRead(ECHO) == 0) {
+            // convert from milliseconds to seconds
+            pulse_start = (int) ((System.currentTimeMillis() / 1000) % 60);
         }
-            
         
-            
-    //        // output (send signal to object)
-    //        GpioPinDigitalOutput trigPin = 
-    //                ultraSonicTransceiverCtrl.provisionDigitalOutputPin(RaspiPin.GPIO_16);
-    //        
-    //        // input (receieves echo from ultra sonic wave to indicate the proximity between 
-    //        // the object and the ultra-sonic transceiver itself
-    //                ultraSonicTransceiverCtrl.provisionDigitalInputPin(RaspiPin.GPIO_16);
-    //                ultraSonicTransceiverCtrl.provisionDigitalInputPin(RaspiPin.GPIO_16);  
+        // while GPIO.input(ECHO) == 1:
+        // pulse_end = time.time()
+        while(Gpio.digitalRead(ECHO) == 1) {
+            // convert from milliseconds to seconds
+            pulse_end = (int) ((System.currentTimeMillis() / 1000) % 60);
+        }
+        
+        // pulse_duration = pulse_end - pulse_start
+        pulse_duration = pulse_end - pulse_start;
+        
+        // distance = pulse_duration * 17150
+        distance = pulse_duration * 17150;
+                
+        // distance = round(distance, 2)
+        // convert to 2 decimal places
+        distance = Math.round(distance * 100) / 100;
+        
+        System.out.println("THE DISTANCE IS: " + distance);
     }
     
     /**
@@ -98,16 +100,7 @@ public class Movement implements ISession {
     @Override
     public boolean initialise() {
         boolean connected = false;
-        
-        // check it is connected
-//        if() {
-//            System.out.println("Ultrasonic Transceiver is online.");
-//            connected = true;
-//        } else {
-//            System.out.println("Could not connect to the Ultrasonic Transceiver.");
-//            connected = false;
-//        }
-        
+                
         return connected;
     }
         

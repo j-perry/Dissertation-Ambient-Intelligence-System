@@ -15,7 +15,7 @@ import java.sql.*;
  *
  * @author Jonathan Perry
  */
-public class MonitoringTable implements IDatabase {
+public class InitialContextTable implements IDatabase {
     
     private String query;
     
@@ -24,9 +24,9 @@ public class MonitoringTable implements IDatabase {
     private ResultSet resultSet;
     private Connection conn;
         
-    private final String tableName = "Monitoring";
+    private final String tableName = "InitialContext";
     
-    public MonitoringTable() {
+    public InitialContextTable() {
         // register the driver
         try {
             Class.forName(driver);
@@ -44,7 +44,6 @@ public class MonitoringTable implements IDatabase {
     public void open() {
         try {
             // https://mysql.student.sussex.ac.uk/phpmyadmin/
-//            conn = DriverManager.getConnection(dbUrl, username, password);
             conn = DriverManager.getConnection(dbUrl);
             
             // create the table if necessary
@@ -87,7 +86,7 @@ public class MonitoringTable implements IDatabase {
                 ")";
         
         int status = 0;
-        
+         
         try {
             qryStatement = conn.createStatement();
             status = qryStatement.executeUpdate(query);
@@ -99,6 +98,16 @@ public class MonitoringTable implements IDatabase {
         
     /**
      * Writes data to our table
+     * @param sessionId
+     * @param hostname
+     * @param day
+     * @param minute
+     * @param hour
+     * @param month
+     * @param year
+     * @param value
+     * @param linguisticType
+     * @param context
      */
     public void persist(int sessionId, String hostname, int hour, int minute, String day, String month, int year, int value, String context, String linguisticType) {
         System.out.println("SESSION ID: " + sessionId);

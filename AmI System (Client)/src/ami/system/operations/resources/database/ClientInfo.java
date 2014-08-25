@@ -139,7 +139,8 @@ public class ClientInfo implements IDatabase {
      * 
      * @param hours
      * @param minutes
-     * @param macAddr
+     * @param hostname
+     * @param hostname
      * @param noSensors 
      */
     public void persist(int hours, int minutes, String hostname, int noSensors) {

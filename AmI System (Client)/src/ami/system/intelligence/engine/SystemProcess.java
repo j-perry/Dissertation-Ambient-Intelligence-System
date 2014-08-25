@@ -187,9 +187,9 @@ public class SystemProcess {
                             prevMinute = utilTime.getCurrentMinute();
 
                             GregorianCalendar cal = new GregorianCalendar();
-                            double time = 0.0;
+                            double time;
                             double hour = cal.get(Calendar.HOUR_OF_DAY);
-                            double minute = (Double.valueOf(new SimpleDateFormat("mm").format(new Date()).toString()) / 100);
+                            double minute = (Double.valueOf(new SimpleDateFormat("mm").format(new Date()) ) / 100);
 
                             time = (double) hour;
                             time += minute;
@@ -212,17 +212,17 @@ public class SystemProcess {
                                         util.getSessionId(), // session ID
                                         util.getDeviceName(), // hostname
                                         getTemperature(time), // temperature
-                                        Integer.valueOf(cal.get(Calendar.HOUR_OF_DAY)), // hour
-                                        Integer.valueOf(cal.get(Calendar.MINUTE)));     // minute
+                                        cal.get(Calendar.HOUR_OF_DAY), // hour
+                                        cal.get(Calendar.MINUTE) );     // minute
 
                             }
                         } else if (utilTime.getCurrentMinute() == 0) {
                             prevMinute = utilTime.getCurrentMinute(); // reset it
 
                             GregorianCalendar cal = new GregorianCalendar();
-                            double time = 0.0;
+                            double time;
                             double hour = cal.get(Calendar.HOUR_OF_DAY);
-                            double minute = (Double.valueOf(new SimpleDateFormat("mm").format(new Date()).toString()) / 100);
+                            double minute = (Double.valueOf(new SimpleDateFormat("mm").format(new Date() )) / 100);
 
                             time = (double) hour;
                             time += minute;
@@ -246,8 +246,8 @@ public class SystemProcess {
                                         util.getSessionId(), // session ID
                                         util.getDeviceName(), // hostname
                                         getTemperature(time), // temperature
-                                        Integer.valueOf(cal.get(Calendar.HOUR_OF_DAY)), // hour
-                                        Integer.valueOf(cal.get(Calendar.MINUTE)));     // minute
+                                        cal.get(Calendar.HOUR_OF_DAY), // hour
+                                        cal.get(Calendar.MINUTE) );     // minute
                             }
 
                         }
@@ -300,7 +300,7 @@ public class SystemProcess {
         temp.initialise();
         tempValue = temp.readValue();
 
-        String strTime = new DecimalFormat("0.00").format(time).toString();
+        String strTime = new DecimalFormat("0.00").format(time);
 
         // write a temperature value
         System.out.println(temperatureTitle + tempValue + "\t\t" + "Time: " + strTime);
@@ -319,12 +319,12 @@ public class SystemProcess {
 
         /*      Run The Ultrasonic Transceiver
          *******************************************/
-        Movement usSensor = new Movement();
-        usSensor.setup();
-        usSensor.initialise();
-
-        // get the distance
-        usValue = usSensor.readValue();
+//        Movement usSensor = new Movement();
+//        usSensor.setup();
+//        usSensor.initialise();
+//
+//        // get the distance
+//        usValue = usSensor.readValue();
 
         return usValue;
     }

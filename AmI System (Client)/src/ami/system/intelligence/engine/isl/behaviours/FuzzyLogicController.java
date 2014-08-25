@@ -1,7 +1,8 @@
 package ami.system.intelligence.engine.isl.behaviours;
 
-import ami.system.operations.resources.database.InitialMonitoringTable;
-import ami.system.operations.resources.database.MonitoringTable;
+// local libaries
+import ami.system.operations.resources.database.InitialContextTable;
+import ami.system.operations.resources.database.MonitoringContextTable;
 
 /**
  * Based on implementation in
@@ -14,18 +15,20 @@ public class FuzzyLogicController {
     private DataBase dataBase;
     private RuleBase ruleBase;
     private DecisionTree decisionTree;
-    private MonitoringTable dbMonitoring;
-    private InitialMonitoringTable dbInitialMonitoring;
+    
+    // database
+    private MonitoringContextTable dbMonitoringContext;
+    private InitialContextTable dbInitialContext;
 
     public FuzzyLogicController() {
         dataBase = new DataBase();
         ruleBase = new RuleBase();
         decisionTree = new DecisionTree();        
-        dbMonitoring = new MonitoringTable();
-        dbInitialMonitoring = new InitialMonitoringTable();
+        dbMonitoringContext = new MonitoringContextTable();
+        dbInitialContext = new InitialContextTable();
         
-        dbMonitoring.open();
-        dbInitialMonitoring.open();
+//        dbMonitoringContext.open();
+//        dbInitialContext.open();
     }
 
     /**
@@ -34,6 +37,7 @@ public class FuzzyLogicController {
      *
      * @param i
      * @param context
+     * @return 
      */
     public DataBase create(int i, String context) {
         dataBase = decisionTree.generate(i, context);
@@ -49,10 +53,15 @@ public class FuzzyLogicController {
      * Write our sampled contextual data to a MySQL database table for computation on
      * the web server.
      * 
+     * @param sessionId
+     * @param hostname
      * @param hour
      * @param minute
+     * @param day
+     * @param month
+     * @param year
      */
-    public void persistInitialMonitoringSession(int sessionId, 
+    public void persistInitialContextSession(int sessionId, 
             String hostname, 
             int hour, 
             int minute, 
@@ -60,8 +69,8 @@ public class FuzzyLogicController {
             String month, 
             int year) {
         
-        dbInitialMonitoring.open();
-        dbInitialMonitoring.persist(
+        dbInitialContext.open();
+        dbInitialContext.persist(
                 sessionId, 
                 hostname,
                 hour, 
@@ -72,7 +81,7 @@ public class FuzzyLogicController {
                 dataBase.getValue(), 
                 dataBase.getType(), 
                 dataBase.getLinguisticType());
-        dbInitialMonitoring.close();
+        dbInitialContext.close();
     }
     
     /**
@@ -86,7 +95,7 @@ public class FuzzyLogicController {
      * @param month
      * @param year 
      */
-    public void persistMonitoringSession(int sessionId, 
+    public void persistContextSession(int sessionId, 
             String hostname, 
             int hour, 
             int minute, 
@@ -94,8 +103,8 @@ public class FuzzyLogicController {
             String month, 
             int year) {
         
-        dbMonitoring.open();
-        dbMonitoring.persist(
+        dbMonitoringContext.open();
+        dbMonitoringContext.persist(
                 sessionId, 
                 hostname,
                 hour, 
@@ -106,7 +115,7 @@ public class FuzzyLogicController {
                 dataBase.getValue(), 
                 dataBase.getType(), 
                 dataBase.getLinguisticType());
-        dbMonitoring.close();
+        dbMonitoringContext.close();
     }
     
 }
