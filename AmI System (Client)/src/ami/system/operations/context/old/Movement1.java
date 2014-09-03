@@ -3,7 +3,7 @@
  * Jonathan Perry
  * Candidate No. 102235
  */
-package ami.system.operations.context;
+package ami.system.operations.context.old;
 
 //import com.pi4j.io.gpio.GpioController;
 //import com.pi4j.io.gpio.GpioFactory;
@@ -13,6 +13,7 @@ package ami.system.operations.context;
 //import com.pi4j.io.gpio.PinState;
 //import com.pi4j.io.gpio.RaspiPin;
 
+import ami.system.operations.context.ISession;
 import com.pi4j.wiringpi.Gpio;
 import com.pi4j.wiringpi.GpioUtil;
 import java.util.logging.Level;

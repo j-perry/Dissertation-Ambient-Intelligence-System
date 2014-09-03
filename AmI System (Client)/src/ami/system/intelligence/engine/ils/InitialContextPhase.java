@@ -4,19 +4,11 @@ package ami.system.intelligence.engine.ils;
 import ami.system.intelligence.engine.SystemProcessUtil;
 import ami.system.intelligence.engine.isl.behaviours.DataBase;
 import ami.system.intelligence.engine.isl.behaviours.FuzzyLogicController;
+import ami.system.operations.resources.database.ClientInfo;
 
-// Java APIs
-import java.io.FileReader;
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
-// third party libraries
-import org.json.simple.*;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
 
 /**
  * Constructs an initial contextual model of data collected on the first day of
@@ -43,7 +35,7 @@ public class InitialContextPhase {
     private int minute;
 
     public InitialContextPhase() {
-        
+
     }
 
     /**
@@ -60,26 +52,21 @@ public class InitialContextPhase {
                 + String.valueOf(cal.get(Calendar.MONTH))
                 + "-"
                 + String.valueOf(cal.get(Calendar.YEAR));
+
+        ClientInfo info = new ClientInfo();
+        info.open();
+        int noSessions = info.getSessionId();
+        info.close();
         
-        try {
-            JSONParser jsonParser = new JSONParser();
-            Object obj = jsonParser.parse(new FileReader(fileName));
-            JSONObject jsonObject = (JSONObject) obj;
-            
-            startDate = (String) jsonObject.get("startDate");
-            
-            System.out.println("hasRun(): " + startDate);
-            
-            // if a start date has been set
-            if (startDate.contains("")) {
-                // run it
-                hasRun = true;
-            } else {
-                // otherwise don't run it
-                hasRun = false;
-            }
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
+        if (noSessions == 1) {
+            // run an initial context phase
+            System.out.println("hasRun(): " + noSessions);
+            hasRun = false;
+        } else {
+            // otherwise don't run an initial context phase and
+            // run a context phase instead
+            hasRun = true;
+            System.out.println("hasRun(): " + noSessions);
         }
 
         return hasRun;
@@ -97,17 +84,18 @@ public class InitialContextPhase {
      * @param sessionId
      * @param hostname
      * @param tempValue
+     * @param ultrasonicValue
      * @param hour
      * @param minute
      */
-    public void run(int sessionId, String hostname, int tempValue, int hour, int minute) {
+    public void run(int sessionId, String hostname, int tempValue, int ultrasonicValue, int hour, int minute) {
         flc = new FuzzyLogicController();
         String date = null;
         String context;
         d = new Date();
         cal = new GregorianCalendar();
         double time;
-        
+
         SystemProcessUtil.SystemTime util = new SystemProcessUtil.SystemTime();
         time = (double) cal.get(Calendar.HOUR_OF_DAY);
         time += (double) (Double.valueOf(new SimpleDateFormat("mm").format(new Date())) / 100);
@@ -118,23 +106,35 @@ public class InitialContextPhase {
 
         // if it is not 17.30pm
         if (time != SystemProcessUtil.terminate_time) {
+            
+            String tempContext = "temperature";
+            String ultraContext = "movement";
 
-            // identify the context
-            contextualPrompt = new ContextualPrompt();
-            context = contextualPrompt.identify(tempValue);
-
-            // apply a fuzzy logic controller
-            // NB: we will need to return a set of data to write to the database/JSON/XML file
-            // agent controller??
-            // generate and update a fuzzy logic model based on defined and pre-defined rules                         
-            entry = new DataBase();
-            entry = flc.create(tempValue, context);
-
+            
             // day, month, year
             String day = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
             String month = String.valueOf(cal.get(Calendar.MONTH) + 1);
             int year = cal.get(Calendar.YEAR);
-
+                        
+            // apply a fuzzy logic controller
+            // NB: we will need to return a set of data to write to the database/JSON/XML file
+            // agent controller??
+            // generate and update a fuzzy logic model based on defined and pre-defined rules 
+            
+            /*
+             * temperature
+             */  
+            flc.create(tempValue, tempContext);
+                        
+            // persistInitialContextSession the generated fuzzy model to a MySQL database table
+            flc.persistInitialContextSession(sessionId, hostname, hour, minute, day, month, year);
+            
+            
+            /*
+             * ultrasonic
+             */
+            entry = flc.create(ultrasonicValue, ultraContext);
+            
             // persistInitialContextSession the generated fuzzy model to a MySQL database table
             flc.persistInitialContextSession(sessionId, hostname, hour, minute, day, month, year);
         }

@@ -1,7 +1,7 @@
 
 
 
-package ami.system.operations.context;
+package ami.system.operations.context.old;
 
 /**
  * Class used to create an instance of a RGB light sensor

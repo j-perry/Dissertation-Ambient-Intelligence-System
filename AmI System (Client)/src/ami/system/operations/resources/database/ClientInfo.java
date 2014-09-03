@@ -23,7 +23,7 @@ public class ClientInfo implements IDatabase {
      */
     private int hours;
     private int minutes;
-    private String macAddr;
+    private String hostname;
     private int noSensors;
     
     /**

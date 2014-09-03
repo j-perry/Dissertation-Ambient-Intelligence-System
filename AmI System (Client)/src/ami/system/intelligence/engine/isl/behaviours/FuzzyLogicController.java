@@ -21,7 +21,6 @@ public class FuzzyLogicController {
     private InitialContextTable dbInitialContext;
 
     public FuzzyLogicController() {
-        dataBase = new DataBase();
         ruleBase = new RuleBase();
         decisionTree = new DecisionTree();        
         dbMonitoringContext = new MonitoringContextTable();
@@ -40,6 +39,7 @@ public class FuzzyLogicController {
      * @return 
      */
     public DataBase create(int i, String context) {
+        dataBase = new DataBase();
         dataBase = decisionTree.generate(i, context);
         
         // type

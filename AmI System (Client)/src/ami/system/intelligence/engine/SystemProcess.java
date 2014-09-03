@@ -12,12 +12,8 @@ import ami.system.intelligence.engine.ils.IncrementalSynchronousLearning;
 import ami.system.operations.resources.database.ClientInfo;
 
 // Java APIs
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Stack;
+import java.text.*;
+import java.util.*;
 
 /**
  * Class used to create a new system process
@@ -44,7 +40,7 @@ public class SystemProcess {
     private void processHeading(int sessionId, int hour, int minute, int second) {
         // used for formatting
         String strMinute = "",
-                strSecond = "";
+               strSecond = "";
 
         // format the minute
         if (minute < 10) {
@@ -97,7 +93,7 @@ public class SystemProcess {
         
         
         // if it is between Monday and Friday, continue...
-        if (new SystemProcessUtil().withinWeekdays() == true) {
+//        if (new SystemProcessUtil().withinWeekdays() == true) {
             // check it isn't 17:30 PM or thereafter
             if (new SystemProcessUtil().afterHours() == true) {
                 String msg = "It is beyond 17:30pm. Try again tomorrow at 9.00 AM or thereafter.";
@@ -140,8 +136,7 @@ public class SystemProcess {
 
                 IncrementalSynchronousLearning isl = new IncrementalSynchronousLearning();
                 int prevMinute = utilTime.getCurrentMinute();
-                int prevSecond = utilTime.getCurrentSeconds();
-
+                
                 /**
                  * Check the number of devices connected to the system
                  *
@@ -152,6 +147,11 @@ public class SystemProcess {
 
                 // temperature sensor
                 if (utilDevices.temperatureSensorConnected() == true) {
+                    noSensors++;
+                }
+                
+                // ultra sonic sensor
+                if (utilDevices.ultrasonicSensorConnected() == true) {
                     noSensors++;
                 }
 
@@ -165,7 +165,7 @@ public class SystemProcess {
                 // main application loop
                 while (run_application) {
 
-                    // if it is 17.30, terminate the application
+                    // if it is 17.00, terminate the application
                     if (util.checkTimeBounds() == true) {
                         run_application = false;
 
@@ -199,7 +199,7 @@ public class SystemProcess {
 
                             if (!hourlyValues.contains(time)) {
                                 hourlyValues.add(time);
-
+                                
                                 /**
                                  * This is our main loop
                                  *
@@ -208,10 +208,13 @@ public class SystemProcess {
                                  * call inside this method will get ignored, and
                                  * a full system process will execute
                                  */
+                                getUltrasonicDistance();
+                                
                                 isl.run(
                                         util.getSessionId(), // session ID
                                         util.getDeviceName(), // hostname
                                         getTemperature(time), // temperature
+                                        getUltrasonicDistance(), // movement
                                         cal.get(Calendar.HOUR_OF_DAY), // hour
                                         cal.get(Calendar.MINUTE) );     // minute
 
@@ -242,10 +245,13 @@ public class SystemProcess {
                                  * call inside this method will get ignored, and
                                  * a full system process will execute
                                  */
+                                getUltrasonicDistance();
+                                
                                 isl.run(
                                         util.getSessionId(), // session ID
                                         util.getDeviceName(), // hostname
                                         getTemperature(time), // temperature
+                                        getUltrasonicDistance(), // movement
                                         cal.get(Calendar.HOUR_OF_DAY), // hour
                                         cal.get(Calendar.MINUTE) );     // minute
                             }
@@ -272,15 +278,16 @@ public class SystemProcess {
                 AmISystemMenu menu = new AmISystemMenu();
                 menu.input();
             }
-        } // if it is Saturday or Sunday, don't start the system
-        else {
-            String msg = "> The system is only operational weekdays (Monday to Friday).\n> Please try again on those days.";
-            System.out.println(msg);
-            
-            // display the application menu
-            AmISystemMenu menu = new AmISystemMenu();
-            menu.input();
-        }
+//        } 
+//        // if it is Saturday or Sunday, don't start the system
+//        else {
+//            String msg = "> The system is only operational weekdays (Monday to Friday).\n> Please try again on those days.";
+//            System.out.println(msg);
+//            
+//            // display the application menu
+//            AmISystemMenu menu = new AmISystemMenu();
+//            menu.input();
+//        }
 
     }
 
@@ -295,7 +302,7 @@ public class SystemProcess {
 
         /*      Run The Temperature
          **********************************/
-        Temperature temp = new Temperature();
+        TemperatureInternal temp = new TemperatureInternal();
         temp.setup();
         temp.initialise();
         tempValue = temp.readValue();
@@ -307,26 +314,37 @@ public class SystemProcess {
 
         return tempValue;
     }
-
+    
     /**
      * Returns the ultra-sonic transceiver distance (in Fahrenheit)
      *
      * @return
      */
-    private double getUltrasonicDistance() {
-        double usValue = 0.0;
+    private int getUltrasonicDistance() {
+        int distance = 0;
+        double tmp_distance = 0.0;
         final String ultrasonicTitle = "Ultrasonic Transceiver Value: ";
-
+        
         /*      Run The Ultrasonic Transceiver
          *******************************************/
-//        Movement usSensor = new Movement();
-//        usSensor.setup();
-//        usSensor.initialise();
-//
-//        // get the distance
-//        usValue = usSensor.readValue();
-
-        return usValue;
+        MovementExternal usSensor = new MovementExternal();
+        tmp_distance = Double.valueOf(usSensor.readValue() );
+        distance = (int) Math.round(tmp_distance);
+        
+        // write an ultrasonic value
+        System.out.println(ultrasonicTitle + "\t\t" + distance + "cm");
+                
+        return distance;
+    }
+    
+    private double getRoomAmplitude() {
+        double amplitude = 0.0;
+        final String ampTitle = "Audio Amplifier Value: ";
+        
+        AudioAmplitudeExternal audioAmp = new AudioAmplitudeExternal();
+        amplitude = audioAmp.readValue();
+        
+        return amplitude;        
     }
 
     /**

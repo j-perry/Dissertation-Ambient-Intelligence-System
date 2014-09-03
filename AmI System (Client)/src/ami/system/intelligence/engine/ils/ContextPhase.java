@@ -41,7 +41,7 @@ public class ContextPhase {
     public ContextPhase() {
         
     }
-
+    
     /**
      * Performs an initial monitoring phase.
      *
@@ -53,12 +53,11 @@ public class ContextPhase {
      * @param sessionId
      * @param hostname
      * @param hour
-     * @param tempValue
+     * @param value
      * @param minute
      */
-    public void run(int sessionId, String hostname, int tempValue, int hour, int minute) {
+    public void run(int sessionId, String hostname, int tempValue, int ultrasonicValue, int hour, int minute) {
         flc = new FuzzyLogicController();
-        String date = null;
         String context;
         d = new Date();
         cal = new GregorianCalendar();
@@ -75,21 +74,32 @@ public class ContextPhase {
         // if it is not 17.30pm
         if (time != SystemProcessUtil.terminate_time) {
             
-            // identify the context
-            contextualPrompt = new ContextualPrompt();
-            context = contextualPrompt.identify(tempValue);
-
-            // apply a fuzzy logic controller
-            // NB: we will need to return a set of data to write to the database/JSON/XML file
-            // agent controller??
-            // generate and update a fuzzy logic model based on defined and pre-defined rules                         
-            entry = new DataBase();
-            entry = flc.create(tempValue, context);
-
+            String tempContext = "temperature";
+            String ultraContext = "movement";
+            
             // day, month, year
             String day = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
             String month = String.valueOf(cal.get(Calendar.MONTH) + 1);
             int year = cal.get(Calendar.YEAR);
+
+            // apply a fuzzy logic controller
+            // NB: we will need to return a set of data to write to the database/JSON/XML file
+            // agent controller??
+            // generate and update a fuzzy logic model based on defined and pre-defined rules
+                        
+            /*
+             * temperature
+             */  
+            flc.create(tempValue, tempContext);
+
+            // persistInitialContextSession the generated fuzzy model to a MySQL database table
+            flc.persistContextSession(sessionId, hostname, hour, minute, day, month, year);
+            
+            
+            /*
+             * ultrasonic
+             */
+            flc.create(ultrasonicValue, ultraContext);
 
             // persistInitialContextSession the generated fuzzy model to a MySQL database table
             flc.persistContextSession(sessionId, hostname, hour, minute, day, month, year);

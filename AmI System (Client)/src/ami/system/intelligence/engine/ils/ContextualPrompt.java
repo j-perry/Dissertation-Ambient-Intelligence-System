@@ -28,9 +28,9 @@ public class ContextualPrompt {
         // temperature
         int minTemp = 0;
         int maxTemp = 40;
-                
+        
         // temperature
-        if(value > minTemp && value < maxTemp) {
+        if((double) value > minTemp && (double) value < maxTemp) {
             context = "temperature";
         }
         

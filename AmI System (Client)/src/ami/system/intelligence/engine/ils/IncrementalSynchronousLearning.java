@@ -5,15 +5,12 @@
  */
 package ami.system.intelligence.engine.ils;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.json.simple.JSONObject;
 
@@ -35,14 +32,12 @@ public class IncrementalSynchronousLearning {
      */
 //    private Coordinator coord;
 //    private ExperienceBank exBank;
-    private ContextualPrompt pContext;
     private InitialContextPhase initialContextPhase;
     private ContextPhase contextPhase;
     // sensor values (for processing)
     private int tempValue;
 
     public IncrementalSynchronousLearning() {
-        pContext = new ContextualPrompt();
         initialContextPhase = new InitialContextPhase();
         contextPhase = new ContextPhase();
     }
@@ -59,20 +54,21 @@ public class IncrementalSynchronousLearning {
      * @param sessionId
      * @param hostname
      * @param tempValue
+     * @param ultrasonicValue
      * @param hour
      * @param minute
      */
-    public void run(int sessionId, String hostname, int tempValue, int hour, int minute) {
-
-        // if it has already been performed
-        if (initialContextPhase.hasRun() == true) {
-            System.out.println("initialContextPhase.hasRun() == true");
-            contextPhase.run(sessionId, hostname, tempValue, hour, minute);
-        } else {
-            // if it hasn't run yet
+    public void run(int sessionId, String hostname, int tempValue, int ultrasonicValue, int hour, int minute) {
+        
+        // if an initial context phase has not been performed
+        if (initialContextPhase.hasRun() == false) {
             System.out.println("initialContextPhase.hasRun() == false");
-            initialContextPhase.run(sessionId, hostname, tempValue, hour, minute);
-            writeIntent();
+            initialContextPhase.run(sessionId, hostname, tempValue, ultrasonicValue, hour, minute);
+        } else {
+            // else run a full context phase
+            System.out.println("initialContextPhase.hasRun() == true");
+            contextPhase.run(sessionId, hostname, tempValue, ultrasonicValue, hour, minute);
+//            writeIntent();
         }
     }
 

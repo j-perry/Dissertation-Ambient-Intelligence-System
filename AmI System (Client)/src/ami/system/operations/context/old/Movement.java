@@ -3,8 +3,9 @@
  * Jonathan Perry
  * Candidate No. 102235
  */
-package ami.system.operations.context;
+package ami.system.operations.context.old;
 
+import ami.system.operations.context.ISession;
 import com.pi4j.wiringpi.Gpio;
 
 /**
@@ -43,9 +44,9 @@ public class Movement implements ISession {
         
         // same as GPIO.setmode(GPIO.BCM in Python)
         if(Gpio.wiringPiSetupGpio() == -1) {
-            System.out.println("> GPIO SETUP FAILED");
+            System.out.println("> GPIO SETUP FAILED: " + Gpio.wiringPiSetupGpio());
         } else {
-            System.out.println("> GPIO SETUP SUCCESSFUL");
+            System.out.println("> GPIO SETUP SUCCESSFUL: " + Gpio.wiringPiSetupGpio());
         }
            
         // GPIO.setup(TRIG,GPIO.OUT)
@@ -91,7 +92,7 @@ public class Movement implements ISession {
         // convert to 2 decimal places
         distance = Math.round(distance * 100) / 100;
         
-        System.out.println("THE DISTANCE IS: " + distance);
+        System.out.println("THE DISTANCE IS: " + distance + "cm");
     }
     
     /**

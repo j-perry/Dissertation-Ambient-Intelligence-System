@@ -28,13 +28,7 @@ public class AmISystem {
     /**
      * Starts our application
      */
-    public void init() {
-        // Attempt to auto start and run a new system process.
-        // This is reliant on conditions set between 9:00 - 17:30.
-        // However, before doing so, delay the start by 15 seconds to ensure
-        // a network connection is established (just as a precaution).
-        final int seconds = 10;
-        
+    public void init() {     
         SystemProcess systemProcess = new SystemProcess();
         systemProcess.run();
     }

@@ -11,14 +11,14 @@ import java.io.*;
  * Class used to create an instance of a temperature sensor
  * @author Jonathan Perry
  */
-public class Temperature implements ISession {
+public class TemperatureInternal implements ISession {
     
     private I2CBus bus;
     private I2CDevice tempSensor;
     
     private final static int address = 0x48;
     
-    public Temperature() {
+    public TemperatureInternal() {
         setup();
         initialise();
     }

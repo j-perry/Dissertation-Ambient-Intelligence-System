@@ -1,8 +1,9 @@
 
 
 
-package ami.system.operations.context;
+package ami.system.operations.context.old;
 
+import ami.system.operations.context.ISession;
 import com.pi4j.io.i2c.*;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;

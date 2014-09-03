@@ -6,12 +6,13 @@
 package ami.system.intelligence.engine;
 
 // Java APIs
+import ami.system.operations.context.MovementExternal;
+import ami.system.operations.context.TemperatureInternal;
 import java.net.*;
 import java.text.*;
 import java.util.*;
 
 // internal classes
-import ami.system.operations.context.Temperature;
 
 /**
  * Utility class for use whilst processing system activity to hold and manipulate
@@ -22,7 +23,7 @@ import ami.system.operations.context.Temperature;
 public class SystemProcessUtil {
     
     // this constant variable should be kept initialised at 17.00
-    public static final double terminate_time = 21.05; //17.01;
+    public static final double terminate_time = 17.01; //17.01;
     
     // instance variables
     private Calendar cal;
@@ -125,13 +126,13 @@ public class SystemProcessUtil {
     }
 
     /**
-     * Checks whether the system is out of bounds (17.30 PM >) in operation terms
+     * Checks whether the system is out of bounds (17.00 PM >) in operation terms
      *
      * @return true if it is out of bounds, false if not
      */
     public boolean afterHours() {
         boolean result;
-        final double afterHours = 23.00; // 17.00;
+        final double afterHours = terminate_time;
         cal = new GregorianCalendar();
         
         Double actualTime;
@@ -320,7 +321,7 @@ public class SystemProcessUtil {
         duration.append(":");
         
         // minutes
-        duration.append(String.valueOf(getAccumulatedSeconds() ));
+        duration.append(String.valueOf(getAccumulatedMinutes() ));
         duration.append(":");
         
         // seconds
@@ -343,7 +344,7 @@ public class SystemProcessUtil {
      * Set's the number of sensors connected to the ambient intelligence
      * learning system on the client device.
      *
-     * @param number
+     * @param noSensors
      */
     public void setNoSensors(int noSensors) {
         this.noSensors = noSensors;
@@ -427,10 +428,26 @@ public class SystemProcessUtil {
          * @return 
          */
         public boolean temperatureSensorConnected() {
-            Temperature temp = new Temperature();
+            TemperatureInternal temp = new TemperatureInternal();
             
             if(temp.initialise() == true) {
                 connected = true;                
+            } else {
+                connected = false;
+            }
+            
+            return connected;
+        }
+        
+        /**
+         * Checks whether the temperature sensor is connected to the agent
+         * @return 
+         */
+        public boolean ultrasonicSensorConnected() {
+            MovementExternal ultra = new MovementExternal();
+            
+            if(ultra.readValue() != null) {
+                connected = true;
             } else {
                 connected = false;
             }
